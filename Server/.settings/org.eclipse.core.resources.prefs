@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//src/com/server/cmd/getBudget/ReceiveGetBudgetHandler.java=UTF-8
+encoding//src/com/server/server/ConnectionUtils.java=UTF-8
+encoding//src/com/server/server/MySQLConnUtils.java=UTF-8
