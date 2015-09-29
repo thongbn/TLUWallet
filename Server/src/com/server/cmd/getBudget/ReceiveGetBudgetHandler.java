@@ -47,7 +47,7 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 		}
 		catch (Exception ex)
 		{
-			System.out.println("Loi cc gi: " + ex);
+			System.out.println("Loi gi: " + ex);
 			out.print("Error: " + ex);
 		}
 		finally
