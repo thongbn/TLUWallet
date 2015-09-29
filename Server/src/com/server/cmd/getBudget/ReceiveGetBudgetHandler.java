@@ -32,7 +32,7 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 			String data = (String) baseRequest.getParameter("data");
 			JsonParser parser = new JsonParser();
 			JsonObject o = (JsonObject)parser.parse(data);
-			String uId = o.get("ID").toString();
+			String uId = o.get("ID").toString().replaceAll("\"", "");
 //			User u = null;
 //			String uName = o.get("Name").toString();
 //			String uPass = o.get("Pass").toString();
