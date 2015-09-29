@@ -40,4 +40,16 @@ public class DataController {
 		}
 		return;
 	}
+	
+	@SuppressWarnings("static-access")
+	public static void UpdateUser(User s) throws SQLException {	
+		try {
+			uDC.UpdateUser(s);
+			System.out.println("update success");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return;
+	}
 }

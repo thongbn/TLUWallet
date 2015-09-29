@@ -39,7 +39,6 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 //			u = new User(uId, uName, uPass);
 //			DataController.InsertUser(u);
 			User user = DataController.getUserId(uId);
-			DataController.DeleteUser(uId);
 			String hienthi = gson.toJson(user);
 			out.print(hienthi);
 			
