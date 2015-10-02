@@ -13,48 +13,50 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.server.data.DataController;
+import com.server.model.TypeMoney;
 import com.server.model.User;
-
-
+import com.server.model.Wallet;
 
 public class ReceiveGetBudgetHandler extends AbstractHandler {
 
-	public void handle(String arg0, Request baseRequest, HttpServletRequest request,
-			HttpServletResponse response) throws IOException{
+	public void handle(String arg0, Request baseRequest,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		response.setContentType("application/json;charset=UTF-8");
 
 		PrintWriter out = response.getWriter();
 
-		try
-		{
-
+		try {
+			
 			Gson gson = new Gson();
 			String data = (String) baseRequest.getParameter("data");
 			JsonParser parser = new JsonParser();
-			JsonObject o = (JsonObject)parser.parse(data);
-			String uId = o.get("ID").toString().replaceAll("\"", "");
-//			User u = null;
-//			String uName = o.get("Name").toString();
-//			String uPass = o.get("Pass").toString();
-//			u = new User(uId, uName, uPass);
-//			DataController.InsertUser(u);
-			User user = DataController.getUserId(uId);
-			String hienthi = gson.toJson(user);
-			out.print(hienthi);
-			
-			
+			JsonObject o = (JsonObject) parser.parse(data);
 
-		}
-		catch (Exception ex)
-		{
+			String uId = o.get("uID").toString().replaceAll("\"", "");
+			
+			String wId = o.get("wID").toString().replaceAll("\"", "");
+			
+			String mId = o.get("mID").toString().replaceAll("\"", "");
+
+			User user = DataController.getUserId(uId);
+			String showUser = gson.toJson(user);
+			out.print(showUser);
+
+			Wallet wallet = DataController.getwalletID(wId);
+			String showWallet = gson.toJson(wallet);
+			out.print(showWallet);
+
+			TypeMoney typemoney = DataController.gettypeID(mId);
+			String showTypeMoney = gson.toJson(typemoney);
+			out.print(showTypeMoney);
+
+		} catch (Exception ex) {
 			System.out.println("Loi gi: " + ex);
 			out.print("Error: " + ex);
-		}
-		finally
-		{
+		} finally {
 			out.close();
 		}
-
 
 	}
 }
