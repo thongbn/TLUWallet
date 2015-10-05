@@ -32,24 +32,39 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 			String data = (String) baseRequest.getParameter("data");
 			JsonParser parser = new JsonParser();
 			JsonObject o = (JsonObject) parser.parse(data);
-
 			String uId = o.get("uID").toString().replaceAll("\"", "");
-			
 			String wId = o.get("wID").toString().replaceAll("\"", "");
-			
 			String mId = o.get("mID").toString().replaceAll("\"", "");
-
-			User user = DataController.getUserId(uId);
-			String showUser = gson.toJson(user);
-			out.print(showUser);
-
-			Wallet wallet = DataController.getwalletID(wId);
-			String showWallet = gson.toJson(wallet);
-			out.print(showWallet);
-
-			TypeMoney typemoney = DataController.gettypeID(mId);
-			String showTypeMoney = gson.toJson(typemoney);
-			out.print(showTypeMoney);
+			if (uId != null)
+			{
+				User user = DataController.getUserId(uId);
+				String showUser = gson.toJson(user);
+				out.print(showUser);
+				
+				Wallet wallet = DataController.getwalletID(wId);
+				String showWallet = gson.toJson(wallet);
+				out.print(showWallet);
+				
+				TypeMoney typemoney = DataController.gettypeID(mId);
+				String showTypeMoney = gson.toJson(typemoney);
+				out.print(showTypeMoney);
+			} else {
+				
+				if (wId != null)
+				{
+					Wallet wallet = DataController.getwalletID(wId);
+					String showWallet = gson.toJson(wallet);
+					out.print(showWallet);
+				} else {
+					
+					
+					TypeMoney typemoney = DataController.gettypeID(mId);
+					String showTypeMoney = gson.toJson(typemoney);
+					out.print(showTypeMoney);
+				}
+			
+			}
+	
 
 		} catch (Exception ex) {
 			System.out.println("Loi gi: " + ex);

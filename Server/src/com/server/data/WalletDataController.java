@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.server.model.Wallet;
+import com.server.model.User;
 import com.server.server.ConnectionUtils;
 
 public class WalletDataController {
@@ -20,7 +21,7 @@ public class WalletDataController {
 		}
 		Wallet w = null;
 		ResultSet rs = null;
-		String sqlCommand = "select * from vi where idVi = ?";
+		String sqlCommand = "select * from vi where idNguoiDung = ?";
 		PreparedStatement pst = null;
 		try {
 			pst = connection.prepareStatement(sqlCommand);
@@ -28,12 +29,12 @@ public class WalletDataController {
 			pst.setString(1, iD);
 			rs = pst.executeQuery();
 			while (rs.next()) {
+				String idUser = rs.getString("idNguoiDung");
 				String idVi = rs.getString("idVi");
 				String tenVi = rs.getString("TenVi");
-				String soTien = rs.getString("SoTien");
-				String idUser = rs.getString("idNguoiDung");
+				String soTien = rs.getString("SoTien");	
 				String idTien = rs.getString("idTienTe");
-				w = new Wallet(idVi, tenVi, soTien, idUser, idTien);
+				w = new Wallet(idUser, idVi, tenVi, soTien, idTien);
 			}
 		} catch (SQLException e) {
 			System.out.println("select error \n" + e.toString());

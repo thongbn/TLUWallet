@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.server.model.TypeMoney;
+import com.server.model.Wallet;
 import com.server.server.ConnectionUtils;
 
 public class TypeMoneyDataController {
@@ -20,7 +21,9 @@ public class TypeMoneyDataController {
 		}
 		TypeMoney tp = null;
 		ResultSet rs = null;
-		String sqlCommand = "select * from tiente where idTienTe = ?";
+		String sqlCommand = "select idTienTe, LoaiTien "
+				+ "from vi inner join tiente on vi.idTienTe = tiente.idTienTe "
+				+ "where tiente.idTienTe = ?";
 		PreparedStatement pst = null;
 		try {
 			pst = connection.prepareStatement(sqlCommand);
