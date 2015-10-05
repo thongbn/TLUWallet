@@ -21,7 +21,9 @@ public class WalletDataController {
 		}
 		Wallet w = null;
 		ResultSet rs = null;
-		String sqlCommand = "select * from vi where idNguoiDung = ?";
+		String sqlCommand = "select idVi, TenVi, SoTien, idTienTe "
+				+ "from vi inner join nguoidung on nguoidung.idNguoiDung = vi.idNguoiDung "
+				+ "where nguoidung.idNguoiDung = ?";
 		PreparedStatement pst = null;
 		try {
 			pst = connection.prepareStatement(sqlCommand);
@@ -29,12 +31,13 @@ public class WalletDataController {
 			pst.setString(1, iD);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				String idUser = rs.getString("idNguoiDung");
+				
 				String idVi = rs.getString("idVi");
 				String tenVi = rs.getString("TenVi");
 				String soTien = rs.getString("SoTien");	
 				String idTien = rs.getString("idTienTe");
-				w = new Wallet(idUser, idVi, tenVi, soTien, idTien);
+				String idUser = rs.getString("idNguoiDung");
+				w = new Wallet(idVi, tenVi, soTien, idTien, idUser);
 			}
 		} catch (SQLException e) {
 			System.out.println("select error \n" + e.toString());
