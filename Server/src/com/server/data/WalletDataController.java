@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.server.model.Wallet;
-import com.server.model.User;
 import com.server.server.ConnectionUtils;
 
 public class WalletDataController {
@@ -21,7 +20,7 @@ public class WalletDataController {
 		}
 		Wallet w = null;
 		ResultSet rs = null;
-		String sqlCommand = "select idVi, TenVi, SoTien, idTienTe "
+		String sqlCommand = "select * "
 				+ "from vi inner join nguoidung on nguoidung.idNguoiDung = vi.idNguoiDung "
 				+ "where nguoidung.idNguoiDung = ?";
 		PreparedStatement pst = null;
@@ -31,13 +30,14 @@ public class WalletDataController {
 			pst.setString(1, iD);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				
+
 				String idVi = rs.getString("idVi");
 				String tenVi = rs.getString("TenVi");
-				String soTien = rs.getString("SoTien");	
-				String idTien = rs.getString("idTienTe");
+				String soTien = rs.getString("SoTien");
 				String idUser = rs.getString("idNguoiDung");
-				w = new Wallet(idVi, tenVi, soTien, idTien, idUser);
+				String idTien = rs.getString("idTienTe");
+
+				w = new Wallet(idVi, tenVi, soTien, idUser, idTien);
 			}
 		} catch (SQLException e) {
 			System.out.println("select error \n" + e.toString());
@@ -88,7 +88,7 @@ public class WalletDataController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String sql2 = "Update vi" 
+		String sql2 = "Update vi"
 				+ " set TenVi = ?, SoTien = ?, idNguoiDung = ?, idTienTe = ?"
 				+ " where idVi = ?";
 		PreparedStatement pst = null;
@@ -105,4 +105,3 @@ public class WalletDataController {
 		}
 	}
 }
-
