@@ -2,13 +2,17 @@ package com.server.cmd.getBudget;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jettison.json.JSONObject;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -39,29 +43,18 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 			String uId = o.get("uID").toString().replaceAll("\"", "");
 			User user = DataController.getUserId(uId);
 
-			Wallet vi = WalletDataController.getwalletID(uId);
+			List<Wallet> vi = WalletDataController.getwalletID(uId);
 
-			// Object obj = new Object();
-			// JsonElement jsonElement = gson.toJsonTree(obj);
-			// jsonElement.getAsJsonObject().addProperty("user",
-			// gson.toJson(user));
-			// jsonElement.getAsJsonObject().addProperty("wallets",
-			// gson.toJson(vi));
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonUser = mapper.writeValueAsString(user).replaceAll("\"", "");;
+			String jsonWallet = mapper.writeValueAsString(vi).replaceAll("\"", "");;
 
 			JSONObject obj = new JSONObject();
-			JSONObject userJson = new JSONObject();
-			userJson.put("UserID", user.getUserID());
-			userJson.put("UserName", user.getUserName());
-			userJson.put("Password", user.getPassWord());
-			JSONObject walletJson = new JSONObject();
-			walletJson.put("WalletID", vi.getwalletID());
-			walletJson.put("WalletName", vi.getwalletName());
-			walletJson.put("Money", vi.getMoney());
-			walletJson.put("MoneyType", vi.getmoneyID());
-			Collection mangVi = new ArrayList();
-			mangVi.add(walletJson);
 
-			obj.put("User", userJson);
+			Collection mangVi = new ArrayList();
+			mangVi.add(jsonWallet);
+
+			obj.put("User", jsonUser);
 			obj.put("Wallet", mangVi);
 
 			String showUser = obj.toString();
@@ -76,4 +69,5 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 		}
 
 	}
+	
 }

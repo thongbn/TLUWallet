@@ -22,7 +22,7 @@ public class DataController {
 		return uDC.getUserId(id);
 	}
 	@SuppressWarnings("static-access")
-	public  List<Wallet> getwalletID(String iD) throws SQLException {
+	public static  List<Wallet> getwalletID(String iD) throws SQLException {
 		return wDC.getwalletID(iD);
 	}
 	@SuppressWarnings("static-access")

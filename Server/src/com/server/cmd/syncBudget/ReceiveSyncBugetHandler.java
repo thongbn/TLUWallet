@@ -2,6 +2,7 @@ package com.server.cmd.syncBudget;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +56,7 @@ public class ReceiveSyncBugetHandler extends AbstractHandler {
 				JsonObject o1 = (JsonObject) parser1.parse(data2);
 				String wId = o1.get("wID").toString().replaceAll("\"", "");
 
-				Wallet wallet = DataController.getwalletID(wId);
+				List<Wallet> wallet = DataController.getwalletID(wId);
 				Wallet w = null;
 				String wName = o1.get("TenVi").toString().replaceAll("\"", "");
 				String wSoTien = o1.get("SoTien").toString()
