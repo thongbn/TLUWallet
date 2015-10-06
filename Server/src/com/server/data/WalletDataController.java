@@ -4,13 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.server.model.Wallet;
-import com.server.model.User;
 import com.server.server.ConnectionUtils;
 
 public class WalletDataController {
 
-	public static Wallet getwalletID(String iD) throws SQLException {
+	public List<Wallet> getwalletID(String iD) throws SQLException {
 
 		Connection connection = null;
 		try {
@@ -19,9 +21,10 @@ public class WalletDataController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Wallet w = null;
+		List<Wallet> w = new ArrayList<Wallet>();
+//		Wallet w = null;
 		ResultSet rs = null;
-		String sqlCommand = "select idVi, TenVi, SoTien, idTienTe "
+		String sqlCommand = "select * "
 				+ "from vi inner join nguoidung on nguoidung.idNguoiDung = vi.idNguoiDung "
 				+ "where nguoidung.idNguoiDung = ?";
 		PreparedStatement pst = null;
@@ -31,13 +34,17 @@ public class WalletDataController {
 			pst.setString(1, iD);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				
+
 				String idVi = rs.getString("idVi");
 				String tenVi = rs.getString("TenVi");
-				String soTien = rs.getString("SoTien");	
-				String idTien = rs.getString("idTienTe");
+				String soTien = rs.getString("SoTien");
 				String idUser = rs.getString("idNguoiDung");
-				w = new Wallet(idVi, tenVi, soTien, idTien, idUser);
+				String idTien = rs.getString("idTienTe");
+
+				List<Wallet> list = (List<Wallet>) new Wallet(idVi, tenVi, soTien, 
+						 idUser, idTien);
+				w = list;
+//				w = (List<Wallet>) new Wallet(idVi, tenVi, soTien, idUser, idTien);
 			}
 		} catch (SQLException e) {
 			System.out.println("select error \n" + e.toString());
@@ -88,7 +95,7 @@ public class WalletDataController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String sql2 = "Update vi" 
+		String sql2 = "Update vi"
 				+ " set TenVi = ?, SoTien = ?, idNguoiDung = ?, idTienTe = ?"
 				+ " where idVi = ?";
 		PreparedStatement pst = null;
@@ -105,4 +112,3 @@ public class WalletDataController {
 		}
 	}
 }
-

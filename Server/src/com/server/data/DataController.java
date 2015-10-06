@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import com.server.model.TypeMoney;
 import com.server.model.User;
 import com.server.model.Wallet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataController {
 	static TypeMoneyDataController tDC;
@@ -20,7 +22,7 @@ public class DataController {
 		return uDC.getUserId(id);
 	}
 	@SuppressWarnings("static-access")
-	public static Wallet getwalletID(String iD) throws SQLException {
+	public  List<Wallet> getwalletID(String iD) throws SQLException {
 		return wDC.getwalletID(iD);
 	}
 	@SuppressWarnings("static-access")
