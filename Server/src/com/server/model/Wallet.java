@@ -1,12 +1,14 @@
 package com.server.model;
 
+import java.util.List;
+
 public class Wallet {
 	private String walletID;
 	public String walletName;
 	private String Money;
 	private String userID;
 	private String moneyID;
-	public <List> Wallet(String walletID, String walletName, String Money, String userID, String moneyID){
+	public Wallet(String walletID, String walletName, String Money, String userID, String moneyID){
 		
 		this.walletID = walletID;
 		this.walletName = walletName;

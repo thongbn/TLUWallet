@@ -34,6 +34,7 @@
 	<classpathentry kind="lib" path="F:/jetty/lib/jetty-xml-9.3.3.v20150827.jar"/>
 	<classpathentry kind="lib" path="F:/jetty/lib/servlet-api-3.1.jar"/>
 	<classpathentry kind="lib" path="F:/eclipse-java-luna-SR2-win32-x86_64/eclipse/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/java/jackson-all-1.9.9.jar"/>
 	<classpathentry kind="lib" path="E:/java/jettison-1.3.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

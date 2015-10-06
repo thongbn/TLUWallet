@@ -35,18 +35,16 @@ public class WalletDataController {
 			pst.setString(1, iD);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-
+			
 				String idVi = rs.getString("idVi");
 				String tenVi = rs.getString("TenVi");
 				String soTien = rs.getString("SoTien");
 				String idUser = rs.getString("idNguoiDung");
 				String idTien = rs.getString("idTienTe");
-
-				List<Wallet> list = (List<Wallet>) new Wallet(idVi, tenVi, soTien, 
-						 idUser, idTien);
-				w = list;
-//				w = (List<Wallet>) new Wallet(idVi, tenVi, soTien, idUser, idTien);
-			}
+				
+				w.add(new Wallet(idVi, tenVi, soTien, idUser, idTien));
+		}
+			
 		} catch (SQLException e) {
 			System.out.println("select error \n" + e.toString());
 		}

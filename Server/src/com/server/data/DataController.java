@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import com.server.model.TypeMoney;
 import com.server.model.User;
 import com.server.model.Wallet;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataController {
