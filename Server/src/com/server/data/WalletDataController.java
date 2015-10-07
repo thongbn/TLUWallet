@@ -12,7 +12,6 @@ import com.server.server.ConnectionUtils;
 
 public class WalletDataController {
 
-	@SuppressWarnings("unchecked")
 	public static List<Wallet> getwalletID(String iD) throws SQLException {
 
 		Connection connection = null;
