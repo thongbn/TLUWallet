@@ -15,13 +15,13 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import com.google.gson.JsonParser;
 import com.server.data.DataController;
-import com.server.data.WalletDataController;
+import com.server.model.Deal;
 import com.server.model.User;
 import com.server.model.Wallet;
 
 public class ReceiveGetBudgetHandler extends AbstractHandler {
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked"})
 	public void handle(String arg0, Request baseRequest,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -36,15 +36,23 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 			com.google.gson.JsonObject o = (com.google.gson.JsonObject) parser.parse(data);
 			String uId = o.get("uID").toString().replaceAll("\"", "");
 			User user = DataController.getUserId(uId);
-
-			List<Wallet> vi = WalletDataController.getwalletID(uId);
-
-			ObjectMapper mapper = new ObjectMapper();
+			List<Wallet> vi = DataController.getwalletID(uId);
 			
-			String json = "";
 			Map map = new HashMap();
 			map.put("User", user);
+			
+			List<Deal> deal = null;
+			String wid = null;
+			for (Wallet w: vi){
+				wid = w.getwalletID();
+				deal = DataController.getdealID(wid);
+				w.setWalletDetails(deal);
+			}
+			
 			map.put("Wallet", vi);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String json = "";
 			json = mapper.writeValueAsString(map);
 			out.println(json);
 			

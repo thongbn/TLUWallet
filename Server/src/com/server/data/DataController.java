@@ -1,21 +1,21 @@
 package com.server.data;
 
 import java.sql.SQLException;
-import com.server.model.TypeMoney;
+
 import com.server.model.User;
 import com.server.model.Wallet;
 import com.server.model.Deal;
+
 import java.util.List;
 
 public class DataController {
-	static TypeMoneyDataController tDC;
 	static UserDataController uDC;
 	static WalletDataController wDC;
 	static DealDataController dDC;
 	public DataController(){
 		uDC = new UserDataController();
 		wDC = new WalletDataController();
-		tDC = new TypeMoneyDataController();
+		dDC = new DealDataController();
 	}
 	//get-------------
 	@SuppressWarnings("static-access")
@@ -25,10 +25,6 @@ public class DataController {
 	@SuppressWarnings("static-access")
 	public static  List<Wallet> getwalletID(String iD) throws SQLException {
 		return wDC.getwalletID(iD);
-	}
-	@SuppressWarnings("static-access")
-	public static TypeMoney gettypeID(String Id) throws SQLException {
-		return tDC.gettypeID(Id);
 	}
 	@SuppressWarnings("static-access")
 	public static List<Deal> getdealID(String iDD) throws SQLException {

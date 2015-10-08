@@ -11,7 +11,6 @@ import com.server.model.Deal;
 import com.server.server.ConnectionUtils;
 
 public class DealDataController {
-	@SuppressWarnings("unchecked")
 	public static List<Deal> getdealID(String iDD) throws SQLException {
 
 		Connection connection = null;
@@ -24,7 +23,7 @@ public class DealDataController {
 		List<Deal> dl = new ArrayList<Deal>();
 //		Wallet w = null;
 		ResultSet rs = null;
-		String sqlCommand = "select idGiaoDich, TienGiaoDich, ChiTietGiaoDich, NgayGiaoDich, idNhom "
+		String sqlCommand = "select * "
 				+ "from giaodich inner join vi on giaodich.idVi = vi.idVi "
 				+ "where vi.idVi = ?";
 		PreparedStatement pst = null;

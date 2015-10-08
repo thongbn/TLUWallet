@@ -1,11 +1,16 @@
 package com.server.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Wallet {
 	private String walletID;
 	public String walletName;
 	private String Money;
 	private String userID;
 	private String moneyID;
+	private List<Deal> WalletDetails;
+	
 	public Wallet(String walletID, String walletName, String Money, String userID, String moneyID){
 		
 		this.walletID = walletID;
@@ -13,6 +18,7 @@ public class Wallet {
 		this.Money = Money;
 		this.userID = userID;
 		this.moneyID = moneyID;
+		setWalletDetails(new ArrayList<Deal>());
 	}
 	
 	public String getwalletID(){
@@ -50,5 +56,13 @@ public class Wallet {
 	
 	public void setmoneyID(String moneyID){
 		this.moneyID = moneyID;
+	}
+
+	public List<Deal> getWalletDetails() {
+		return WalletDetails;
+	}
+
+	public void setWalletDetails(List<Deal> WalletDetails) {
+		this.WalletDetails = WalletDetails;
 	}
 }
