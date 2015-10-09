@@ -101,12 +101,12 @@ public class DealDataController {
 		PreparedStatement pst = null;
 		try {
 			pst = connection.prepareStatement(sql2);
-			pst.setString(1, dl.getdealID());
-			pst.setString(2, dl.getmoneyDeal());
-			pst.setString(3, dl.getdealDetail());
-			pst.setString(4, dl.getdate());
-			pst.setString(5, dl.getwalletID());
-			pst.setString(6, dl.getgroupID());
+			pst.setString(1, dl.getmoneyDeal());
+			pst.setString(2, dl.getdealDetail());
+			pst.setString(3, dl.getdate());
+			pst.setString(4, dl.getwalletID());
+			pst.setString(5, dl.getgroupID());
+			pst.setString(6, dl.getdealID());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("update error \n" + e.toString());

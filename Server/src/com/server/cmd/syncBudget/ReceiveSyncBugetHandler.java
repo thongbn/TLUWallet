@@ -2,7 +2,6 @@ package com.server.cmd.syncBudget;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,24 +79,24 @@ public class ReceiveSyncBugetHandler extends AbstractHandler {
 				else{
 					String data3 = (String) baseRequest.getParameter("dataDeal");
 					JsonParser parser2 = new JsonParser();
-					JsonObject o3 = (JsonObject) parser2.parse(data3);
-					String dId = o3.get("idGiaoDich").toString().replaceAll("\"", "");
-					List<Deal> deal = DataController.getdealID(dId);
+					JsonObject o2 = (JsonObject) parser2.parse(data3);
+					String dId = o2.get("idGiaoDich").toString().replaceAll("\"", "");
+					Deal deal = DataController.getdealIDbyDiD(dId);
 
 					Deal d = null;
-					String TienGiaoDich = o3.get("TienGiaoDich").toString().replaceAll("\"", "");
-					String ChiTietGiaoDich = o3.get("ChiTietGiaoDich").toString().replaceAll("\"", "");
-					String NgayGiaoDich = o3.get("NgayGiaoDich").toString().replaceAll("\"", "");
-					String idVi = o3.get("idVi").toString().replaceAll("\"", "");
-					String idNhom = o3.get("idNhom").toString().replaceAll("\"", "");
+					String TienGiaoDich = o2.get("TienGiaoDich").toString().replaceAll("\"", "");
+					String ChiTietGiaoDich = o2.get("ChiTietGiaoDich").toString().replaceAll("\"", "");
+					String NgayGiaoDich = o2.get("NgayGiaoDich").toString().replaceAll("\"", "");
+					String idVi = o2.get("idVi").toString().replaceAll("\"", "");
+					String idNhom = o2.get("idNhom").toString().replaceAll("\"", "");
 	
 					d = new Deal(dId, TienGiaoDich, ChiTietGiaoDich, NgayGiaoDich,idVi, idNhom);
-					if (deal.isEmpty()) {
+					if (deal == null) {
 						DataController.InsertDeal(d);
-						out.println("Them user thanh cong");
+						out.println("Them thanh cong");
 					} else {
 						DataController.UpdateDeal(d);
-						out.println("Cap nhat user thanh cong");
+						out.println("Cap nhat thanh cong");
 	
 					}
 				}
