@@ -55,7 +55,6 @@ public class ReceiveGetBudgetHandler extends AbstractHandler {
 			String json = "";
 			json = mapper.writeValueAsString(map);
 			out.println(json);
-			
 
 		} catch (Exception ex) {
 			System.out.println("Loi gi: " + ex);

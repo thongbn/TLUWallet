@@ -21,7 +21,7 @@ public class DealDataController {
 			e1.printStackTrace();
 		}
 		List<Deal> dl = new ArrayList<Deal>();
-//		Wallet w = null;
+		// Wallet w = null;
 		ResultSet rs = null;
 		String sqlCommand = "select * "
 				+ "from giaodich inner join vi on giaodich.idVi = vi.idVi "
@@ -33,17 +33,18 @@ public class DealDataController {
 			pst.setString(1, iDD);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-			
+
 				String idGiaoDich = rs.getString("idGiaoDich");
 				String TienGiaoDich = rs.getString("TienGiaoDich");
 				String ChiTietGiaoDich = rs.getString("ChiTietGiaoDich");
 				String NgayGiaoDich = rs.getString("NgayGiaoDich");
 				String idVi = rs.getString("idVi");
 				String idNhom = rs.getString("idNhom");
-				
-				dl.add(new Deal(idGiaoDich, TienGiaoDich, ChiTietGiaoDich, NgayGiaoDich,idVi, idNhom));
-		}
-			
+
+				dl.add(new Deal(idGiaoDich, TienGiaoDich, ChiTietGiaoDich,
+						NgayGiaoDich, idVi, idNhom));
+			}
+
 		} catch (SQLException e) {
 			System.out.println("select error \n" + e.toString());
 		}
@@ -80,7 +81,7 @@ public class DealDataController {
 		pst.setString(1, dl.getdealID());
 		pst.setString(2, dl.getmoneyDeal());
 		pst.setString(3, dl.getdealDetail());
-		pst.setString(4, dl.getdate());
+		pst.setNString(4, dl.getdate());
 		pst.setString(5, dl.getwalletID());
 		pst.setString(6, dl.getgroupID());
 		pst.executeUpdate();
@@ -110,5 +111,44 @@ public class DealDataController {
 		} catch (SQLException e) {
 			System.out.println("update error \n" + e.toString());
 		}
+	}
+
+	public static Deal getdealIDbyDiD(String iDD) throws SQLException {
+
+		Connection connection = null;
+		try {
+			connection = ConnectionUtils.getMyConnection();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// List<Deal> dl = new ArrayList<Deal>();
+		Deal dl = null;
+		ResultSet rs = null;
+		String sqlCommand = "select * " + "from giaodich "
+				+ "where idGiaoDich = ?";
+		PreparedStatement pst = null;
+		try {
+			pst = connection.prepareStatement(sqlCommand);
+			// replace "?" by id
+			pst.setString(1, iDD);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+
+				String idGiaoDich = rs.getString("idGiaoDich");
+				String TienGiaoDich = rs.getString("TienGiaoDich");
+				String ChiTietGiaoDich = rs.getString("ChiTietGiaoDich");
+				String NgayGiaoDich = rs.getString("NgayGiaoDich");
+				String idVi = rs.getString("idVi");
+				String idNhom = rs.getString("idNhom");
+
+				dl = new Deal(idGiaoDich, TienGiaoDich, ChiTietGiaoDich,
+						NgayGiaoDich, idVi, idNhom);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("select error \n" + e.toString());
+		}
+		return dl;
 	}
 }

@@ -74,7 +74,7 @@ public class WalletDataController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String sql1 = "insert into vi   value(?, ?, ?, ?, ?)";
+		String sql1 = "insert into vi values(?, ?, ?, ?, ?) ";
 		PreparedStatement pst = null;
 		pst = connection.prepareStatement(sql1);
 		pst.setString(1, w.getwalletID());
@@ -108,5 +108,42 @@ public class WalletDataController {
 		} catch (SQLException e) {
 			System.out.println("update error \n" + e.toString());
 		}
+	}
+	public static Wallet getwalletIDbyWID(String iD) throws SQLException {
+		Connection connection = null;
+		try {
+			connection = ConnectionUtils.getMyConnection();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+//		List<Wallet> w = new ArrayList<Wallet>();
+		Wallet w = null;
+		ResultSet rs = null;
+		String sqlCommand = "select * "
+				+ "from vi "
+				+ "where idVi = ?";
+		PreparedStatement pst = null;
+		try {
+			pst = connection.prepareStatement(sqlCommand);
+			// replace "?" by id
+			pst.setString(1, iD);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+			
+				String idVi = rs.getString("idVi");
+				String tenVi = rs.getString("TenVi");
+				String soTien = rs.getString("SoTien");
+				String idUser = rs.getString("idNguoiDung");
+				String idTien = rs.getString("idTienTe");
+				
+				w = new Wallet(idVi, tenVi, soTien, idUser, idTien);
+		}
+			
+		} catch (SQLException e) {
+			System.out.println("select error \n" + e.toString());
+		}
+		return w;
+
 	}
 }

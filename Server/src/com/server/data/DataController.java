@@ -131,4 +131,13 @@ public class DataController {
 		}
 		return;
 	}
+	@SuppressWarnings("static-access")
+	public static Wallet getwalletIDbyWID(String wId) throws SQLException {
+		return wDC.getwalletIDbyWID(wId);
+	}
+	
+	@SuppressWarnings("static-access")
+	public static Deal getdealIDbyDiD(String iDD) throws SQLException {
+		return dDC.getdealIDbyDiD(iDD);
+	}
 }
