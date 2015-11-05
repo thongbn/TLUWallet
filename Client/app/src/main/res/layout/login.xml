@@ -30,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageview_app_logo"
+        android:layout_below="@id/imageview_app_logo"
         android:inputType="text"
         android:maxLines="1"
         android:singleLine="true"
@@ -41,9 +41,9 @@
         android:id="@+id/editTextPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextUsername"
-        android:layout_alignLeft="@+id/editTextUsername"
-        android:layout_alignRight="@+id/editTextUsername"
+        android:layout_below="@id/editTextUsername"
+        android:layout_alignLeft="@id/editTextUsername"
+        android:layout_alignRight="@id/editTextUsername"
         android:inputType="textPassword"
         android:singleLine="true"
         android:ems="10"
@@ -54,7 +54,7 @@
         android:id="@+id/saveLoginCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPassword"
+        android:layout_below="@id/editTextPassword"
         android:layout_alignLeft="@+id/editTextPassword"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
@@ -66,8 +66,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/forgotPass"
-        android:layout_below="@+id/saveLoginCheckBox"
-        android:layout_alignLeft="@+id/saveLoginCheckBox"
+        android:layout_below="@id/saveLoginCheckBox"
+        android:layout_alignLeft="@id/saveLoginCheckBox"
         android:layout_marginLeft="8dp"
         android:textColor="#FF4040"
         android:layout_marginTop="16dip" />
@@ -76,20 +76,22 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_below="@+id/forgotPass"
+        android:layout_below="@id/forgotPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
         android:layout_centerInParent="true"
         android:layout_marginLeft="8dp"
         android:text="@string/login" />
+
+
     <!-- Link to Registration Screen -->
             
 
 
     <TextView
         android:id="@+id/link_to_register"
-        android:layout_below="@+id/btnLogin"
+        android:layout_below="@id/btnLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dip"
