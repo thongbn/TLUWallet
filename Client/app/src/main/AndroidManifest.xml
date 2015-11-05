@@ -29,7 +29,7 @@
             android:label="Retrive Pass" >
         </activity>
         <activity
-            android:name="com.client.activity.MainActivity"
+            android:name="com.client.MainActivity"
             android:label="Budget App">
         </activity>
         <activity android:name=".account.AccountActivity"></activity>
