@@ -19,6 +19,8 @@
 
             <!-- User Label -->
 
+
+
     <EditText
         android:id="@+id/reg_username"
         android:layout_centerHorizontal="true"
@@ -29,6 +31,20 @@
         android:maxLines="1"
         android:singleLine="true"
         android:hint="@string/hint_user" />
+
+    <EditText
+        android:id="@+id/reg_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reg_username"
+        android:layout_alignLeft="@id/reg_username"
+        android:layout_alignRight="@id/reg_username"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:ems="10"
+        android:maxLines="1"
+        android:hint="@string/hint_email" />
             
     <!-- Password Label -->
 
@@ -36,9 +52,9 @@
         android:id="@+id/reg_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/reg_username"
-        android:layout_alignLeft="@id/reg_username"
-        android:layout_alignRight="@id/reg_username"
+        android:layout_below="@id/reg_email"
+        android:layout_alignLeft="@id/reg_email"
+        android:layout_alignRight="@id/reg_email"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:singleLine="true"
@@ -61,6 +77,8 @@
         android:ems="10"
         android:maxLines="1"
         android:hint="@string/hint_confirm_pass"  />
+
+
             
     <!-- Register Button -->
 
@@ -85,6 +103,5 @@
         android:text="@string/linkToLogin"
         android:textColor="#025f7c"
         android:textSize="18sp" />
-
 
 </RelativeLayout>

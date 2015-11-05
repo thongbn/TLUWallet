@@ -49,6 +49,8 @@
         android:ems="10"
         android:maxLines="1"
         android:hint="@string/hint_pass" />
+
+
                 
     <CheckBox
         android:id="@+id/saveLoginCheckBox"
@@ -100,6 +102,7 @@
         android:text="@string/linkToRegister"
         android:textColor="#0b84aa"
         android:textSize="20sp" />
+
 
     <!-- Login Form Ends -->
 
