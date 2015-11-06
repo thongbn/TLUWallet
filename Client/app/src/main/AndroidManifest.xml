@@ -7,14 +7,21 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
-            android:name="com.client.account.FirstActivity"
-            android:label="@string/app_name" >
+            android:name="com.client.activity.Splash"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.client.account.FirstActivity">
         </activity>
         <activity
             android:name="com.client.account.LoginActivity"
@@ -33,6 +40,8 @@
             android:label="Budget App">
         </activity>
         <activity android:name=".account.AccountActivity"></activity>
+
+
 
     </application>
 

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff">
 
 
@@ -13,6 +14,8 @@
             android:background="@layout/footer_repeat"
             android:orientation="horizontal" >
     </LinearLayout>
+
+
 
     <Button
         android:id="@+id/btnRegisterMain"

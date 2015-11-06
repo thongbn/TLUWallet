@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Toolbar
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         //Layout resources
@@ -107,10 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // set the first item as selected for the first time
 
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(R.string.toolbar_title_wallet);
-        }
-
         mFrameLayout_Wallet.setSelected(true);
 
         // Create the first fragment to be shown
@@ -138,10 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (view == mFrameLayout_Wallet)
                 {
-                    if (getSupportActionBar() != null)
-                    {
-                        getSupportActionBar().setTitle(getString(R.string.toolbar_title_wallet));
-                    }
 
                     view.setSelected(true);
 
@@ -152,10 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else if (view == mFrameLayout_Group)
                 {
-                    if (getSupportActionBar() != null)
-                    {
-                        getSupportActionBar().setTitle(getString(R.string.toolbar_title_group));
-                    }
 
                     view.setSelected(true);
 
@@ -166,10 +155,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else if (view == mFrameLayout_Database)
                 {
-                    if (getSupportActionBar() != null)
-                    {
-                        getSupportActionBar().setTitle(getString(R.string.toolbar_title_database));
-                    }
 
                     view.setSelected(true);
 
@@ -181,11 +166,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else if (view == mFrameLayout_Help)
                 {
 
-                    if (getSupportActionBar() != null)
-                    {
-                        getSupportActionBar().setTitle(getString(R.string.toolbar_title_help));
-                    }
-
                     view.setSelected(true);
 
                     Fragment helpFragment = new HelpFragment();
@@ -194,11 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fragmentTransaction.commit();
                 }
                 else if (view == mFrameLayout_Settings){
-
-                    if (getSupportActionBar() != null)
-                    {
-                        getSupportActionBar().setTitle(getString(R.string.toolbar_title_settings));
-                    }
 
                     view.setSelected(true);
 

@@ -27,6 +27,7 @@
     <string name="toolbar_title_help">Hướng dẫn</string>
     <string name="toolbar_title_settings">Cài đặt</string>
     <string name="toolbar_title_account">Account</string>
+    <string name="APP_ID">760189010793477</string>
 
     <!-- Navigation Drawer -->
     <string name="nav_drawer_item_wallet">Ví</string>
