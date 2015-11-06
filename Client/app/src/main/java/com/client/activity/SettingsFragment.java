@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.client.R;
+import com.client.account.FirstActivity;
 import com.client.account.LoginActivity;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener{
@@ -39,7 +40,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
                 mSaveState.putBoolean("LoginSession", false);
                 mSaveState.clear();
                 mSaveState.commit();
-                Intent signout = new Intent(v.getContext(),LoginActivity.class);
+                Intent signout = new Intent(v.getContext(), FirstActivity.class);
                 signout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 signout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(signout);

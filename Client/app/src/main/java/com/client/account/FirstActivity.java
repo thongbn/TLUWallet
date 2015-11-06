@@ -8,6 +8,7 @@ import android.view.View;
 
 import android.widget.TextView;
 
+import com.client.MainActivity;
 import com.client.R;
 
 
@@ -19,6 +20,8 @@ public class FirstActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first_activity);
+
+
 		
 		TextView actionLogin = (TextView) findViewById(R.id.btnLoginMain);
 		TextView actionRegister = (TextView) findViewById(R.id.btnRegisterMain);
@@ -26,12 +29,12 @@ public class FirstActivity extends Activity {
 		//Listening to register new account link
 		
 		actionLogin.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// Switching to Register screen
-				Intent i = new Intent(getApplicationContext(),LoginActivity.class);
-				startActivity(i);				
+				Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+				startActivity(i);
 			}
 		});
 		

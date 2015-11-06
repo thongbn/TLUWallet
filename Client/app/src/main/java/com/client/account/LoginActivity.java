@@ -20,8 +20,8 @@ import com.client.database.LoginDataBaseAdapter;
 
 public class LoginActivity extends Activity{
 	
-	private String username,password;
-    private EditText editTextUsername,editTextPassword;
+	private String email,password;
+    private EditText editTextEmail,editTextPassword;
     LoginDataBaseAdapter loginDataBaseAdapter;
     private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
@@ -34,7 +34,7 @@ public class LoginActivity extends Activity{
 		//setting defaut screen to login.xml
 		setContentView(R.layout.login);
 		
-		editTextUsername = (EditText)findViewById(R.id.editTextUsername);
+		editTextEmail = (EditText)findViewById(R.id.editTextEmail);
 		editTextPassword = (EditText)findViewById(R.id.editTextPassword);
 		saveLoginCheckBox = (CheckBox)findViewById(R.id.saveLoginCheckBox);
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -42,10 +42,11 @@ public class LoginActivity extends Activity{
         
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
         if (saveLogin == true) {
-            editTextUsername.setText(loginPreferences.getString("username", ""));
+			editTextEmail.setText(loginPreferences.getString("email", ""));
             editTextPassword.setText(loginPreferences.getString("password", ""));
             saveLoginCheckBox.setChecked(true);
-        }
+			startActivity(new Intent(getApplication(), MainActivity.class));
+		}
 		
 		Button btnLogin = (Button)findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new OnClickListener() {
@@ -54,17 +55,17 @@ public class LoginActivity extends Activity{
 			public void onClick(View v) {
 				
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-	            imm.hideSoftInputFromWindow(editTextUsername.getWindowToken(), 0);
+	            imm.hideSoftInputFromWindow(editTextEmail.getWindowToken(), 0);
 				
-				username = editTextUsername.getText().toString();
+				email = editTextEmail.getText().toString();
 				password = editTextPassword.getText().toString();
 				 
 				try{
-					if(username.length()>0 && password.length() >0)
+					if(email.length()>0 && password.length() >0)
 					{
 						loginDataBaseAdapter = new LoginDataBaseAdapter(LoginActivity.this);
 						loginDataBaseAdapter.open();
-						if(loginDataBaseAdapter.Login(username, password))
+						if(loginDataBaseAdapter.Login(email, password))
 						{
 							Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
 							Intent i = new Intent(getApplicationContext(),MainActivity.class);
@@ -86,7 +87,7 @@ public class LoginActivity extends Activity{
 				
 				if (saveLoginCheckBox.isChecked()) {
 	                loginPrefsEditor.putBoolean("saveLogin", true);
-	                loginPrefsEditor.putString("username", username);
+	                loginPrefsEditor.putString("email", email);
 	                loginPrefsEditor.putString("password", password);
 	                loginPrefsEditor.commit();
 	            } else {

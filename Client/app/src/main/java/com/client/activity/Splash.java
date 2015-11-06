@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import com.client.R;
 import com.client.account.FirstActivity;
+import com.client.account.LoginActivity;
 
 /**
  * Created by nguye on 11/6/2015.
@@ -15,6 +16,7 @@ public class Splash extends Activity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 3000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +32,8 @@ public class Splash extends Activity {
 
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-                Intent i = new Intent(Splash.this, FirstActivity.class);
-                startActivity(i);
+
+                startActivity(new Intent(getApplication(), FirstActivity.class));
 
                 // close this activity
                 finish();

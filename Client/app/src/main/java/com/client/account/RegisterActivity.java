@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends Activity{
 	
-	EditText editTextUserName, editTextPassword, editTextConfirmPassword, editTextEmail;
+	EditText editTextPassword, editTextConfirmPassword, editTextEmail;
 	Button btnCreateAccount;
 	LoginDataBaseAdapter loginDataBaseAdapter;
 	private static final Pattern EMAIL_PATTERN = Pattern
@@ -33,7 +33,6 @@ public class RegisterActivity extends Activity{
 		loginDataBaseAdapter = loginDataBaseAdapter.open();
 		
 		//get Refferences of Views
-		editTextUserName = (EditText)findViewById(R.id.reg_username);
 		editTextPassword = (EditText)findViewById(R.id.reg_password);
 		editTextEmail = (EditText)findViewById(R.id.reg_email);
 		editTextConfirmPassword = (EditText)findViewById(R.id.reg_confirm_password);
@@ -43,14 +42,13 @@ public class RegisterActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				
-				String userName = editTextUserName.getText().toString();
+
 				String password = editTextPassword.getText().toString();
 				String email = editTextEmail.getText().toString();
 				String confirmPassword = editTextConfirmPassword.getText().toString();
 				
 				//check if any of fields are vaccant
-				if(userName.equals("") || password.equals("") || confirmPassword.equals("")|| email.equals("")){
+				if(password.equals("") || confirmPassword.equals("")|| email.equals("")){
 					Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
 					return;
 				}
@@ -66,7 +64,7 @@ public class RegisterActivity extends Activity{
 				}
 				else{
 					//Save the Data in Database
-					loginDataBaseAdapter.insertEntry(userName, password,email);
+					loginDataBaseAdapter.insertEntry(email, password);
 					Toast.makeText(getApplicationContext(), "Tài khoản đã được tạo", Toast.LENGTH_LONG).show();
 					Intent i = new Intent(getApplicationContext(),LoginActivity.class);
 					startActivity(i);

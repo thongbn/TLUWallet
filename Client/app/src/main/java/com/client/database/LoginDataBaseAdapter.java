@@ -14,7 +14,7 @@ public class LoginDataBaseAdapter {
 	//ToDo: Create public field for each column in your table.
 	//SQL Statement to create a new database.
 	static final String DATABASE_CREATE = "create table "+"nguoidung"+ 
-						"(" +"idNguoiDung"+" integer primary key autoincrement,"+ "userName text, Pass text, Email text);";
+						"(" +"idNguoiDung"+" integer primary key autoincrement,"+ " Pass text, Email text);";
 	
 	//Variable to hold the database instance
 	public SQLiteDatabase db;
@@ -40,11 +40,10 @@ public class LoginDataBaseAdapter {
 		return db;
 	}
 	
-	public void insertEntry(String userName, String password, String email){
+	public void insertEntry(String email, String password){
 		ContentValues newValues = new ContentValues();
 		//assign values for each row
-		
-		newValues.put("userName", userName);
+
 		newValues.put("Pass", password);
 		newValues.put("Email",email);
 		
@@ -53,17 +52,17 @@ public class LoginDataBaseAdapter {
 		
 	}
 	
-	public int deleteEntry(String userName){
+	public int deleteEntry(String email){
 		//String id = String.valueOf(idNguoiDung);
-		String where = "userName=?";
-		int numberOFEntriesDeleted = db.delete("nguoidung", where, new String[]{userName});
+		String where = "Email=?";
+		int numberOFEntriesDeleted = db.delete("nguoidung", where, new String[]{email});
 		
 		return numberOFEntriesDeleted;
 	}
 	
-	public boolean Login(String username, String password) throws SQLException   
+	public boolean Login(String email, String password) throws SQLException
     {  
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + "nguoidung" + " WHERE userName=? AND Pass=?", new String[]{username,password});
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + "nguoidung" + " WHERE Email=? AND Pass=?", new String[]{email,password});
         if (mCursor != null) {             
             if(mCursor.getCount() > 0)  
             {  
@@ -73,16 +72,15 @@ public class LoginDataBaseAdapter {
      return false;  
     }  
 	
-	public void updateEntry(String userName, String password, String email){
+	public void updateEntry(String email, String password){
 		//define the update row content
 		ContentValues updateValues = new ContentValues();
 		//Assign values for each row
-		updateValues.put("userName", userName);
 		updateValues.put("Pass", password);
 		updateValues.put("Email",email);
 		
-		String where = "userName = ?";
-		db.update("nguoidung", updateValues, where, new String[]{userName});
+		String where = "Email = ?";
+		db.update("nguoidung", updateValues, where, new String[]{email});
 	}
 	
 }

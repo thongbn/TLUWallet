@@ -26,7 +26,7 @@
     <!-- User Label -->
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextEmail"
         android:layout_centerHorizontal="true"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -34,16 +34,16 @@
         android:inputType="text"
         android:maxLines="1"
         android:singleLine="true"
-        android:hint="@string/hint_user" />
+        android:hint="@string/hint_email" />
     <!-- Password Label -->
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextUsername"
-        android:layout_alignLeft="@id/editTextUsername"
-        android:layout_alignRight="@id/editTextUsername"
+        android:layout_below="@id/editTextEmail"
+        android:layout_alignLeft="@id/editTextEmail"
+        android:layout_alignRight="@id/editTextEmail"
         android:inputType="textPassword"
         android:singleLine="true"
         android:ems="10"
