@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".DisplayWallet" >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow
+            android:id="@+id/wRowTenVi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/wTenVi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên Ví:"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <EditText
+                android:id="@+id/wEditTenVi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:ems="10"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/wRowSoTien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/wSoTien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số Tiền:"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <EditText
+                android:id="@+id/wEditTien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/wRowType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/wLoaiTien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loại Tiền:"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <EditText
+                android:id="@+id/wEditType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="10dp"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/wRowButton"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/wbtLuu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lưu"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:onClick="run"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

@@ -10,7 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.client.R;
-import com.client.database.LoginDataBaseAdapter;
+import com.client.database.DataBaseHelper;
+import com.client.database.Login.LoginDataBaseAdapter;
 
 import java.util.regex.Pattern;
 
@@ -19,7 +20,8 @@ public class RegisterActivity extends Activity{
 	
 	EditText editTextPassword, editTextConfirmPassword, editTextEmail;
 	Button btnCreateAccount;
-	LoginDataBaseAdapter loginDataBaseAdapter;
+	private DataBaseHelper dataBaseHelper;
+	private LoginDataBaseAdapter loginDataBaseAdapter;
 	private static final Pattern EMAIL_PATTERN = Pattern
 			.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 	
@@ -29,8 +31,8 @@ public class RegisterActivity extends Activity{
 		setContentView(R.layout.register);
 		
 		//get Instance of Database Adapter
-		loginDataBaseAdapter = new LoginDataBaseAdapter(this);
-		loginDataBaseAdapter = loginDataBaseAdapter.open();
+		dataBaseHelper = new DataBaseHelper(RegisterActivity.this);
+		dataBaseHelper.open();
 		
 		//get Refferences of Views
 		editTextPassword = (EditText)findViewById(R.id.reg_password);
@@ -64,10 +66,15 @@ public class RegisterActivity extends Activity{
 				}
 				else{
 					//Save the Data in Database
-					loginDataBaseAdapter.insertEntry(email, password);
-					Toast.makeText(getApplicationContext(), "Tài khoản đã được tạo", Toast.LENGTH_LONG).show();
-					Intent i = new Intent(getApplicationContext(),LoginActivity.class);
-					startActivity(i);
+
+					if(dataBaseHelper.checkemail(email) == false){
+						Toast.makeText(getApplicationContext(), "Email đã có rồi", Toast.LENGTH_LONG).show();
+					}else {
+						dataBaseHelper.insertEntry(email,password);
+						Toast.makeText(getApplicationContext(), "Tài khoản đã được tạo", Toast.LENGTH_LONG).show();
+						Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+						startActivity(i);
+					}
 				}
 			}
 		});
@@ -89,7 +96,7 @@ public class RegisterActivity extends Activity{
 	protected void onDestroy(){
 		super.onDestroy();
 		
-		loginDataBaseAdapter.close();
+		dataBaseHelper.close();
 	}
 
 	private boolean CheckEmail(String email) {

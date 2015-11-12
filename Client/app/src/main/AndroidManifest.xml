@@ -41,7 +41,8 @@
         </activity>
         <activity android:name=".account.AccountActivity"></activity>
 
-
+        <activity android:name="com.client.database.Wallet.AddData"
+            android:screenOrientation="portrait"/>
 
     </application>
 

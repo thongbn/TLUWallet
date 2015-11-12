@@ -1,22 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
     <TextView
-        android:id="@+id/txtLabel"
-         android:layout_width="wrap_content"
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="16dp"
-        android:text="Wallet View"/>
-    
-    <ImageView android:layout_width="wrap_content"
+        android:background="#8A000000"
+        android:gravity="center"
+        android:text="Quản Lý Ví"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:layout_marginTop="55dp"/>
+    <Button
+        android:id="@+id/btAdd"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtLabel"
-        android:src="@drawable/ic_account_balance_wallet"
+        android:text="Insert"
+        android:textSize="20sp"
+        android:onClick="run"
+        android:layout_below="@id/textView1"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btDealInsert"
+        android:text="Deal Manager"
+        android:textSize="20sp"
+        android:onClick="run"
+        android:layout_below="@id/btAdd"
+        android:layout_marginBottom="15dp"/>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tablerowmain"
+        android:layout_below="@id/btDealInsert">
+        <TextView
+            android:id="@+id/stt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="STT"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Tên Ví"
+            android:layout_weight="2"/>
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Số Tiền"
+            android:layout_weight="2"/>
+    </TableRow>
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
-    
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tablerowmain">
+    </ListView>
+
+
+
 
 </RelativeLayout>

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.client.R;
-import com.client.account.FirstActivity;
 import com.client.account.LoginActivity;
 
 /**
@@ -33,7 +32,7 @@ public class Splash extends Activity {
             @Override
             public void run() {
 
-                startActivity(new Intent(getApplication(), FirstActivity.class));
+                startActivity(new Intent(getApplication(), LoginActivity.class));
 
                 // close this activity
                 finish();

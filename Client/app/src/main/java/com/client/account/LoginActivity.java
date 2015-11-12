@@ -16,13 +16,21 @@ import android.widget.Toast;
 
 import com.client.MainActivity;
 import com.client.R;
-import com.client.database.LoginDataBaseAdapter;
+import com.client.database.DataBaseHelper;
+import com.client.database.Login.LoginDataBaseAdapter;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 public class LoginActivity extends Activity{
 	
 	private String email,password;
     private EditText editTextEmail,editTextPassword;
-    LoginDataBaseAdapter loginDataBaseAdapter;
+    private LoginDataBaseAdapter loginDataBaseAdapter;
+	private DataBaseHelper dataBaseHelper;
     private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
@@ -33,6 +41,28 @@ public class LoginActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		//setting defaut screen to login.xml
 		setContentView(R.layout.login);
+
+		FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+		CallbackManager callbackManager = CallbackManager.Factory.create();
+
+		LoginManager.getInstance().registerCallback(callbackManager,
+				new FacebookCallback<LoginResult>() {
+					@Override
+					public void onSuccess(LoginResult loginResult) {
+						// App code
+					}
+
+					@Override
+					public void onCancel() {
+						// App code
+					}
+
+					@Override
+					public void onError(FacebookException exception) {
+						// App code
+					}
+				});
 		
 		editTextEmail = (EditText)findViewById(R.id.editTextEmail);
 		editTextPassword = (EditText)findViewById(R.id.editTextPassword);
@@ -63,9 +93,9 @@ public class LoginActivity extends Activity{
 				try{
 					if(email.length()>0 && password.length() >0)
 					{
-						loginDataBaseAdapter = new LoginDataBaseAdapter(LoginActivity.this);
-						loginDataBaseAdapter.open();
-						if(loginDataBaseAdapter.Login(email, password))
+						dataBaseHelper = new DataBaseHelper(LoginActivity.this);
+						dataBaseHelper.open();
+						if(dataBaseHelper.Login(email, password))
 						{
 							Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
 							Intent i = new Intent(getApplicationContext(),MainActivity.class);
@@ -75,7 +105,7 @@ public class LoginActivity extends Activity{
 						{
 							Toast.makeText(LoginActivity.this, "Sai tên đăng nhập/mật khẩu", Toast.LENGTH_LONG).show();
 						}
-						loginDataBaseAdapter.close();
+						dataBaseHelper.close();
 					}else{
 						Toast.makeText(LoginActivity.this, "Sai tên đăng nhập/mật khẩu", Toast.LENGTH_LONG).show();
 					}
