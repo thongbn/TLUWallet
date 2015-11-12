@@ -43,17 +43,6 @@ public class WalletFragment extends Fragment {
 
         mydb = new DataBaseHelper(rootView.getContext());
 
-
-//        //add new
-//        rootView.findViewById(R.id.btAdd).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), AddData.class);
-//                intent.putExtra("update", false);
-//                startActivity(intent);
-//            }
-//        });
-
         //click to update
         walletList.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -81,7 +70,7 @@ public class WalletFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(rootView.getContext(),
-                                        w_waletName.get(arg2) + " is deleted.", Toast.LENGTH_LONG).show();
+                                        w_waletName.get(arg2) + " đã được xóa", Toast.LENGTH_LONG).show();
                                 mydb.getReadableDatabase().delete(
                                         DataBaseHelper.WALLET_TABLE,
                                         DataBaseHelper.WALLET_ID + "=" + walletId.get(arg2), null);

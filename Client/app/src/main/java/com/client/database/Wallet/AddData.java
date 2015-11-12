@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.client.MainActivity;
 import com.client.R;
+import com.client.activity.wallet.WalletFragment;
 import com.client.database.DataBaseHelper;
 
 /**
@@ -61,6 +64,7 @@ public class AddData extends Activity implements View.OnClickListener {
 
         if(walletName.length() > 0 && walletMoney.length() > 0 && walletType.length() > 0){
             saveData();
+            startActivity(new Intent(getApplication(), MainActivity.class));
         }
         else {
             AlertDialog.Builder alerBuilder = new AlertDialog.Builder(AddData.this);
