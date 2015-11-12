@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.Login.LoginDataBaseAdapter;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +20,6 @@ public class RegisterActivity extends Activity{
 	EditText editTextPassword, editTextConfirmPassword, editTextEmail;
 	Button btnCreateAccount;
 	private DataBaseHelper dataBaseHelper;
-	private LoginDataBaseAdapter loginDataBaseAdapter;
 	private static final Pattern EMAIL_PATTERN = Pattern
 			.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 	

@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.client.MainActivity;
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.Login.LoginDataBaseAdapter;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -29,7 +28,6 @@ public class LoginActivity extends Activity{
 	
 	private String email,password;
     private EditText editTextEmail,editTextPassword;
-    private LoginDataBaseAdapter loginDataBaseAdapter;
 	private DataBaseHelper dataBaseHelper;
     private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
