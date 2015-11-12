@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.client.account.AccountActivity;
@@ -23,6 +24,7 @@ import com.client.activity.HelpFragment;
 import com.client.activity.SettingsFragment;
 import com.client.activity.wallet.WalletFragment;
 import com.client.customViews.ScrimInsetsFrameLayout;
+import com.client.database.Wallet.AddData;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
 
@@ -30,6 +32,7 @@ import com.client.ultils.UtilsMiscellaneous;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
+    ImageButton FAB;
     Context context;
     private LinearLayout mNavDrawerEntriesRootView;
     private PercentRelativeLayout mFrameLayout_AccountView;
@@ -38,6 +41,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FAB = (ImageButton) findViewById(R.id.imageButton);
+        FAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplication(), AddData.class);
+                intent.putExtra("update", false);
+                startActivity(intent);
+            }
+        });
 
         initialise();
     }

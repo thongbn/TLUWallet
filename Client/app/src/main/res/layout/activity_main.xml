@@ -15,10 +15,21 @@
         android:id="@+id/containerView">
         <include
             layout="@layout/toolbar" />
+
+        <ImageButton
+            android:layout_margin="15dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_create"
+            android:background="@drawable/circle"
+            android:id="@+id/imageButton"
+            android:layout_gravity="right|bottom" />
     </FrameLayout>
 
     <!-- the navigator drawer -->
     <include
         layout="@layout/navigation_drawer" />
+
+
 
 </android.support.v4.widget.DrawerLayout>

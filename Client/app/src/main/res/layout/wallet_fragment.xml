@@ -15,21 +15,13 @@
         android:textSize="25sp"
         android:layout_marginTop="55dp"/>
     <Button
-        android:id="@+id/btAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Insert"
-        android:textSize="20sp"
-        android:onClick="run"
-        android:layout_below="@id/textView1"/>
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btDealInsert"
         android:text="Deal Manager"
         android:textSize="20sp"
         android:onClick="run"
-        android:layout_below="@id/btAdd"
+        android:layout_below="@id/textView1"
         android:layout_marginBottom="15dp"/>
     <TableRow
         android:layout_width="match_parent"

@@ -44,15 +44,15 @@ public class WalletFragment extends Fragment {
         mydb = new DataBaseHelper(rootView.getContext());
 
 
-        //add new
-        rootView.findViewById(R.id.btAdd).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddData.class);
-                intent.putExtra("update", false);
-                startActivity(intent);
-            }
-        });
+//        //add new
+//        rootView.findViewById(R.id.btAdd).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), AddData.class);
+//                intent.putExtra("update", false);
+//                startActivity(intent);
+//            }
+//        });
 
         //click to update
         walletList.setOnItemClickListener(new OnItemClickListener() {
