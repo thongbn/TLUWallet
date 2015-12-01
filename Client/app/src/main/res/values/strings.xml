@@ -1,26 +1,6 @@
 <resources>
+    <string name="app_name">Budget App</string>
 
-    <string name="app_name">Budget App ver 4</string>
-    <string name="log_out">Log out</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string>
-    <string name="email">Email</string>
-    <string name="user">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Đăng nhập</string>
-    <string name="linkToRegister">Lần đầu sử dụng? Đăng ký tại đây</string>
-    <string name="register">Đăng ký tài khoản</string>
-    <string name="linkToLogin">Đã có tài khoản? Đăng nhập tại đây!</string>
-    <string name="saveLogin">Nhớ mật khẩu</string>
-    <string name="forgotPass">Quên mật khẩu?</string>
-    <string name="SendEmail">Gửi Email</string>
-    <string name="hint_user">Username</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_pass">Password</string>
-    <string name="hint_confirm_pass">Confirm Password</string>
-    <string name="hint_name">Mời nhập họ tên</string>
-    <string name="confirm_pass">Confirm Password</string>
-    <!-- Toolbar titles -->
     <string name="toolbar_title_wallet">Ví</string>
     <string name="toolbar_title_group">Nhóm</string>
     <string name="toolbar_title_database">Cơ sở dữ liệu</string>
@@ -39,5 +19,5 @@
     <string name="navigation_drawer_closed">The navigation drawer is closed</string>
     <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>
     <string name="tag_nav_drawer_special_entry">nav_drawer_special_entry</string>
-    <string name="tools_text_account_information_username">UserName</string>
+    <string name="tools_text_account_information_username">UserName@gmail.com</string>
 </resources>

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:id="@+id/main_activity"
-    android:background="#bdbdbd">
+    android:id="@+id/main_activity">
 
     <!-- The main content view -->
     <FrameLayout
@@ -23,7 +22,7 @@
             android:src="@drawable/ic_create"
             android:background="@drawable/circle"
             android:id="@+id/imageButton"
-            android:layout_gravity="right|bottom" />
+            android:layout_gravity="center|bottom" />
     </FrameLayout>
 
     <!-- the navigator drawer -->

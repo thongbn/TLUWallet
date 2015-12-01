@@ -1,109 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="#2196f3">
 
-
-    <!-- Logo Start -->
-
-    <ImageView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/imageview_app_logo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher"
-        android:adjustViewBounds="true"
-        android:padding="32dp"
-        android:background="#2DABFF"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Logo Ends -->
-
-    <!-- Login Form -->
-
-    <!-- User Label -->
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_centerHorizontal="true"
-        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageview_app_logo"
-        android:inputType="text"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:hint="@string/hint_email" />
-    <!-- Password Label -->
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextEmail"
-        android:layout_alignLeft="@id/editTextEmail"
-        android:layout_alignRight="@id/editTextEmail"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        android:ems="10"
-        android:maxLines="1"
-        android:hint="@string/hint_pass" />
+        <ImageView
+            android:id="@+id/imageview_app_logo"
+            android:src="@drawable/ic_launcher"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="24dp" />
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                
-    <CheckBox
-        android:id="@+id/saveLoginCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:layout_alignLeft="@+id/editTextPassword"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/saveLogin" />
-                
-    <TextView
-        android:id="@+id/forgotPass"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/forgotPass"
-        android:layout_below="@id/saveLoginCheckBox"
-        android:layout_alignLeft="@id/saveLoginCheckBox"
-        android:layout_marginLeft="8dp"
-        android:textColor="#FF4040"
-        android:layout_marginTop="16dip" />
-            
-    <!-- Login button -->
+            <EditText android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_below="@id/forgotPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="8dp"
-        android:text="@string/login" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+            <EditText android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password" />
+        </android.support.design.widget.TextInputLayout>
 
+        <CheckBox
+            android:id="@+id/saveLoginCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextPassword"
+            android:layout_alignLeft="@+id/editTextPassword"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Nhớ mật khẩu" />
 
-    <!-- Link to Registration Screen -->
-            
+        <TextView
+            android:id="@+id/forgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Quên mật khẩu?"
+            android:textColor="#ffffff"
+            android:layout_below="@id/saveLoginCheckBox"
+            android:layout_alignLeft="@id/saveLoginCheckBox" />
 
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_below="@id/forgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_gravity="center"
+            android:text="Đăng nhập" />
 
-    <TextView
-        android:id="@+id/link_to_register"
-        android:layout_below="@id/btnLogin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dip"
-        android:layout_marginTop="40dip"
-        android:gravity="center"
-        android:text="@string/linkToRegister"
-        android:textColor="#0b84aa"
-        android:textSize="20sp" />
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/btnLogin"/>
 
+        <!-- Link to Registration Screen -->
 
-    <!-- Login Form Ends -->
-
-</RelativeLayout>
+        <TextView
+            android:id="@+id/link_to_register"
+            android:layout_below="@id/facebook_login_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="40dip"
+            android:gravity="center"
+            android:text="Chưa có tài khoản? Mời đăng ký tại đây!"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+    </LinearLayout>
+</ScrollView>

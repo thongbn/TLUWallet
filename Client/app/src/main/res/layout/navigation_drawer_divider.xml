@@ -5,4 +5,4 @@
     android:layout_height="@dimen/divider_height"
     android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
     android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
-    android:background="@color/text_black_divider_12"/>
+    android:background="@color/black"/>

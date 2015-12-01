@@ -39,7 +39,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + WALLET_MONEY + " text not null," +  WALLET_TYPE_MONEY + " text not null, "
             + WALLET_USER_ID + " integer not null constraint " + WALLET_USER_ID + " references " + WALLET_TABLE + "(" + USER_ID + ") on delete cascade);";
 
-    public DataBaseHelper (Context context){
+    public DataBaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -103,10 +103,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return numberOFEntriesDeleted;
     }
 
-    public boolean Login(String email, String password) throws SQLException
+    public boolean login(String email, String password) throws SQLException
     {
 
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?", new String[]{email,password});
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?", new String[]{email, password});
         if (mCursor != null) {
             if(mCursor.getCount() > 0)
             {
@@ -125,4 +125,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String where = DataBaseHelper.EMAIL + " = ?";
         db.update(DataBaseHelper.NGUOIDUNG_TABLE, updateValues, where, new String[]{email});
     }
+
 }

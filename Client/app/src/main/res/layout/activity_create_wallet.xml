@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".DisplayWallet" >
+    <include
+        layout="@layout/toolbar" />
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -68,22 +70,15 @@
                 android:ems="10"
                 android:layout_marginLeft="10dp"/>
         </TableRow>
-        <TableRow
-            android:id="@+id/wRowButton"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp">
 
-            <Button
+        <Button
                 android:id="@+id/wbtLuu"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lưu"
                 android:layout_marginLeft="10dp"
                 android:textSize="20sp"
                 android:onClick="run"/>
-        </TableRow>
     </TableLayout>
 
 </LinearLayout>

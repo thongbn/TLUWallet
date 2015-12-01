@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.client.R;
-import com.client.account.LoginActivity;
 
 /**
- * Created by nguye on 11/6/2015.
+ * Created by nguye on 11/25/2015.
  */
 public class Splash extends Activity {
 
@@ -40,3 +39,4 @@ public class Splash extends Activity {
         }, SPLASH_TIME_OUT);
     }
 }
+
