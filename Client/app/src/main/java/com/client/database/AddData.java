@@ -25,9 +25,6 @@ public class AddData extends Activity implements View.OnClickListener {
     private String idWallet, walletName, walletMoney, walletType;
     private boolean isUpdate;
 
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

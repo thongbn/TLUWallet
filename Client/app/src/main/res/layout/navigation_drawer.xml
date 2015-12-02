@@ -34,7 +34,7 @@
                     style="@style/Body2.White.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tools_text_account_information_username" />
+                     />
 
             </LinearLayout>
             <de.hdodenhof.circleimageview.CircleImageView
@@ -62,6 +62,7 @@
                 android:orientation="vertical"
                 android:id="@+id/navigation_drawer_linearLayout_entries_root_view">
 
+
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_wallet"
                     style="@style/NavDrawerRowLayout.Main"
@@ -80,6 +81,28 @@
                         tools:textColor="@color/nav_drawer_item_text_selected"/>
 
                 </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/navigation_drawer_list_linearLayout_deal_details"
+                    style="@style/NavDrawerRowLayout.Main"
+                    tools:background="@color/nav_drawer_row_item_selected">
+
+                    <ImageView
+                        android:id="@+id/navigation_drawer_items_list_icon_deal_details"
+                        style="@style/NavDrawerRowItemIcon"
+                        android:src="@drawable/ic_account_balance_wallet"
+                        tools:tint="@color/nav_drawer_item_icon_selected"/>
+
+                    <TextView
+                        android:id="@+id/navigation_drawer_item_textView_deal_details"
+                        style="@style/NavDrawerRowItemText"
+                        android:text="@string/nav_drawer_item_deal_details"
+                        tools:textColor="@color/nav_drawer_item_text_selected"/>
+
+                </FrameLayout>
+
+                <include
+                    layout="@layout/navigation_drawer_divider"/>
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_group"

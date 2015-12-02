@@ -1,12 +1,5 @@
 <resources>
     <string name="app_name">Budget App</string>
-
-    <string name="toolbar_title_wallet">Ví</string>
-    <string name="toolbar_title_group">Nhóm</string>
-    <string name="toolbar_title_database">Cơ sở dữ liệu</string>
-    <string name="toolbar_title_help">Hướng dẫn</string>
-    <string name="toolbar_title_settings">Cài đặt</string>
-    <string name="toolbar_title_account">Account</string>
     <string name="APP_ID">760189010793477</string>
 
     <!-- Navigation Drawer -->
@@ -15,6 +8,7 @@
     <string name="nav_drawer_item_database">Cơ sở dữ liệu</string>
     <string name="nav_drawer_item_help">Hướng dẫn</string>
     <string name="nav_drawer_item_settings">Cài đặt</string>
+    <string name="nav_drawer_item_deal_details">Sổ giao dịch</string>
     <string name="navigation_drawer_opened">The navigation drawer is opened</string>
     <string name="navigation_drawer_closed">The navigation drawer is closed</string>
     <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>

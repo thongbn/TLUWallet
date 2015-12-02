@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".DisplayWallet" >
+    tools:context=".DisplayWallet"
+    android:id="@+id/create_wallet">
+
     <include
         layout="@layout/toolbar" />
+
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
         <TableRow
             android:id="@+id/wRowTenVi"
             android:layout_width="wrap_content"
@@ -28,7 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:ems="10"/>
+                android:ems="10"
+                android:textColor="@color/black"/>
         </TableRow>
         <TableRow
             android:id="@+id/wRowSoTien"
@@ -48,7 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"/>
         </TableRow>
         <TableRow
             android:id="@+id/wRowType"
@@ -68,7 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"/>
         </TableRow>
 
         <Button
@@ -80,5 +87,6 @@
                 android:textSize="20sp"
                 android:onClick="run"/>
     </TableLayout>
+
 
 </LinearLayout>

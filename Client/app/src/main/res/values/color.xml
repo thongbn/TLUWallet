@@ -4,6 +4,7 @@
     <color name="primary_dark">#0000FF</color>
     <color name="primary_darker">#00008B</color>
     <color name="accent">#FFFFFF</color>
+    <color name="primary_material_light">#ffefefef</color>
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
@@ -19,6 +20,7 @@
     <color name="text_black_divider_12">#1F000000</color>
     <color name="text_black_secondary_icon_54">#8A000000</color>
     <color name="text_white_text_icons_100">#FFFFFF</color>
+    <color name="text_main">#ff333333</color>
 
     <!-- NavigationDrawer -->
     <color name="navigation_drawer_background">#ffffffff</color>
@@ -41,4 +43,5 @@
     <!-- Black and White -->
     <color name="white">#FFFFFF</color>
     <color name="black_alpha_50">#80000000</color>
+
 </resources>

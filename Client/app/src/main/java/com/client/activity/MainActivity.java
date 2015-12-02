@@ -1,10 +1,10 @@
 package com.client.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +17,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.client.R;
+import com.client.database.User;
 import com.client.fragment.DatabaseFragment;
+import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.GroupFragment;
 import com.client.fragment.HelpFragment;
 import com.client.fragment.SettingsFragment;
@@ -33,9 +36,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DrawerLayout mDrawerLayout;
     ImageButton FAB;
+    User user;
+    TextView headerUserEmail;
+
     private LinearLayout mNavDrawerEntriesRootView;
     private RelativeLayout mFrameLayout_AccountView;
-    private FrameLayout mFrameLayout_Wallet, mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings;
+    private FrameLayout mFrameLayout_Wallet, mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
 
         //Layout resources
@@ -80,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFrameLayout_Help = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_help);
 
         mFrameLayout_Settings = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_settings);
+
+        mFrameLayout_DealDetails = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_deal_details);
+
 
         // Navigation Drawer
 
@@ -100,6 +108,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mActionBarDrawerToggle.syncState();
 
+        // Header User Email
+
+        user = new User();
+        headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
+//        final String emailHeader = user.getEmail().toString();
+        headerUserEmail.setText("Xin chào.........");
+
         // Navigation Drawer layout width
 
         final int possibleMinDrawerWidth = UtilsDevice.getScreenWidth(this) - UtilsMiscellaneous.getThemeAttributeDimensionSize(this, android.R.attr.actionBarSize);
@@ -111,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Nav Drawer item click listener
         mFrameLayout_AccountView.setOnClickListener(this);
         mFrameLayout_Wallet.setOnClickListener(this);
+        mFrameLayout_DealDetails.setOnClickListener(this);
         mFrameLayout_Group.setOnClickListener(this);
         mFrameLayout_Database.setOnClickListener(this);
         mFrameLayout_Help.setOnClickListener(this);
@@ -122,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Create the first fragment to be shown
 
-        Fragment walletFragment = new WalletFragment();
+        Fragment dealDetailsFragment = new DealDetailsFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.containerView, walletFragment, null);
+        fragmentTransaction.replace(R.id.containerView, dealDetailsFragment, null);
         fragmentTransaction.commit();
 
     }
@@ -138,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // SignUp/SignIn/Profile
             startActivity(new Intent(view.getContext(), AccountActivity.class));
         }
+
         else{
             if (!view.isSelected())
             {
@@ -151,6 +168,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Fragment walletFragment = new WalletFragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, walletFragment, null);
+                    fragmentTransaction.commit();
+                }
+                else if (view == mFrameLayout_DealDetails){
+                    view.setSelected(true);
+
+                    Fragment dealDetailsFragment = new DealDetailsFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, dealDetailsFragment, null);
                     fragmentTransaction.commit();
                 }
                 else if (view == mFrameLayout_Group)

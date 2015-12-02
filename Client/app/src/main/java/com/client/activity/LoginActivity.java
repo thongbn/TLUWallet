@@ -17,13 +17,19 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
+import com.client.database.UserFB;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -39,6 +45,7 @@ public class LoginActivity extends Activity{
     private Boolean saveLogin;
     private LoginButton fbbutton;
     private CallbackManager callbackManager;
+    UserFB userFB;
 
 
 
@@ -54,7 +61,7 @@ public class LoginActivity extends Activity{
 
         // Initialize layout button
         fbbutton = (LoginButton) findViewById(R.id.facebook_login_button);
-        fbbutton.setReadPermissions(Arrays.asList("email"));
+        fbbutton.setReadPermissions(Arrays.asList("email", "user_photos", "public_profile"));
 
         fbbutton.setOnClickListener(new OnClickListener() {
 
@@ -66,6 +73,31 @@ public class LoginActivity extends Activity{
                         new FacebookCallback<LoginResult>() {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
+
+                                GraphRequest.newMeRequest(
+                                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject json, GraphResponse response) {
+                                        if (response.getError() != null) {
+                                            //handle error
+                                            Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
+
+                                            try {
+
+                                                String str_email = json.getString("email");
+                                                String str_id = json.getString("id");
+                                                userFB = new UserFB(str_email, str_id);
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }).executeAsync();
+
                                 Toast.makeText(LoginActivity.this,"Đăng nhập thành công", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             }
@@ -115,11 +147,12 @@ public class LoginActivity extends Activity{
                     {
                         dataBaseHelper = new DataBaseHelper(LoginActivity.this);
                         dataBaseHelper.open();
-                        if(dataBaseHelper.login(email, password))
+                        if(dataBaseHelper.login(email, password) != null)
                         {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(i);
+
                         }
                         else
                         {

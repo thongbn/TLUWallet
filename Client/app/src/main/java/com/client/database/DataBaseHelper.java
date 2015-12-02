@@ -103,17 +103,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return numberOFEntriesDeleted;
     }
 
-    public boolean login(String email, String password) throws SQLException
-    {
-
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?", new String[]{email, password});
-        if (mCursor != null) {
-            if(mCursor.getCount() > 0)
-            {
-                return true;
-            }
+    public User login(String Email, String Password) throws SQLException {
+        String query = "SELECT * FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor mCursor = db.rawQuery(query, new String[]{Email, Password});
+        User user = new User();
+        if (mCursor.moveToFirst()) {
+            mCursor.moveToFirst();
+            user.setIdNguoiDung(mCursor.getString(0));
+            user.setEmail(mCursor.getString(1));
+            user.setPassword(mCursor.getString(2));
+            mCursor.close();
+        } else {
+            user = null;
         }
-        return false;
+        db.close();
+        return user;
     }
 
     public void updateEntry(String email, String password){

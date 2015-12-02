@@ -77,11 +77,12 @@
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="Đăng ký" />
+            android:text="Đăng ký"
+            android:background="@color/white" />
         <!-- Link to Login Screen -->
 
         <TextView

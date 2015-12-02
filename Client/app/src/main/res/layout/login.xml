@@ -73,11 +73,12 @@
         <Button
             android:id="@+id/btnLogin"
             android:layout_below="@id/forgotPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
             android:layout_marginTop="10dip"
             android:layout_gravity="center"
-            android:text="Đăng nhập" />
+            android:text="Đăng nhập"
+            android:background="@color/white"/>
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebook_login_button"
