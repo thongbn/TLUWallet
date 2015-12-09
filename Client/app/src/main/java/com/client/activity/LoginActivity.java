@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
+import com.client.database.User;
 import com.client.database.UserFB;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -89,6 +90,7 @@ public class LoginActivity extends Activity{
                                                 String str_email = json.getString("email");
                                                 String str_id = json.getString("id");
                                                 userFB = new UserFB(str_email, str_id);
+                                                dataBaseHelper.insertFacebookEntry(str_id, str_email);
 
 
                                             } catch (JSONException e) {

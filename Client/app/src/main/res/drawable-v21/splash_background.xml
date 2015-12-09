@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#2196f3" />
+        </shape>
+    </item>
+    <item>
+        <bitmap android:gravity="fill" android:src="@drawable/img_splash_icon" android:antialias="true" android:dither="true" />
+    </item>
+</layer-list>

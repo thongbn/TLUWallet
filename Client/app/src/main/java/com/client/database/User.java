@@ -5,24 +5,22 @@ package com.client.database;
  */
 public class User {
 
-    private String idNguoiDung;
+    private static String idNguoiDung;
 
-    public String email;
+    public static String email;
 
-    private String password;
+    private static String password;
 
     public User(){
         super();
     }
 
     public User (String email, String password){
-        super();
         this.email = email;
         this.password = password;
     }
 
     public User (String idNguoiDung, String email, String password){
-        super();
         this.idNguoiDung = idNguoiDung;
         this.email = email;
         this.password = password;

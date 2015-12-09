@@ -22,8 +22,8 @@
             android:layout_marginLeft="10dp">
             <TextView
                 android:id="@+id/wTenVi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
                 android:text="Tên Ví:"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -43,9 +43,9 @@
             android:layout_marginLeft="10dp">
             <TextView
                 android:id="@+id/wSoTien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Số Tiền:"
+                android:layout_width="20dp"
+                android:layout_height="60dp"
+                android:text="Số tiền ban đầu:"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
             <EditText
@@ -66,7 +66,7 @@
                 android:id="@+id/wLoaiTien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loại Tiền:"
+                android:text="Đơn vị tiền tệ:"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
             <EditText

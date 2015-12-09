@@ -2,6 +2,8 @@ package com.client.activity;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.client.R;
 import com.client.database.User;
+import com.client.database.UserFB;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.GroupFragment;
@@ -30,13 +33,16 @@ import com.client.fragment.WalletFragment;
 import com.client.database.AddData;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
+import com.facebook.login.widget.ProfilePictureView;
+
+import java.io.InputStream;
+import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
     ImageButton FAB;
-    User user;
     TextView headerUserEmail;
 
     private LinearLayout mNavDrawerEntriesRootView;
@@ -110,10 +116,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Header User Email
 
-        user = new User();
         headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
-//        final String emailHeader = user.getEmail().toString();
-        headerUserEmail.setText("Xin chào.........");
+        User user = new User();
+        UserFB userFB = new UserFB();
+        if(user.getEmail() == null){
+            headerUserEmail.setText("Xin chào " + userFB.getEmailFB());
+        }
+        else {
+            headerUserEmail.setText("Xin chào " + user.getEmail());
+        }
+
+        // Header User Picture
+
+        ProfilePictureView profilePictureView;
+        profilePictureView = (ProfilePictureView) findViewById(R.id.imageFB);
+        profilePictureView.setProfileId(userFB.getFacebookID());
 
         // Navigation Drawer layout width
 
@@ -245,4 +262,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
+
 }
