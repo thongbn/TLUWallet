@@ -119,12 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
         User user = new User();
         UserFB userFB = new UserFB();
-        if(user.getEmail() == null){
-            headerUserEmail.setText("Xin chào " + userFB.getEmailFB());
-        }
-        else {
-            headerUserEmail.setText("Xin chào " + user.getEmail());
-        }
+
+            headerUserEmail.setText("Xin chào " + userFB.getNameFB());
+//            headerUserEmail.setText("Xin chào " + user.getEmail());
 
         // Header User Picture
 

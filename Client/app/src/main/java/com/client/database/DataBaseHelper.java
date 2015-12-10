@@ -31,7 +31,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String FACEBOOK_TABLE = "facebook",
                         FB_ID = "idFacebook",
-                        FB_EMAIL = "facebookEmail";
+                        FB_EMAIL = "facebookEmail",
+                        FB_NAME = "facebookName";
 
     static final String DATABASE_CREATE_TABLE_NGUOIDUNG = "create table " +  NGUOIDUNG_TABLE
             + "(" + USER_ID + " integer primary key autoincrement,"
@@ -43,7 +44,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_CREATE_TABLE_FACEBOOK = "create table " + FACEBOOK_TABLE
             + "(" + FB_ID + " integer primary key,"
-            + FB_EMAIL + " text not null;";
+            + FB_EMAIL + " text not null, " + FB_NAME + " text);";
 
     public DataBaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -103,11 +104,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insertFacebookEntry(String facebookID, String email){
+    public void insertFacebookEntry(String facebookID, String email, String name){
         ContentValues newValues = new ContentValues();
 
         newValues.put(DataBaseHelper.FB_ID, facebookID);
         newValues.put(DataBaseHelper.FB_EMAIL, email);
+        newValues.put(DataBaseHelper.FB_NAME,name);
 
         db.insert(DataBaseHelper.FACEBOOK_TABLE, null, newValues);
     }

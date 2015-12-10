@@ -9,13 +9,16 @@ public class UserFB {
 
     public static String facebookID;
 
+    public static String nameFB;
+
     public UserFB(){
         super();
     }
 
-    public UserFB(String emailFB, String facebookID){
+    public UserFB(String emailFB, String facebookID , String nameFB){
         this.emailFB = emailFB;
         this.facebookID = facebookID;
+        this.nameFB = nameFB;
     }
 
     public String getEmailFB() {
@@ -32,6 +35,14 @@ public class UserFB {
 
     public void setFacebookID(String facebookID) {
         this.facebookID = facebookID;
+    }
+
+    public String getNameFB() {
+        return nameFB;
+    }
+
+    public void setNameFB(String nameFB) {
+        this.nameFB = nameFB;
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,7 @@ import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.User;
 import com.client.database.UserFB;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -46,7 +48,7 @@ public class LoginActivity extends Activity{
     private Boolean saveLogin;
     private LoginButton fbbutton;
     private CallbackManager callbackManager;
-    UserFB userFB;
+    private static String idFB, emailFB, nameFB;
 
 
 
@@ -60,9 +62,13 @@ public class LoginActivity extends Activity{
         //setting defaut screen to login.xml
         setContentView(R.layout.login);
 
+        if (AccessToken.getCurrentAccessToken() != null){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+
         // Initialize layout button
         fbbutton = (LoginButton) findViewById(R.id.facebook_login_button);
-        fbbutton.setReadPermissions(Arrays.asList("email", "user_photos", "public_profile"));
+        fbbutton.setReadPermissions(Arrays.asList("email", "user_photos", "public_profile", "user_friends"));
 
         fbbutton.setOnClickListener(new OnClickListener() {
 
@@ -77,28 +83,11 @@ public class LoginActivity extends Activity{
 
                                 GraphRequest.newMeRequest(
                                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject json, GraphResponse response) {
-                                        if (response.getError() != null) {
-                                            //handle error
-                                            Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-
-                                            try {
-
-                                                String str_email = json.getString("email");
-                                                String str_id = json.getString("id");
-                                                userFB = new UserFB(str_email, str_id);
-                                                dataBaseHelper.insertFacebookEntry(str_id, str_email);
-
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
+                                            @Override
+                                            public void onCompleted(JSONObject json, GraphResponse response) {
+                                                getuserdata();
                                             }
-                                        }
-                                    }
-                                }).executeAsync();
+                                        }).executeAsync();
 
                                 Toast.makeText(LoginActivity.this,"Đăng nhập thành công", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -116,7 +105,6 @@ public class LoginActivity extends Activity{
                         });
             }
         });
-
 
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
@@ -218,6 +206,39 @@ public class LoginActivity extends Activity{
         super.onActivityResult(requestCode, resultCode, data);
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void getuserdata() {
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                        Log.v("LoginActivity", response.toString());
+
+                        try {
+                            //and fill them here like so.
+                            idFB = object.getString("id");
+                            emailFB = object.getString("email");
+                            nameFB = object.getString("name");
+                            UserFB userFB = new UserFB();
+                            userFB.setFacebookID(idFB);
+                            userFB.setEmailFB(emailFB);
+                            userFB.setNameFB(nameFB);
+                            dataBaseHelper.insertFacebookEntry(idFB, emailFB, nameFB);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
 }

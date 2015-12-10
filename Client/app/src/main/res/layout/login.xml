@@ -19,7 +19,7 @@
             android:src="@drawable/ic_launcher"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="24dp" />
 
         <android.support.design.widget.TextInputLayout
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password" />
+                android:hint="Mật khẩu" />
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
@@ -78,7 +78,7 @@
             android:layout_marginTop="10dip"
             android:layout_gravity="center"
             android:text="Đăng nhập"
-            android:background="@color/white"/>
+            style="@style/CustomStyleButton"/>
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebook_login_button"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/btnLogin"/>
+            android:layout_below="@id/btnLogin" />
 
         <!-- Link to Registration Screen -->
 
