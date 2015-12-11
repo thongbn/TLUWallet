@@ -7,7 +7,7 @@ public class User {
 
     private static String idNguoiDung;
 
-    public static String email;
+    private static String email;
 
     private static String password;
 

@@ -30,6 +30,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +49,7 @@ public class LoginActivity extends Activity{
     private Boolean saveLogin;
     private LoginButton fbbutton;
     private CallbackManager callbackManager;
-    private static String idFB, emailFB, nameFB;
+//    private static String idFB, emailFB, nameFB;
 
 
 
@@ -85,12 +86,14 @@ public class LoginActivity extends Activity{
                                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                                             @Override
                                             public void onCompleted(JSONObject json, GraphResponse response) {
-                                                getuserdata();
+//                                                getuserdata();
+
                                             }
                                         }).executeAsync();
 
-                                Toast.makeText(LoginActivity.this,"Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                             }
 
                             @Override
@@ -208,37 +211,36 @@ public class LoginActivity extends Activity{
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void getuserdata() {
-        GraphRequest request = GraphRequest.newMeRequest(
-                AccessToken.getCurrentAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        // Application code
-                        Log.v("LoginActivity", response.toString());
+//    public void getuserdata() {
+//        GraphRequest request = GraphRequest.newMeRequest(
+//                AccessToken.getCurrentAccessToken(),
+//                new GraphRequest.GraphJSONObjectCallback() {
+//                    @Override
+//                    public void onCompleted(
+//                            JSONObject object,
+//                            GraphResponse response) {
+//                        // Application code
+//                        Log.v("LoginActivity", response.toString());
+//
+//                        try {
+//                            //and fill them here like so.
+//                            idFB = object.getString("id");
+//                            emailFB = object.getString("email");
+//                            nameFB = object.getString("name");
+//                            UserFB.setFacebookID(idFB);
+//                            UserFB.setEmailFB(emailFB);
+//                            UserFB.setNameFB(nameFB);
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//        Bundle parameters = new Bundle();
+//        parameters.putString("fields", "id,name,email,gender");
+//        request.setParameters(parameters);
+//        request.executeAsync();
+//    }
 
-                        try {
-                            //and fill them here like so.
-                            idFB = object.getString("id");
-                            emailFB = object.getString("email");
-                            nameFB = object.getString("name");
-                            UserFB userFB = new UserFB();
-                            userFB.setFacebookID(idFB);
-                            userFB.setEmailFB(emailFB);
-                            userFB.setNameFB(nameFB);
-                            dataBaseHelper.insertFacebookEntry(idFB, emailFB, nameFB);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 
 }

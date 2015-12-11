@@ -5,46 +5,35 @@ package com.client.database;
  */
 public class UserFB {
 
-    public static String emailFB;
+    private static String emailFB;
 
-    public static String facebookID;
+    private static String facebookID;
 
-    public static String nameFB;
+    private static String nameFB;
 
-    public UserFB(){
-        super();
-    }
-
-    public UserFB(String emailFB, String facebookID , String nameFB){
-        this.emailFB = emailFB;
-        this.facebookID = facebookID;
-        this.nameFB = nameFB;
-    }
-
-    public String getEmailFB() {
+    public static String getEmailFB() {
         return emailFB;
     }
 
-    public void setEmailFB(String email) {
-        this.emailFB = email;
+    public static void setEmailFB(String emailFB) {
+        UserFB.emailFB = emailFB;
     }
 
-    public String getFacebookID() {
+    public static String getFacebookID() {
         return facebookID;
     }
 
-    public void setFacebookID(String facebookID) {
-        this.facebookID = facebookID;
+    public static void setFacebookID(String facebookID) {
+        UserFB.facebookID = facebookID;
     }
 
-    public String getNameFB() {
+    public static String getNameFB() {
         return nameFB;
     }
 
-    public void setNameFB(String nameFB) {
-        this.nameFB = nameFB;
+    public static void setNameFB(String nameFB) {
+        UserFB.nameFB = nameFB;
     }
-
 }
 
 

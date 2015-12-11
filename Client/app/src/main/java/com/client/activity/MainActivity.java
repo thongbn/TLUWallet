@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -33,7 +34,14 @@ import com.client.fragment.WalletFragment;
 import com.client.database.AddData;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -44,13 +52,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     ImageButton FAB;
     TextView headerUserEmail;
-
+    private static String idFB, emailFB, nameFB;
     private LinearLayout mNavDrawerEntriesRootView;
     private RelativeLayout mFrameLayout_AccountView;
     private FrameLayout mFrameLayout_Wallet, mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         FAB = (ImageButton) findViewById(R.id.imageButton);
@@ -65,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         initialise();
+
     }
 
     private void initialise(){
@@ -108,26 +119,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //Disables the burger/arrow animation by defaut
                 super.onDrawerSlide(drawerView, 0);
             }
+
         };
 
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
         mActionBarDrawerToggle.syncState();
-
-        // Header User Email
-
-        headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
-        User user = new User();
-        UserFB userFB = new UserFB();
-
-            headerUserEmail.setText("Xin chào " + userFB.getNameFB());
-//            headerUserEmail.setText("Xin chào " + user.getEmail());
-
-        // Header User Picture
-
-        ProfilePictureView profilePictureView;
-        profilePictureView = (ProfilePictureView) findViewById(R.id.imageFB);
-        profilePictureView.setProfileId(userFB.getFacebookID());
 
         // Navigation Drawer layout width
 
@@ -156,6 +153,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.containerView, dealDetailsFragment, null);
         fragmentTransaction.commit();
+
+        headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
+        User user = new User();
+        getuserdata();
+
+        if(user.getEmail() == null) {
+            headerUserEmail.setText("Xin chào " + UserFB.getNameFB());
+
+            // Header User Picture
+            ProfilePictureView profilePictureView;
+            profilePictureView = (ProfilePictureView) findViewById(R.id.imageFB);
+            profilePictureView.setProfileId(UserFB.getFacebookID());
+
+        }else {
+            headerUserEmail.setText("Xin chào " + user.getEmail());
+        }
 
     }
 
@@ -258,6 +271,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void getuserdata() {
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                        Log.v("LoginActivity", response.toString());
+
+                        try {
+                            //and fill them here like so.
+                            idFB = object.getString("id");
+                            emailFB = object.getString("email");
+                            nameFB = object.getString("name");
+                            UserFB.setFacebookID(idFB);
+                            UserFB.setEmailFB(emailFB);
+                            UserFB.setNameFB(nameFB);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
 }
