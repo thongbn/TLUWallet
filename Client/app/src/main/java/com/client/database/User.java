@@ -11,43 +11,32 @@ public class User {
 
     private static String password;
 
-    public User(){
+    public User (){
         super();
     }
 
-    public User (String email, String password){
-        this.email = email;
-        this.password = password;
-    }
-
-    public User (String idNguoiDung, String email, String password){
-        this.idNguoiDung = idNguoiDung;
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getIdNguoiDung() {
+    public static String getIdNguoiDung() {
         return idNguoiDung;
     }
 
-    public void setIdNguoiDung(String idNguoiDung) {
-        this.idNguoiDung = idNguoiDung;
+    public static void setIdNguoiDung(String idNguoiDung) {
+        User.idNguoiDung = idNguoiDung;
     }
 
-    public String getEmail() {
+    public static String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public static void setEmail(String email) {
+        User.email = email;
     }
 
-    public String getPassword() {
+    public static String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public static void setPassword(String password) {
+        User.password = password;
     }
 
 }

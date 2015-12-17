@@ -36,11 +36,18 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v){
         switch (v.getId()){
             case R.id.btnLogout:
-                SharedPreferences mSharedPrefence = getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor mSaveState = mSharedPrefence.edit();
+                SharedPreferences loginPrefence = getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor mSaveState = loginPrefence.edit();
                 mSaveState.putBoolean("LoginSession", false);
                 mSaveState.clear();
                 mSaveState.commit();
+
+                SharedPreferences facebookPrefence = getActivity().getSharedPreferences("idFacebook", Context.MODE_PRIVATE);
+                SharedPreferences.Editor mSaveState1 = facebookPrefence.edit();
+                mSaveState1.putBoolean("LoginFacebookSession", false);
+                mSaveState1.clear();
+                mSaveState1.commit();
+
                 FacebookSdk.sdkInitialize(getContext());
                 LoginManager.getInstance().logOut();
                 Intent signout = new Intent(v.getContext(), LoginActivity.class);

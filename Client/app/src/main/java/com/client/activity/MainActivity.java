@@ -2,8 +2,7 @@ package com.client.activity;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
@@ -14,17 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.client.R;
-import com.client.database.User;
-import com.client.database.UserFB;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.GroupFragment;
@@ -34,17 +29,8 @@ import com.client.fragment.WalletFragment;
 import com.client.database.AddData;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
-import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -52,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     ImageButton FAB;
     TextView headerUserEmail;
-    private static String idFB, emailFB, nameFB;
     private LinearLayout mNavDrawerEntriesRootView;
     private RelativeLayout mFrameLayout_AccountView;
     private FrameLayout mFrameLayout_Wallet, mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
@@ -155,20 +140,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.commit();
 
         headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
-        User user = new User();
-        getuserdata();
 
-        if(user.getEmail() == null) {
-            headerUserEmail.setText("Xin chào " + UserFB.getNameFB());
+        String noname = "";
+        SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        String emailLogin = loginPreferences.getString("email", noname);
+
+        if(emailLogin != noname){
+            headerUserEmail.setText(emailLogin);
+        }else {
+            SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
+            String facebookName = idFacebook.getString("nameFB", noname);
+            String facebookId = idFacebook.getString("idFB", "");
+            headerUserEmail.setText(facebookName);
 
             // Header User Picture
             ProfilePictureView profilePictureView;
             profilePictureView = (ProfilePictureView) findViewById(R.id.imageFB);
-            profilePictureView.setProfileId(UserFB.getFacebookID());
-
-        }else {
-            headerUserEmail.setText("Xin chào " + user.getEmail());
+            profilePictureView.setProfileId(facebookId);
         }
+
 
     }
 
@@ -271,37 +261,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    public void getuserdata() {
-        GraphRequest request = GraphRequest.newMeRequest(
-                AccessToken.getCurrentAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        // Application code
-                        Log.v("LoginActivity", response.toString());
-
-                        try {
-                            //and fill them here like so.
-                            idFB = object.getString("id");
-                            emailFB = object.getString("email");
-                            nameFB = object.getString("name");
-                            UserFB.setFacebookID(idFB);
-                            UserFB.setEmailFB(emailFB);
-                            UserFB.setNameFB(nameFB);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender");
-        request.setParameters(parameters);
-        request.executeAsync();
     }
 
 }

@@ -15,5 +15,5 @@
     <dimen name="nav_drawer_subheader_height">48dp</dimen>
 
     <dimen name="text_size_14">14sp</dimen>
-    <dimen name="divider_height">1dp</dimen>
+    <dimen name="divider_height">0.5dp</dimen>
 </resources>

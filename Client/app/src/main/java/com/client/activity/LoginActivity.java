@@ -49,7 +49,7 @@ public class LoginActivity extends Activity{
     private Boolean saveLogin;
     private LoginButton fbbutton;
     private CallbackManager callbackManager;
-//    private static String idFB, emailFB, nameFB;
+    private static String idFB, emailFB, nameFB;
 
 
 
@@ -86,7 +86,7 @@ public class LoginActivity extends Activity{
                                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                                             @Override
                                             public void onCompleted(JSONObject json, GraphResponse response) {
-//                                                getuserdata();
+                                                getuserdata();
 
                                             }
                                         }).executeAsync();
@@ -142,6 +142,9 @@ public class LoginActivity extends Activity{
                         dataBaseHelper.open();
                         if(dataBaseHelper.login(email, password) != null)
                         {
+                            loginPrefsEditor.putString("email", email);
+                            loginPrefsEditor.putString("password", password);
+                            loginPrefsEditor.apply();
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(i);
@@ -163,12 +166,7 @@ public class LoginActivity extends Activity{
 
                 if (saveLoginCheckBox.isChecked()) {
                     loginPrefsEditor.putBoolean("saveLogin", true);
-                    loginPrefsEditor.putString("email", email);
-                    loginPrefsEditor.putString("password", password);
-                    loginPrefsEditor.commit();
-                } else {
-                    loginPrefsEditor.clear();
-                    loginPrefsEditor.commit();
+                    loginPrefsEditor.apply();
                 }
             }
 
@@ -211,36 +209,47 @@ public class LoginActivity extends Activity{
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-//    public void getuserdata() {
-//        GraphRequest request = GraphRequest.newMeRequest(
-//                AccessToken.getCurrentAccessToken(),
-//                new GraphRequest.GraphJSONObjectCallback() {
-//                    @Override
-//                    public void onCompleted(
-//                            JSONObject object,
-//                            GraphResponse response) {
-//                        // Application code
-//                        Log.v("LoginActivity", response.toString());
-//
-//                        try {
-//                            //and fill them here like so.
-//                            idFB = object.getString("id");
-//                            emailFB = object.getString("email");
-//                            nameFB = object.getString("name");
-//                            UserFB.setFacebookID(idFB);
-//                            UserFB.setEmailFB(emailFB);
-//                            UserFB.setNameFB(nameFB);
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//        Bundle parameters = new Bundle();
-//        parameters.putString("fields", "id,name,email,gender");
-//        request.setParameters(parameters);
-//        request.executeAsync();
-//    }
+    public void getuserdata() {
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                        Log.v("LoginActivity", response.toString());
+
+                        try {
+                            idFB = object.getString("id");
+                            emailFB = object.getString("email");
+                            nameFB = object.getString("name");
+
+                            UserFB.setFacebookID(idFB);
+                            UserFB.setEmailFB(emailFB);
+                            UserFB.setNameFB(nameFB);
+
+                            dataBaseHelper = new DataBaseHelper(LoginActivity.this);
+                            dataBaseHelper.open();
+                            dataBaseHelper.insertFacebookEntry(idFB, emailFB, nameFB);
+
+                            SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
+                            SharedPreferences.Editor facebookPrefsEditor = idFacebook.edit();
+                            facebookPrefsEditor.putString("idFB", idFB);
+                            facebookPrefsEditor.putString("emailFB", emailFB);
+                            facebookPrefsEditor.putString("nameFB", nameFB);
+                            facebookPrefsEditor.apply();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
 
 
 }
