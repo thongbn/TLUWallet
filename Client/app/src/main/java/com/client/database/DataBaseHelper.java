@@ -109,9 +109,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         newValues.put(DataBaseHelper.FB_ID, facebookID);
         newValues.put(DataBaseHelper.FB_EMAIL, email);
-        newValues.put(DataBaseHelper.FB_NAME,name);
+        newValues.put(DataBaseHelper.FB_NAME, name);
 
         db.insert(DataBaseHelper.FACEBOOK_TABLE, null, newValues);
+    }
+
+    public boolean checkFBiD (String facebookID) throws SQLException{
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + DataBaseHelper.FACEBOOK_TABLE + " WHERE " + DataBaseHelper.FB_ID + "=?", new String[]{facebookID});
+        if (mCursor != null) {
+            if (mCursor.getCount() > 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public int deleteEntry(String email){

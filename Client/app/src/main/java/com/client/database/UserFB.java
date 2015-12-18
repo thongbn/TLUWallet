@@ -11,7 +11,7 @@ public class UserFB {
 
     private static String nameFB;
 
-    public static String getEmailFB() {
+    public String getEmailFB() {
         return emailFB;
     }
 

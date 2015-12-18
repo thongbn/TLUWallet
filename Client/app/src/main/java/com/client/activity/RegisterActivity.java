@@ -65,7 +65,7 @@ public class RegisterActivity extends Activity{
 				else{
 					//Save the Data in Database
 
-					if(dataBaseHelper.checkemail(email) == false){
+					if(!dataBaseHelper.checkemail(email)){
 						Toast.makeText(getApplicationContext(), "Email đã có rồi", Toast.LENGTH_LONG).show();
 					}else {
 						dataBaseHelper.insertEntry(email,password);
