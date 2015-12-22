@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -27,7 +26,6 @@ import com.client.fragment.GroupFragment;
 import com.client.fragment.HelpFragment;
 import com.client.fragment.SettingsFragment;
 import com.client.fragment.WalletFragment;
-import com.client.database.AddData;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
 import com.facebook.AccessToken;
@@ -35,9 +33,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -61,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplication(), AddData.class);
+                Intent intent = new Intent(getApplication(), WalletActivity2.class);
                 intent.putExtra("update", false);
                 startActivity(intent);
             }

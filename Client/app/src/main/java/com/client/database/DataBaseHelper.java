@@ -7,6 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.client.database.model.User;
+import com.client.database.model.Wallet;
+
 /**
  * Created by nguye on 11/12/2015.
  */
@@ -17,12 +20,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "quanlychitieu.db";
     public static final int DATABASE_VERSION = 1;
 
+
     public static final String WALLET_TABLE = "wallet",
                         WALLET_ID = "idWallet",
                         WALLET_NAME = "walletName",
                         WALLET_MONEY = "walletMoney",
                         WALLET_TYPE_MONEY = "moneyType",
-                        WALLET_USER_ID = "idUser";
+                        WALLET_USER_ID = "idUser",
+                        WALLET_FB_ID = "idFB";
 
     public static final String NGUOIDUNG_TABLE = "nguoidung",
                         USER_ID = "idNguoiDung",
@@ -40,7 +45,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     static final String DATABASE_CREATE_TABLE_WALLET = "create table " +  WALLET_TABLE
             + "(" + WALLET_ID + " integer primary key autoincrement," +  WALLET_NAME + " varchar(100) not null, "
             + WALLET_MONEY + " text not null," +  WALLET_TYPE_MONEY + " text not null, "
-            + WALLET_USER_ID + " integer not null constraint " + WALLET_USER_ID + " references " + WALLET_TABLE + "(" + USER_ID + ") on delete cascade);";
+            + WALLET_USER_ID + " integer constraint " + WALLET_USER_ID + " references " + WALLET_TABLE + "(" + USER_ID + ") on delete cascade, "
+            + WALLET_FB_ID + " integer constraint " + WALLET_FB_ID + " references " + WALLET_TABLE + "(" + FB_ID + ") on delete cascade);";
 
     static final String DATABASE_CREATE_TABLE_FACEBOOK = "create table " + FACEBOOK_TABLE
             + "(" + FB_ID + " integer primary key,"
@@ -92,12 +98,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public void insertEntry(String email, String password){
+    public void insertEntry(){
         ContentValues newValues = new ContentValues();
         //assign values for each row
 
-        newValues.put(DataBaseHelper.PASSWORD, password);
-        newValues.put(DataBaseHelper.EMAIL, email);
+        newValues.put(DataBaseHelper.PASSWORD, User.getPassword());
+        newValues.put(DataBaseHelper.EMAIL, User.getEmail());
 
         //Insert the row into your table
         db.insert(DataBaseHelper.NGUOIDUNG_TABLE, null, newValues);
@@ -151,6 +157,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    public void insertWallet(){
+        ContentValues values = new ContentValues();
+        values.put(DataBaseHelper.WALLET_NAME, Wallet.getWalletName());
+        values.put(DataBaseHelper.WALLET_MONEY, Wallet.getWalletMoney());
+        values.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
+        values.put(DataBaseHelper.WALLET_USER_ID, Wallet.getUser().getIdNguoiDung());
+
+        db.insert(DataBaseHelper.WALLET_TABLE, null, values);
+    }
+    public void insertWalletByFB(){
+        ContentValues values = new ContentValues();
+        values.put(DataBaseHelper.WALLET_NAME, Wallet.getWalletName());
+        values.put(DataBaseHelper.WALLET_MONEY, Wallet.getWalletMoney());
+        values.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
+        values.put(DataBaseHelper.WALLET_FB_ID, Wallet.getUserFB().getFacebookID());
+
+        db.insert(DataBaseHelper.WALLET_TABLE, null, values);
+    }
+
     public void updateEntry(String email, String password){
         //define the update row content
         ContentValues updateValues = new ContentValues();
@@ -159,6 +184,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         String where = DataBaseHelper.EMAIL + " = ?";
         db.update(DataBaseHelper.NGUOIDUNG_TABLE, updateValues, where, new String[]{email});
+    }
+
+    public void updateWallet(){
+        ContentValues upWallet = new ContentValues();
+        upWallet.put(DataBaseHelper.WALLET_NAME, Wallet.getWalletName());
+        upWallet.put(DataBaseHelper.WALLET_MONEY, Wallet.getWalletMoney());
+        upWallet.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
+
+        String where = DataBaseHelper.WALLET_ID + "= ?";
+        db.update(DataBaseHelper.WALLET_TABLE, upWallet, where, new String[]{Wallet.getIdWallet()});
     }
 
 }

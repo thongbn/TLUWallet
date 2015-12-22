@@ -27,6 +27,8 @@
 
         <activity android:name=".activity.RegisterActivity" />
 
+        <activity android:name=".activity.WalletActivity2"/>
+
         <activity
             android:name="com.client.activity.RetrivePass"
             android:label="Retrive Pass" >
@@ -36,8 +38,6 @@
             android:label="Budget App">
         </activity>
         <activity android:name=".activity.AccountActivity"></activity>
-
-        <activity android:name="com.client.database.AddData" />
 
         <activity
             android:name="com.facebook.FacebookActivity"

@@ -1,4 +1,4 @@
-package com.client.database;
+package com.client.database.model;
 
 /**
  * Created by nguye on 12/2/2015.

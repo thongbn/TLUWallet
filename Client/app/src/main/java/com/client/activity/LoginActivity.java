@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

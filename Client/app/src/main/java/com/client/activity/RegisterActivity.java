@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
+import com.client.database.model.User;
 
 import java.util.regex.Pattern;
 
@@ -46,7 +47,8 @@ public class RegisterActivity extends Activity{
 				String password = editTextPassword.getText().toString();
 				String email = editTextEmail.getText().toString();
 				String confirmPassword = editTextConfirmPassword.getText().toString();
-				
+				User.setEmail(email);
+				User.setPassword(password);
 				//check if any of fields are vaccant
 				if(password.equals("") || confirmPassword.equals("")|| email.equals("")){
 					Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
@@ -68,7 +70,7 @@ public class RegisterActivity extends Activity{
 					if(!dataBaseHelper.checkemail(email)){
 						Toast.makeText(getApplicationContext(), "Email đã có rồi", Toast.LENGTH_LONG).show();
 					}else {
-						dataBaseHelper.insertEntry(email,password);
+						dataBaseHelper.insertEntry();
 						Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_LONG).show();
 						Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 						startActivity(i);

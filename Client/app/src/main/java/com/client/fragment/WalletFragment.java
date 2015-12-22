@@ -15,8 +15,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.client.R;
+
+import com.client.activity.WalletActivity2;
 import com.client.database.DataBaseHelper;
-import com.client.database.AddData;
 
 import java.util.ArrayList;
 
@@ -70,7 +71,7 @@ public class WalletFragment extends Fragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(rootView.getContext(), AddData.class);
+                                Intent intent = new Intent(rootView.getContext(), WalletActivity2.class);
                                 intent.putExtra("WName", w_waletName.get(arg2));
                                 intent.putExtra("WMoney", w_walletMoney.get(arg2));
                                 intent.putExtra("WType", w_walletType.get(arg2));
