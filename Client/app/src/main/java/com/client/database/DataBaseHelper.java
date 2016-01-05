@@ -268,4 +268,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(DataBaseHelper.DEAL_TABLE, values, where, new String[]{Deal.getIdDeal()});
     }
 
+    public Cursor readDataWallet(){
+        String [] allColumns = new String [] {DataBaseHelper.WALLET_NAME, DataBaseHelper.WALLET_MONEY};
+        Cursor c = db.query(DataBaseHelper.WALLET_TABLE, allColumns, null, null, null, null, null);
+
+        if (c != null){
+            c.moveToFirst();
+        }
+
+        return c;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.client.activity;
 import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
@@ -21,10 +22,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.client.R;
+import com.client.database.DataBaseHelper;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.GroupFragment;
@@ -40,6 +44,8 @@ import com.facebook.login.widget.ProfilePictureView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
+    private DataBaseHelper dataBaseHelper;
+    private ListView lv;
     ImageButton FAB;
     ImageView button_show_wallet;
     TextView headerUserEmail, pick_Wallet, show_wallet_name;
@@ -186,6 +192,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pick_Wallet = (TextView) findViewById(R.id.navigation_drawer_item_textView_wallet);
         pick_Wallet.setText("Ví........");
 
+
+//        dataBaseHelper.open();
+//        Cursor cursor = dataBaseHelper.readDataWallet();
+//        String[] from = new String[] {DataBaseHelper.WALLET_NAME, DataBaseHelper.WALLET_MONEY};
+//        int[] to = new int [] {R.id.txtWalletName, R.id.txtWalletMoney};
+//
+//        SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this, R.layout.activity_chosen_wallet, cursor, from, to);
+//        adapter.notifyDataSetChanged();
+//
+//        lv = (ListView) findViewById(R.id.listWallet);
 
         TextView addWallet = (TextView) findViewById(R.id.addWallet);
         addWallet.setOnClickListener(new View.OnClickListener() {
