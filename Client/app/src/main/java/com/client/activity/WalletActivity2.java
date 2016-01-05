@@ -2,6 +2,7 @@ package com.client.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.User;
+import com.client.database.model.UserFB;
 import com.client.database.model.Wallet;
 import com.facebook.AccessToken;
 
@@ -26,7 +28,7 @@ public class WalletActivity2 extends Activity{
     private EditText wallet_Name, wallet_Money, wallet_Type;
     private DataBaseHelper dataBaseHelper;
     private SQLiteDatabase database;
-    private String idWallet, walletName, walletMoney, walletType, idUser;
+    private String idWallet, walletName, walletMoney, walletType, idUser, idFB;
     private boolean isUpdate;
 
     @Override
@@ -67,6 +69,9 @@ public class WalletActivity2 extends Activity{
                 Wallet.setWalletMoney(walletMoney);
                 Wallet.setWalletType(walletType);
                 idUser = User.getIdNguoiDung();
+                SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
+                String facebookId = idFacebook.getString("idFB", "");
+                Wallet.getUserFB().setFacebookID(facebookId);
                 Wallet.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (walletName.equals("") || walletMoney.equals("") || walletType.equals("")) {

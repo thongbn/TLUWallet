@@ -14,4 +14,9 @@
     <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>
     <string name="tag_nav_drawer_special_entry">nav_drawer_special_entry</string>
     <string name="tools_text_account_information_username">UserName@gmail.com</string>
+    <string name="Group">Chọn Nhóm</string>
+    <string name="Money">Số Tiền</string>
+    <string name="Note">Ghi Chú</string>
+    <string name="Date">Ngày Tháng</string>
+    <string name="add">Lưu Giao Dịch</string>
 </resources>

@@ -7,7 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.client.database.model.Deal;
 import com.client.database.model.User;
+import com.client.database.model.UserFB;
 import com.client.database.model.Wallet;
 
 /**
@@ -39,6 +41,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         FB_EMAIL = "facebookEmail",
                         FB_NAME = "facebookName";
 
+    public static final String DEAL_TABLE = "deal",
+                        DEAL_ID = "idDeal",
+                        DEAL_GROUP = "dealGroup",
+                        DEAL_MONEY = "dealMoney",
+                        DEAL_DEATAIL = "dealDetail",
+                        DEAL_DATE = "dealDate",
+                        DEAL_WALLET_ID = "walletID";
+
     static final String DATABASE_CREATE_TABLE_NGUOIDUNG = "create table " +  NGUOIDUNG_TABLE
             + "(" + USER_ID + " integer primary key autoincrement,"
             +  PASSWORD + " text," +  EMAIL + " text);";
@@ -46,11 +56,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + "(" + WALLET_ID + " integer primary key autoincrement," +  WALLET_NAME + " varchar(100) not null, "
             + WALLET_MONEY + " text not null," +  WALLET_TYPE_MONEY + " text not null, "
             + WALLET_USER_ID + " integer constraint " + WALLET_USER_ID + " references " + WALLET_TABLE + "(" + USER_ID + ") on delete cascade, "
-            + WALLET_FB_ID + " integer constraint " + WALLET_FB_ID + " references " + WALLET_TABLE + "(" + FB_ID + ") on delete cascade);";
+            + WALLET_FB_ID + " string " + WALLET_FB_ID + " references " + WALLET_TABLE + "(" + FB_ID + ") on delete cascade);";
 
     static final String DATABASE_CREATE_TABLE_FACEBOOK = "create table " + FACEBOOK_TABLE
-            + "(" + FB_ID + " integer primary key,"
+            + "(" + FB_ID + " string primary key,"
             + FB_EMAIL + " text not null, " + FB_NAME + " text);";
+    static final String DATABASE_CREATE_TABLE_DEAL = "create table " + DEAL_TABLE
+            + "(" + DEAL_ID + " integer primary key autoincrement, "
+            + DEAL_GROUP + " integer not null, "
+            + DEAL_MONEY + " numeric not null, "
+            + DEAL_DEATAIL + " text, "
+            + DEAL_DATE + " datetime not null, "
+            + DEAL_WALLET_ID + " integet constraint " + DEAL_WALLET_ID + " references " + DEAL_TABLE + "(" + WALLET_ID + ") on delete cascade);";
 
     public DataBaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,6 +79,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_CREATE_TABLE_NGUOIDUNG);
         db.execSQL(DATABASE_CREATE_TABLE_WALLET);
         db.execSQL(DATABASE_CREATE_TABLE_FACEBOOK);
+        db.execSQL(DATABASE_CREATE_TABLE_DEAL);
     }
 
     @Override
@@ -70,6 +88,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXITS " + WALLET_TABLE);
         db.execSQL("DROP TABLE IF EXITS " + NGUOIDUNG_TABLE);
         db.execSQL("DROP TABLE IF EXITS " + FACEBOOK_TABLE);
+        db.execSQL("DROP TABLE IF EXITS " + DEAL_TABLE);
 
         onCreate(db);
     }
@@ -139,6 +158,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return numberOFEntriesDeleted;
     }
 
+    public int deleteWallet(){
+        String where = DataBaseHelper.WALLET_ID + " = ? ";
+        int num = db.delete(DataBaseHelper.WALLET_TABLE, where, new String[]{Wallet.getIdWallet()});
+
+        return num;
+    }
+
+    public int deleteDeal(){
+        String where = DataBaseHelper.DEAL_ID + " = ? ";
+        int num = db.delete(DataBaseHelper.DEAL_TABLE, where, new String[]{Deal.getIdDeal()});
+
+        return num;
+    }
+
     public User login(String Email, String Password) throws SQLException {
         String query = "SELECT " + DataBaseHelper.USER_ID + ", " + DataBaseHelper.EMAIL + "," + DataBaseHelper.PASSWORD + " FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -155,6 +188,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         db.close();
         return user;
+    }
+
+    public UserFB loginFB (String fbEmail, String fbName) throws SQLException{
+        UserFB userFB = new UserFB();
+        String query = "Select" + DataBaseHelper.FB_ID + ", " + DataBaseHelper.FB_EMAIL + "," + DataBaseHelper.FB_NAME + " from " + DataBaseHelper.FACEBOOK_TABLE + " where " + DataBaseHelper.FB_EMAIL + "=? And " + DataBaseHelper.FB_NAME + "=?";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{fbEmail, fbName});
+        if (cursor.moveToFirst()){
+            cursor.moveToFirst();
+            userFB.setFacebookID(cursor.getString(0));
+            userFB.setEmailFB(cursor.getString(1));
+            userFB.setNameFB(cursor.getString(2));
+            cursor.close();
+        } else {
+            userFB = null;
+        }
+        db.close();
+        return userFB;
     }
 
     public void insertWallet(){
@@ -176,6 +227,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.insert(DataBaseHelper.WALLET_TABLE, null, values);
     }
 
+    public void insertDeal(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
+        contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
+        contentValues.put(DataBaseHelper.DEAL_DEATAIL, Deal.getDealDetail());
+        contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
+        contentValues.put(DataBaseHelper.DEAL_WALLET_ID, Deal.getWallet().getIdWallet());
+
+        db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
+    }
     public void updateEntry(String email, String password){
         //define the update row content
         ContentValues updateValues = new ContentValues();
@@ -194,6 +255,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         String where = DataBaseHelper.WALLET_ID + "= ?";
         db.update(DataBaseHelper.WALLET_TABLE, upWallet, where, new String[]{Wallet.getIdWallet()});
+    }
+
+    public void updateDeal(){
+        ContentValues values = new ContentValues();
+        values.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
+        values.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
+        values.put(DataBaseHelper.DEAL_DEATAIL, Deal.getDealDetail());
+        values.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
+
+        String where = DataBaseHelper.DEAL_ID + " = ? ";
+        db.update(DataBaseHelper.DEAL_TABLE, values, where, new String[]{Deal.getIdDeal()});
     }
 
 }

@@ -106,7 +106,7 @@ public class WalletFragment extends Fragment {
     }
     private void displayData(){
         mydb.open();
-        Cursor cursor = mydb.getReadableDatabase().rawQuery("Select * from " + DataBaseHelper.WALLET_TABLE, null);
+        Cursor cursor = mydb.getReadableDatabase().rawQuery("Select * from " + DataBaseHelper.WALLET_TABLE + " where " + DataBaseHelper.WALLET_USER_ID + " = ? ", null);
         walletId.clear();
         w_waletName.clear();
         w_walletMoney.clear();
