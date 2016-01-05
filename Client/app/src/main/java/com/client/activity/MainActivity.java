@@ -1,6 +1,6 @@
 package com.client.activity;
 
-
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,24 +14,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.client.R;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.GroupFragment;
 import com.client.fragment.HelpFragment;
 import com.client.fragment.SettingsFragment;
-import com.client.fragment.WalletFragment;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
 
 
@@ -39,11 +41,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private DrawerLayout mDrawerLayout;
     ImageButton FAB;
-    TextView headerUserEmail;
-    private LinearLayout mNavDrawerEntriesRootView;
-    private RelativeLayout mFrameLayout_AccountView;
-    private FrameLayout mFrameLayout_Wallet, mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
-    private static String idFB, emailFB, nameFB;
+    ImageView button_show_wallet;
+    TextView headerUserEmail, pick_Wallet, show_wallet_name;
+    private LinearLayout mNavDrawerEntriesRootView, m_LinearLayout_Show_Wallet;
+    private RelativeLayout mFrameLayout_AccountView, m_activity_choosen_wallet;
+    private FrameLayout mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void initialise(){
+    private void initialise() {
 
         //Toolbar
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -80,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFrameLayout_AccountView = (RelativeLayout) findViewById(R.id.navigation_drawer_account_view);
 
         mNavDrawerEntriesRootView = (LinearLayout) findViewById(R.id.navigation_drawer_linearLayout_entries_root_view);
-
-        mFrameLayout_Wallet = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_wallet);
 
         mFrameLayout_Group = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_group);
 
@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         final ScrimInsetsFrameLayout mScrimInsetsFrameLayout = (ScrimInsetsFrameLayout) findViewById(R.id.main_activity_navigation_drawer_rootLayout);
 
-        final ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_opened, R.string.navigation_drawer_closed){
+        final ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_opened, R.string.navigation_drawer_closed) {
             @Override
-            public void onDrawerSlide(View drawerView, float slideOffset){
+            public void onDrawerSlide(View drawerView, float slideOffset) {
 
                 //Disables the burger/arrow animation by defaut
                 super.onDrawerSlide(drawerView, 0);
@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Nav Drawer item click listener
         mFrameLayout_AccountView.setOnClickListener(this);
-        mFrameLayout_Wallet.setOnClickListener(this);
         mFrameLayout_DealDetails.setOnClickListener(this);
         mFrameLayout_Group.setOnClickListener(this);
         mFrameLayout_Database.setOnClickListener(this);
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // set the first item as selected for the first time
 
-        mFrameLayout_Wallet.setSelected(true);
+        mFrameLayout_DealDetails.setSelected(true);
 
         // Create the first fragment to be shown
 
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         String emailLogin = loginPreferences.getString("email", "");
 
-        if (AccessToken.getCurrentAccessToken() != null){
+        if (AccessToken.getCurrentAccessToken() != null) {
             SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
             String facebookName = idFacebook.getString("nameFB", "");
             String facebookId = idFacebook.getString("idFB", "");
@@ -161,7 +160,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             headerUserEmail.setText(emailLogin);
         }
 
+        //Wallet choosen
+
+        m_LinearLayout_Show_Wallet = (LinearLayout) findViewById(R.id.show_wallet);
+        button_show_wallet = (ImageView) findViewById(R.id.click_to_slide);
+
+        mNavDrawerEntriesRootView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        m_activity_choosen_wallet = (RelativeLayout) findViewById(R.id.activity_choosen_wallet);
+
+        m_LinearLayout_Show_Wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ViewGroup.LayoutParams params = m_activity_choosen_wallet.getLayoutParams();
+                params.height = params.height == 0 ? ViewGroup.LayoutParams.WRAP_CONTENT : 0;
+                m_activity_choosen_wallet.setLayoutParams(params);
+
+                float xoayVong = (button_show_wallet.getRotation() == 180F) ? 0F : 180F;
+                button_show_wallet.animate().rotation(xoayVong).setInterpolator(new AccelerateDecelerateInterpolator());
+
+            }
+
+        });
+
+        pick_Wallet = (TextView) findViewById(R.id.navigation_drawer_item_textView_wallet);
+        pick_Wallet.setText("Ví........");
+
+
+        TextView addWallet = (TextView) findViewById(R.id.addWallet);
+        addWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplication(), WalletActivity2.class);
+                intent.putExtra("update", false);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     @Override
     public void onClick(View view){
@@ -178,17 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 onRowPressed((FrameLayout) view);
 
-                if (view == mFrameLayout_Wallet)
-                {
-
-                    view.setSelected(true);
-
-                    Fragment walletFragment = new WalletFragment();
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, walletFragment, null);
-                    fragmentTransaction.commit();
-                }
-                else if (view == mFrameLayout_DealDetails){
+                if (view == mFrameLayout_DealDetails){
                     view.setSelected(true);
 
                     Fragment dealDetailsFragment = new DealDetailsFragment();

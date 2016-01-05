@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:background="@color/white"
+    android:id="@+id/activity_choosen_wallet">
+
+    <ListView
+        android:id="@+id/listWallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm ví"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:id="@+id/addWallet"
+        android:layout_alignParentBottom="true"
+        />
+
+    <View
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
+        android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
+        android:background="@color/black"
+        android:layout_above="@id/addWallet"/>
+
+</RelativeLayout>

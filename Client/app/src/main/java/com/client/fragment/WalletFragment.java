@@ -38,8 +38,8 @@ public class WalletFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.wallet_fragment, container, false);
-        walletList = (ListView) rootView.findViewById(R.id.listView1);
+        final View rootView = inflater.inflate(R.layout.activity_chosen_wallet, container, false);
+        walletList = (ListView) rootView.findViewById(R.id.listWallet);
 
         mydb = new DataBaseHelper(rootView.getContext());
 
@@ -121,7 +121,7 @@ public class WalletFragment extends Fragment {
             }
             while (cursor.moveToNext());
         }
-        DisplayWallet dWallet = new DisplayWallet(getContext(), walletId, w_waletName, w_walletMoney);
+        DisplayWallet dWallet = new DisplayWallet(getContext(), w_waletName, w_walletMoney);
         walletList.setAdapter(dWallet);
         cursor.close();
     }

@@ -62,6 +62,13 @@
         </RelativeLayout>
 
         <!-- Drawer Item -->
+
+        <include
+            layout="@layout/show_wallet" />
+
+        <include
+            layout="@layout/activity_chosen_wallet"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -74,21 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/navigation_drawer_linearLayout_entries_root_view">
-
-
-                <FrameLayout
-                    android:id="@+id/navigation_drawer_list_linearLayout_wallet"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
-
-                    <Spinner
-                        android:id="@+id/spinner_nav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"/>
-
-                </FrameLayout>
+                android:id="@+id/navigation_drawer_linearLayout_entries_root_view"
+                android:animateLayoutChanges="true">
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_deal_details"
