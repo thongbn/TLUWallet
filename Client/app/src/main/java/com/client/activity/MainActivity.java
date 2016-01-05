@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         pick_Wallet = (TextView) findViewById(R.id.navigation_drawer_item_textView_wallet);
-        pick_Wallet.setText("Ví........");
+        pick_Wallet.setText("Ví....................");
 
 
 //        dataBaseHelper.open();
