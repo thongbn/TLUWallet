@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.client.R;
 import com.client.activity.LoginActivity;
+import com.client.database.model.MyWallet;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 

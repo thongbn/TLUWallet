@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.User;
@@ -27,7 +28,6 @@ public class WalletActivity2 extends Activity{
     private Button btSave;
     private EditText wallet_Name, wallet_Money, wallet_Type;
     private DataBaseHelper dataBaseHelper;
-    private SQLiteDatabase database;
     private String idWallet, walletName, walletMoney, walletType, idUser, idFB;
     private boolean isUpdate;
 
@@ -92,6 +92,7 @@ public class WalletActivity2 extends Activity{
                             dataBaseHelper.insertWallet();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
+
                         }
                     }
                 }

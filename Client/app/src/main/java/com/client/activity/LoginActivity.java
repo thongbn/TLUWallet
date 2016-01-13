@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
+import com.client.database.model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -123,6 +124,11 @@ public class LoginActivity extends Activity{
 
         if (AccessToken.getCurrentAccessToken() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
+            String facebookName = idFacebook.getString("nameFB", "");
+            String facebookEmail = idFacebook.getString("emailFB", "");
+            dataBaseHelper.loginFB(facebookEmail,facebookName);
+
         }
 
         // Initialize layout button
@@ -159,6 +165,8 @@ public class LoginActivity extends Activity{
                                     if (dataBaseHelper.checkFBiD(idFB)) {
                                         dataBaseHelper.insertFacebookEntry(idFB, emailFB, nameFB);
                                     }
+
+                                    dataBaseHelper.loginFB(emailFB, nameFB);
 
                                     startActivity(new Intent(getApplication(), MainActivity.class));
 

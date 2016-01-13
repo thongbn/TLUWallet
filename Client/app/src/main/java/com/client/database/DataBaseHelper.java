@@ -6,11 +6,18 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.client.CustomWalletList.CustomWalletList;
 import com.client.database.model.Deal;
+import com.client.database.model.MyWallet;
 import com.client.database.model.User;
 import com.client.database.model.UserFB;
 import com.client.database.model.Wallet;
+
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nguye on 11/12/2015.
@@ -186,13 +193,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         } else {
             user = null;
         }
+        MyWallet.listWalletMoney.clear();
+        MyWallet.listWalletName.clear();
+        getDataWalletByUserID(User.getIdNguoiDung());
         db.close();
         return user;
     }
 
     public UserFB loginFB (String fbEmail, String fbName) throws SQLException{
         UserFB userFB = new UserFB();
-        String query = "Select" + DataBaseHelper.FB_ID + ", " + DataBaseHelper.FB_EMAIL + "," + DataBaseHelper.FB_NAME + " from " + DataBaseHelper.FACEBOOK_TABLE + " where " + DataBaseHelper.FB_EMAIL + "=? And " + DataBaseHelper.FB_NAME + "=?";
+        String query = "Select " + DataBaseHelper.FB_ID + ", " + DataBaseHelper.FB_EMAIL + "," + DataBaseHelper.FB_NAME + " from " + DataBaseHelper.FACEBOOK_TABLE + " where " + DataBaseHelper.FB_EMAIL + "=? And " + DataBaseHelper.FB_NAME + "=?";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, new String[]{fbEmail, fbName});
         if (cursor.moveToFirst()){
@@ -204,6 +214,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         } else {
             userFB = null;
         }
+        MyWallet.listWalletMoney.clear();
+        MyWallet.listWalletName.clear();
+        getDataWalletByFbID(UserFB.getFacebookID());
         db.close();
         return userFB;
     }
@@ -215,6 +228,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
         values.put(DataBaseHelper.WALLET_USER_ID, Wallet.getUser().getIdNguoiDung());
 
+        MyWallet.listWalletMoney.clear();
+        MyWallet.listWalletName.clear();
+        getDataWalletByUserID(User.getIdNguoiDung());
+        MyWallet.listWalletName.add(Wallet.getWalletName());
+        MyWallet.listWalletMoney.add(Wallet.getWalletMoney());
+
         db.insert(DataBaseHelper.WALLET_TABLE, null, values);
     }
     public void insertWalletByFB(){
@@ -223,6 +242,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseHelper.WALLET_MONEY, Wallet.getWalletMoney());
         values.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
         values.put(DataBaseHelper.WALLET_FB_ID, Wallet.getUserFB().getFacebookID());
+
+        MyWallet.listWalletMoney.clear();
+        MyWallet.listWalletName.clear();
+        getDataWalletByFbID(UserFB.getFacebookID());
+        MyWallet.listWalletName.add(Wallet.getWalletName());
+        MyWallet.listWalletMoney.add(Wallet.getWalletMoney());
 
         db.insert(DataBaseHelper.WALLET_TABLE, null, values);
     }
@@ -268,15 +293,53 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(DataBaseHelper.DEAL_TABLE, values, where, new String[]{Deal.getIdDeal()});
     }
 
-    public Cursor readDataWallet(){
-        String [] allColumns = new String [] {DataBaseHelper.WALLET_NAME, DataBaseHelper.WALLET_MONEY};
-        Cursor c = db.query(DataBaseHelper.WALLET_TABLE, allColumns, null, null, null, null, null);
 
-        if (c != null){
-            c.moveToFirst();
+    private Cursor getWalletValuesbyUserID(String userID) {
+        db = this.getWritableDatabase();
+        String from[] = { WALLET_NAME, WALLET_MONEY };
+        String where = WALLET_USER_ID + "=?";
+        String[] whereArgs = new String[]{userID+""};
+        Cursor cursor = db.query(WALLET_TABLE, from, where, whereArgs, null, null, null, null);
+        return cursor;
+    }
+
+    public void getDataWalletByUserID(String id) {
+
+        Cursor c = getWalletValuesbyUserID(id);
+
+        if(c != null)
+        {
+            while(c.moveToNext()){
+                String name = c.getString(c.getColumnIndex(WALLET_NAME));
+                String money = c.getString(c.getColumnIndex(WALLET_MONEY));
+                MyWallet.listWalletName.add(name);
+                MyWallet.listWalletMoney.add(money);
+            }
         }
+    }
 
-        return c;
+    private Cursor getWalletValuesbyFbID(String userID) {
+        db = this.getWritableDatabase();
+        String from[] = { WALLET_NAME, WALLET_MONEY };
+        String where = WALLET_FB_ID + "=?";
+        String[] whereArgs = new String[]{userID+""};
+        Cursor cursor = db.query(WALLET_TABLE, from, where, whereArgs, null, null, null, null);
+        return cursor;
+    }
+
+    public void getDataWalletByFbID(String id) {
+
+        Cursor c = getWalletValuesbyFbID(id);
+
+        if(c != null)
+        {
+            while(c.moveToNext()){
+                String name = c.getString(c.getColumnIndex(WALLET_NAME));
+                String money = c.getString(c.getColumnIndex(WALLET_MONEY));
+                MyWallet.listWalletName.add(name);
+                MyWallet.listWalletMoney.add(money);
+            }
+        }
     }
 
 }
