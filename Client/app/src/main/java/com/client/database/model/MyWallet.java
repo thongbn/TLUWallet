@@ -19,7 +19,7 @@ public class MyWallet {
 
     private static UserFB userFB;
 
-    public static ArrayList<String> listWalletID = new ArrayList<String>();
+    public static ArrayList<String> listWalletMoneyType = new ArrayList<String>();
 
     public static ArrayList<String> listWalletName = new ArrayList<String>();
 

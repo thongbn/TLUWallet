@@ -1,21 +1,122 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="50dp">
 
-    <TextView
-        android:id="@+id/txtLabel"
+    <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="16dp"
-        android:text="Deal Details"/>
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:background="@color/white" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng quan"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
 
-    <ImageView android:layout_width="wrap_content"
+        <View
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/devider1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
+            android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu nhập"
+                android:textSize="15dp"
+                android:id="@+id/inBount"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxx.xxx M"
+                android:textSize="15dp"
+                android:textColor="@color/blue_500"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chi Tiêu"
+                android:textSize="15dp"
+                android:id="@+id/outBount"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxx.xxx M"
+                android:textSize="15dp"
+                android:textColor="#FF0000"
+                android:layout_alignParentRight="true"/>
+
+
+        </RelativeLayout>
+
+        <View
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/devider2"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="270dp"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
+            android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXXX M"
+                android:textSize="15dp"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </TableLayout>
+
+    <View
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/devider3"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
+        android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top" />
+
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtLabel"
-        android:src="@drawable/ic_account_balance_wallet"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:id="@+id/listDealDetails"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"
+        android:background="@color/white">
+
+    </ListView>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -1,9 +1,7 @@
 package com.client.CustomWalletList;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.client.R;
-import com.client.activity.MainActivity;
 import com.client.database.model.MyWallet;
 
-import java.util.List;
 
 /**
  * Created by nguye on 1/7/2016.
@@ -52,6 +48,7 @@ public class CustomWalletList extends BaseAdapter {
             holder = new ViewHolder();
             holder.itemName = (TextView) convertView.findViewById(R.id.txtWalletName);
             holder.itemMoney = (TextView)convertView.findViewById(R.id.txtWalletMoney);
+            holder.itemTypeMoney = (TextView) convertView.findViewById(R.id.txtWalletTypeMoney);
 
             convertView.setTag(holder);
         }else {
@@ -59,13 +56,14 @@ public class CustomWalletList extends BaseAdapter {
         }
         holder.itemName.setText(MyWallet.listWalletName.get(position));
         holder.itemMoney.setText(MyWallet.listWalletMoney.get(position));
+        holder.itemTypeMoney.setText(MyWallet.listWalletMoneyType.get(position));
 
         return convertView;
 
     }
 
     static class ViewHolder {
-        TextView itemName , itemMoney;
+        TextView itemName , itemMoney, itemTypeMoney;
     }
 
 }

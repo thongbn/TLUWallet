@@ -1,6 +1,10 @@
 package com.client.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +22,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -181,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         m_LinearLayout_Show_Wallet = (LinearLayout) findViewById(R.id.show_wallet);
         button_show_wallet = (ImageView) findViewById(R.id.click_to_slide);
 
-
         mNavDrawerEntriesRootView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
         m_activity_choosen_wallet = (RelativeLayout) findViewById(R.id.activity_choosen_wallet);
 
@@ -192,10 +201,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ViewGroup.LayoutParams params = m_activity_choosen_wallet.getLayoutParams();
                 params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
                 m_activity_choosen_wallet.setLayoutParams(params);
-
-                if (params.height != 0) {
-                    pick_Wallet.setText("Chọn ví ");
-                }
 
                 float xoayVong = (button_show_wallet.getRotation() == 180F) ? 0F : 180F;
                 button_show_wallet.animate().rotation(xoayVong).setInterpolator(new AccelerateDecelerateInterpolator());
@@ -224,10 +229,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listWalletView.setAdapter(adapter);
 
         pick_Wallet = (TextView) findViewById(R.id.navigation_drawer_item_textView_wallet);
-        pick_Wallet.setText(MyWallet.listWalletName.get(0) + " - " + MyWallet.listWalletMoney.get(0));
+
+        if (MyWallet.listWalletName.size() > 0) {
+            pick_Wallet.setText(MyWallet.listWalletName.get(0));
+        } else {
+            pick_Wallet.setText("Tạo ví ");
+        }
+
+
 
         listWalletView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 ViewGroup.LayoutParams params = m_activity_choosen_wallet.getLayoutParams();
                 params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
@@ -236,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 float xoayVong = (button_show_wallet.getRotation() == 180F) ? 0F : 180F;
                 button_show_wallet.animate().rotation(xoayVong).setInterpolator(new AccelerateDecelerateInterpolator());
 
-                pick_Wallet.setText(MyWallet.listWalletName.get(position) + " - " + MyWallet.listWalletMoney.get(position));
+                pick_Wallet.setText(MyWallet.listWalletName.get(position) + " - " + MyWallet.listWalletMoney.get(position) + " " + MyWallet.listWalletMoneyType.get(position));
 
             }
         });

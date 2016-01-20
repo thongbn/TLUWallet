@@ -54,7 +54,9 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:inputType="numberDecimal"
+                android:digits="0123456789.,"/>
         </TableRow>
         <TableRow
             android:id="@+id/wRowType"
@@ -68,14 +70,15 @@
                 android:layout_height="wrap_content"
                 android:text="Đơn vị tiền tệ:"
                 android:textSize="20sp"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-            <EditText
-                android:id="@+id/wEditType"
-                android:layout_width="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/black"/>
+                android:layout_marginLeft="8dip"
+                android:layout_marginBottom="10dp"
+                android:drawSelectorOnTop="true" />
+
         </TableRow>
 
         <Button
