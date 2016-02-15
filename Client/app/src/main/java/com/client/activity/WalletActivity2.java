@@ -25,7 +25,7 @@ import com.client.database.model.Wallet;
 import com.facebook.AccessToken;
 
 public class WalletActivity2 extends Activity{
-    private Button btSave;
+    private TextView saveButton, cancelButton;
     private EditText wallet_Name, wallet_Money;
     private DataBaseHelper dataBaseHelper;
     private String walletName, walletMoney, walletType, idUser, idWallet;
@@ -129,8 +129,8 @@ public class WalletActivity2 extends Activity{
 
         }
 
-        btSave = (Button) findViewById(R.id.wbtLuu);
-        btSave.setOnClickListener(new View.OnClickListener() {
+        saveButton = (TextView) findViewById(R.id.save_action_text);
+        saveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -148,6 +148,9 @@ public class WalletActivity2 extends Activity{
                 //check if any of fields are vaccant
                 if (walletName.equals("") || walletMoney.equals("") || walletType.equals("")) {
                     Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
+                    return;
+                }else if (!dataBaseHelper.checkWalletName(walletName)){
+                    Toast.makeText(getApplicationContext(), "Ví đã có rồi!", Toast.LENGTH_LONG).show();
                     return;
                 } else {
                     if (isUpdate) {
@@ -170,6 +173,15 @@ public class WalletActivity2 extends Activity{
             }
 
         });
+
+        cancelButton = (TextView) findViewById(R.id.cancel_action_text);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
     }
 
     // Custom View Spinner

@@ -35,13 +35,13 @@
         android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
         android:background="@color/black" />
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/listWallet"
         android:layout_below="@id/devider_listWallet2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" >
-    </ListView>
+        android:layout_alignParentLeft="true" />
+
 
 
 

@@ -20,6 +20,7 @@
 
         <item name="colorButtonNormal">@color/blue_500</item>
         <item name="android:colorButtonNormal">@color/blue_500</item>
+
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">

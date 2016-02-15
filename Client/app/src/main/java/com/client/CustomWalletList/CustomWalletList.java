@@ -3,12 +3,16 @@ package com.client.CustomWalletList;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.client.R;
+import com.client.database.DataBaseHelper;
 import com.client.database.model.MyWallet;
 
 
@@ -17,7 +21,7 @@ import com.client.database.model.MyWallet;
  */
 public class CustomWalletList extends BaseAdapter {
     private Context context;
-
+    private DataBaseHelper dataBaseHelper;
 
     public CustomWalletList (Context context) {
         super();
@@ -38,7 +42,7 @@ public class CustomWalletList extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
 
@@ -58,6 +62,36 @@ public class CustomWalletList extends BaseAdapter {
         holder.itemMoney.setText(MyWallet.listWalletMoney.get(position));
         holder.itemTypeMoney.setText(MyWallet.listWalletMoneyType.get(position));
 
+//        final ImageView popup_button = (ImageView) convertView.findViewById(R.id.button_menu_wallet);
+//        popup_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                final PopupMenu popup = new PopupMenu(context, popup_button);
+//                popup.getMenuInflater().inflate(R.menu.context_menu, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        int i = item.getItemId();
+//                        if (i == R.id.item1) {
+//
+//                            return true;
+//                        } else if (i == R.id.item2) {
+//
+//                            return true;
+//                        } else if (i == R.id.item3) {
+//
+////                            dataBaseHelper.deleteWallet(MyWallet.listWalletName.get(position));
+//                            return true;
+//                        } else {
+//                            return onMenuItemClick(item);
+//                        }
+//                    }
+//                });
+//
+//                popup.show();
+//            }
+//        });
+
         return convertView;
 
     }
@@ -65,5 +99,6 @@ public class CustomWalletList extends BaseAdapter {
     static class ViewHolder {
         TextView itemName , itemMoney, itemTypeMoney;
     }
+
 
 }

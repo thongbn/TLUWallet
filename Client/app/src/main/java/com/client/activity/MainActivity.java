@@ -1,13 +1,12 @@
 package com.client.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
-import android.animation.ObjectAnimator;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
@@ -19,25 +18,29 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
 import com.client.database.DataBaseHelper;
@@ -53,7 +56,7 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.ProfilePictureView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -65,10 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout mNavDrawerEntriesRootView, m_LinearLayout_Show_Wallet;
     private RelativeLayout mFrameLayout_AccountView, m_activity_choosen_wallet;
     private FrameLayout mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
-    ListView listWalletView;
+    private SwipeMenuListView listWalletView;
     private CustomWalletList adapter;
     private SharedPreferences loginPreferences;
-
+    private Context context;
+    private DataBaseHelper dataBaseHelper;
+    private List<ApplicationInfo> mAppList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //My Wallet List
         adapter = new CustomWalletList(getApplication());
-        listWalletView = (ListView) findViewById(R.id.listWallet);
+        listWalletView = (SwipeMenuListView) findViewById(R.id.listWallet);
         listWalletView.setAdapter(adapter);
 
         pick_Wallet = (TextView) findViewById(R.id.navigation_drawer_item_textView_wallet);
@@ -235,8 +240,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             pick_Wallet.setText("Tạo ví ");
         }
-
-
 
         listWalletView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -248,10 +251,86 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 float xoayVong = (button_show_wallet.getRotation() == 180F) ? 0F : 180F;
                 button_show_wallet.animate().rotation(xoayVong).setInterpolator(new AccelerateDecelerateInterpolator());
 
-                pick_Wallet.setText(MyWallet.listWalletName.get(position) + " - " + MyWallet.listWalletMoney.get(position) + " " + MyWallet.listWalletMoneyType.get(position));
+                pick_Wallet.setText(MyWallet.listWalletName.get(position));
 
             }
         });
+
+        // Menu listview
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+                //create an action that will be showed on swiping an item in the list
+                SwipeMenuItem edit = new SwipeMenuItem(
+                        getApplicationContext());
+                edit.setBackground(new ColorDrawable(Color.DKGRAY));
+                // set width of an option (px)
+                edit.setWidth(dp2px(90));
+                edit.setTitle("Chỉnh sửa");
+                edit.setTitleSize(14);
+                edit.setIcon(R.drawable.ic_edit);
+                edit.setTitleColor(Color.WHITE);
+                menu.addMenuItem(edit);
+
+                SwipeMenuItem delete = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                delete.setBackground(new ColorDrawable(Color.RED));
+                delete.setWidth(dp2px(90));
+                delete.setTitle("Xóa");
+                delete.setTitleSize(14);
+                delete.setIcon(R.drawable.ic_delete);
+                delete.setTitleColor(Color.WHITE);
+                menu.addMenuItem(delete);
+            }
+        };
+
+        listWalletView.setMenuCreator(creator);
+
+        listWalletView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
+
+            @Override
+            public void onSwipeStart(int position) {
+
+            }
+
+            @Override
+            public void onSwipeEnd(int position) {
+
+            }
+        });
+
+        listWalletView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                ApplicationInfo item = mAppList.get(position);
+                switch (index) {
+                    case 0:
+
+                        break;
+                    case 1:
+
+                        break;
+                }
+                return false;
+            }
+        });
+
+        listWalletView.setOnMenuStateChangeListener(new SwipeMenuListView.OnMenuStateChangeListener() {
+            @Override
+            public void onMenuOpen(int position) {
+            }
+
+            @Override
+            public void onMenuClose(int position) {
+            }
+        });
+
+        listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
+        listWalletView.setOpenInterpolator(new BounceInterpolator());
+        listWalletView.setCloseInterpolator(new BounceInterpolator());
 
     }
 
@@ -346,5 +425,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_left) {
+            listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
+            return true;
+        }
+        if (id == R.id.action_right) {
+            listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
