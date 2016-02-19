@@ -25,6 +25,8 @@ public class MyWallet {
 
     public static ArrayList<String> listWalletMoney = new ArrayList<String>();
 
+    public static ArrayList<String> listWalletID = new ArrayList<String>();
+
     public  MyWallet (){
         super();
     }

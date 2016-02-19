@@ -29,7 +29,7 @@ public class WalletActivity2 extends Activity{
     private EditText wallet_Name, wallet_Money;
     private DataBaseHelper dataBaseHelper;
     private String walletName, walletMoney, walletType, idUser, idWallet;
-    private boolean isUpdate;
+    private boolean isUpdate, isDelete;
     private Spinner spinner;
     String[] spinnerValues = {"VNĐ", "USD", "EUR", "GBP"};
     int money_images[] = {R.drawable.ic_currency_vnd, R.drawable.ic_currency_usd, R.drawable.ic_currency_eur, R.drawable.ic_currency_gbp};
@@ -129,6 +129,14 @@ public class WalletActivity2 extends Activity{
 
         }
 
+        isDelete = getIntent().getExtras().getBoolean("delete");
+        if(isDelete) {
+            idWallet = getIntent().getExtras().getString("ID");
+            dataBaseHelper.deleteWallet(idWallet);
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+        }
+
         saveButton = (TextView) findViewById(R.id.save_action_text);
         saveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -155,7 +163,9 @@ public class WalletActivity2 extends Activity{
                 } else {
                     if (isUpdate) {
                         //update data with new data
-                        dataBaseHelper.updateWallet();
+                        dataBaseHelper.updateWallet(idWallet);
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
                     } else {
                         if (AccessToken.getCurrentAccessToken() != null) {
                             dataBaseHelper.insertWalletByFB();

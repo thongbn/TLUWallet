@@ -1,5 +1,7 @@
 package com.client.database.model;
 
+import java.util.Date;
+
 /**
  * Created by quang on 30/12/2015.
  */
@@ -8,7 +10,7 @@ public class Deal {
     private static String dealGroup;
     private static String dealMoney;
     private static String dealDetail;
-    private static String dealDate;
+    private static Date dealDate;
     private static Wallet wallet;
 
     public Deal (){
@@ -47,11 +49,11 @@ public class Deal {
         Deal.dealDetail = dealDetail;
     }
 
-    public static String getDealDate(){
+    public static Date getDealDate(){
         return dealDate;
     }
 
-    public static void setDealDate(String dealDate){
+    public static void setDealDate(Date dealDate){
         Deal.dealDate = dealDate;
     }
 

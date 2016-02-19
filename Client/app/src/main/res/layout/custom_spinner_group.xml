@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="3px"
+    android:background="@color/grey_200">
+
+
+    <TextView
+        android:id="@+id/text_Group"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="3px"
+        android:text="Group"
+        android:textColor="#0022ee"
+        android:layout_gravity="center"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold" />
+</LinearLayout>

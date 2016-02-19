@@ -9,16 +9,17 @@
     <include
             layout="@layout/toolbar_save_deal" />
 
-    <EditText
-        android:id="@+id/edit_Group"
+
+    <Spinner
+        android:id="@+id/spinnerGroup"
         android:layout_marginTop="60dp"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:ems="10"
         android:hint="@string/Group"
         android:nextFocusDown="@+id/edit_Money"
-        android:singleLine="true"/>
+        android:drawSelectorOnTop="true" />
 
     <EditText
         android:id="@+id/edit_Money"
@@ -47,9 +48,10 @@
         android:hint="@string/Date"
         android:layout_below="@+id/edit_Detail" />
     <Spinner
-        android:id="@+id/spinner_dept"
+        android:id="@+id/spinner_wallet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_below="@+id/edit_Detail" />
 
 </LinearLayout>

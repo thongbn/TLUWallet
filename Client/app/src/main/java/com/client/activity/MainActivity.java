@@ -2,6 +2,7 @@ package com.client.activity;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -19,7 +20,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,12 +31,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -71,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SwipeMenuListView listWalletView;
     private CustomWalletList adapter;
     private SharedPreferences loginPreferences;
-    private Context context;
-    private DataBaseHelper dataBaseHelper;
-    private List<ApplicationInfo> mAppList;
+    private final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplication(), WalletActivity2.class);
+                Intent intent = new Intent(getApplication(), DealActivity.class);
                 intent.putExtra("update", false);
                 startActivity(intent);
             }
@@ -215,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        TextView addWallet = (TextView) findViewById(R.id.addWallet);
+        final TextView addWallet = (TextView) findViewById(R.id.addWallet);
         addWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -304,13 +298,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listWalletView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                ApplicationInfo item = mAppList.get(position);
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-
+                        Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
+                        intent.putExtra("ID", MyWallet.listWalletID.get(position));
+                        intent.putExtra("WName", MyWallet.listWalletName.get(position));
+                        intent.putExtra("WMoney", MyWallet.listWalletMoney.get(position));
+                        intent.putExtra("WType", MyWallet.listWalletMoneyType.get(position));
+                        intent.putExtra("update", true);
+                        startActivity(intent);
                         break;
                     case 1:
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Xóa " + MyWallet.listWalletName.get(position));
+                        builder.setMessage("Bạn có muốn xóa " + MyWallet.listWalletName.get(position));
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton(
+                                "Đồng ý",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
+                                        intent.putExtra("ID", MyWallet.listWalletID.get(position));
+                                        intent.putExtra("delete", true);
+                                        startActivity(intent);
+
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder.setNegativeButton(
+                                "Hủy bỏ",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
                         break;
                 }
@@ -331,6 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
         listWalletView.setOpenInterpolator(new BounceInterpolator());
         listWalletView.setCloseInterpolator(new BounceInterpolator());
+
 
     }
 
