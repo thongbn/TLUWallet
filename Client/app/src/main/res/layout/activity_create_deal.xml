@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:hint="@string/Note"
-        android:inputType="numberDecimal"
+        android:inputType="text"
         android:singleLine="true" />
 
     <EditText

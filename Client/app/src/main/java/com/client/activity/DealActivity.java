@@ -32,6 +32,7 @@ import com.client.database.model.Wallet;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,8 +81,7 @@ public class DealActivity extends Activity {
         });
         //spinner wallet
         spinnerW = (Spinner) findViewById(R.id.spinner_wallet);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.custom_spinner_wallet, MyWallet.listWalletName);
-        spinnerW.setAdapter(adapter);
+        spinnerW.setAdapter(new ArrayAdapter<>(this,R.layout.custom_spinner_wallet, MyWallet.listWalletName));
 //        spinnerW.setAdapter(new MyAdapter(this, R.layout.custom_spinner_wallet, spinnerValues));
 
 //        spinnerW.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
@@ -128,7 +128,7 @@ public class DealActivity extends Activity {
             }
         });
 
-        setListaners();
+        setListener();
         deal_Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,7 +203,7 @@ public class DealActivity extends Activity {
             eDate.setText(day+"-"+(month+1)+"-"+year);
         }
     };
-    private void setListaners(){
+    private void setListener(){
         EditText eDate=(EditText) findViewById(R.id.edit_Date);
         Calendar cal=Calendar.getInstance();
         day=cal.get(Calendar.DAY_OF_MONTH);
@@ -241,6 +241,8 @@ public class DealActivity extends Activity {
             return mySpinner;
         }
     }
+
+
     protected void resetAllFields(){
 //        deal_Group.setText("");
         deal_Money.setText("");

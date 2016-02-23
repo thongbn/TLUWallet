@@ -55,7 +55,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             DEAL_ID = "idDeal",
             DEAL_GROUP = "dealGroup",
             DEAL_MONEY = "dealMoney",
-            DEAL_DEATAIL = "dealDetail",
+            DEAL_DETAIL = "dealDetail",
             DEAL_DATE = "dealDate",
             DEAL_WALLET_ID = "walletID";
 
@@ -75,7 +75,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + "(" + DEAL_ID + " integer primary key autoincrement, "
             + DEAL_GROUP + " integer not null, "
             + DEAL_MONEY + " numeric not null, "
-            + DEAL_DEATAIL + " text, "
+            + DEAL_DETAIL + " text, "
             + DEAL_DATE + " datetime not null, "
             + DEAL_WALLET_ID + " integet constraint " + DEAL_WALLET_ID + " references " + DEAL_TABLE + "(" + WALLET_ID + ") on delete cascade);";
 
@@ -278,7 +278,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
-        contentValues.put(DataBaseHelper.DEAL_DEATAIL, Deal.getDealDetail());
+        contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         contentValues.put(DataBaseHelper.DEAL_DATE, formatter.format(Deal.getDealDate()));
         contentValues.put(DataBaseHelper.DEAL_WALLET_ID, Deal.getWallet().getIdWallet());
 
@@ -315,7 +315,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
         values.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
-        values.put(DataBaseHelper.DEAL_DEATAIL, Deal.getDealDetail());
+        values.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         values.put(DataBaseHelper.DEAL_DATE, formatter.format(Deal.getDealDate()));
 
         String where = DataBaseHelper.DEAL_ID + " = ? ";

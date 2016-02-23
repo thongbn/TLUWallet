@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,8 +17,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,20 +41,17 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
-import com.client.database.DataBaseHelper;
 import com.client.database.model.MyWallet;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
-import com.client.fragment.GroupFragment;
 import com.client.fragment.HelpFragment;
+import com.client.fragment.PlanFragment;
 import com.client.fragment.SettingsFragment;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.ProfilePictureView;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView headerUserEmail, pick_Wallet;
     private LinearLayout mNavDrawerEntriesRootView, m_LinearLayout_Show_Wallet;
     private RelativeLayout mFrameLayout_AccountView, m_activity_choosen_wallet;
-    private FrameLayout mFrameLayout_Group, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
+    private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
     private SwipeMenuListView listWalletView;
     private CustomWalletList adapter;
     private SharedPreferences loginPreferences;
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mNavDrawerEntriesRootView = (LinearLayout) findViewById(R.id.navigation_drawer_linearLayout_entries_root_view);
 
-        mFrameLayout_Group = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_group);
+        mFrameLayout_Plan = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_group);
 
         mFrameLayout_Database = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_database);
 
@@ -149,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mFrameLayout_AccountView.setOnClickListener(this);
         mFrameLayout_DealDetails.setOnClickListener(this);
-        mFrameLayout_Group.setOnClickListener(this);
+        mFrameLayout_Plan.setOnClickListener(this);
         mFrameLayout_Database.setOnClickListener(this);
         mFrameLayout_Help.setOnClickListener(this);
         mFrameLayout_Settings.setOnClickListener(this);
@@ -300,6 +299,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 switch (index) {
+                    // Chinh sua
                     case 0:
                         Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
                         intent.putExtra("ID", MyWallet.listWalletID.get(position));
@@ -309,12 +309,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra("update", true);
                         startActivity(intent);
                         break;
+
+                    // Xoa
                     case 1:
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Xóa " + MyWallet.listWalletName.get(position));
-                        builder.setMessage("Bạn có muốn xóa " + MyWallet.listWalletName.get(position));
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AppTheme_Dark_Dialog));
+                        builder.setTitle("Wait a second...");
+                        builder.setMessage("Bạn có chắc chắn muốn xóa " + MyWallet.listWalletName.get(position));
                         builder.setCancelable(true);
+
 
                         builder.setPositiveButton(
                                 "Đồng ý",
@@ -387,14 +390,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fragmentTransaction.replace(R.id.containerView, dealDetailsFragment, null);
                     fragmentTransaction.commit();
                 }
-                else if (view == mFrameLayout_Group)
+                else if (view == mFrameLayout_Plan)
                 {
 
                     view.setSelected(true);
 
-                    Fragment groupFragment = new GroupFragment();
+                    Fragment planFragment = new PlanFragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, groupFragment, null);
+                    fragmentTransaction.replace(R.id.containerView, planFragment, null);
                     fragmentTransaction.commit();
                 }
                 else if (view == mFrameLayout_Database)
