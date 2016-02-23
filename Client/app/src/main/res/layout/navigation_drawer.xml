@@ -107,20 +107,20 @@
                     layout="@layout/navigation_drawer_divider"/>
 
                 <FrameLayout
-                    android:id="@+id/navigation_drawer_list_linearLayout_group"
+                    android:id="@+id/navigation_drawer_list_linearLayout_plan"
                     style="@style/NavDrawerRowLayout.Main"
                     tools:background="@color/nav_drawer_row_item_selected">
 
                     <ImageView
-                        android:id="@+id/navigation_drawer_items_list_group"
+                        android:id="@+id/navigation_drawer_items_list_plan"
                         style="@style/NavDrawerRowItemIcon"
                         android:src="@drawable/ic_group_work"
                         tools:tint="@color/nav_drawer_icon"/>
 
                     <TextView
-                        android:id="@+id/navigation_drawer_item_textView_group"
+                        android:id="@+id/navigation_drawer_item_textView_plan"
                         style="@style/NavDrawerRowItemText"
-                        android:text="@string/nav_drawer_item_group" />
+                        android:text="@string/nav_drawer_item_plan" />
 
                 </FrameLayout>
 

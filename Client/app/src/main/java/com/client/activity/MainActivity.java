@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mNavDrawerEntriesRootView = (LinearLayout) findViewById(R.id.navigation_drawer_linearLayout_entries_root_view);
 
-        mFrameLayout_Plan = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_group);
+        mFrameLayout_Plan = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_plan);
 
         mFrameLayout_Database = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_database);
 

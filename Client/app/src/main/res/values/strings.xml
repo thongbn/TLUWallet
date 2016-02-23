@@ -4,7 +4,7 @@
 
     <!-- Navigation Drawer -->
     <string name="nav_drawer_item_wallet">Ví</string>
-    <string name="nav_drawer_item_group">Nhóm</string>
+    <string name="nav_drawer_item_plan">Dự định</string>
     <string name="nav_drawer_item_database">Cơ sở dữ liệu</string>
     <string name="nav_drawer_item_help">Hướng dẫn</string>
     <string name="nav_drawer_item_settings">Cài đặt</string>
