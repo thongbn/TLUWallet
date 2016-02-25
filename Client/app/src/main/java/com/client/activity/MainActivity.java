@@ -29,7 +29,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,10 +39,7 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
-import com.client.database.DataBaseHelper;
 import com.client.database.model.MyWallet;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.HelpFragment;
@@ -55,9 +51,6 @@ import com.client.ultils.UtilsMiscellaneous;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.ProfilePictureView;
-import com.github.clans.fab.FloatingActionMenu;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -203,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNavDrawerEntriesRootView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
         m_activity_choosen_wallet = (RelativeLayout) findViewById(R.id.activity_choosen_wallet);
 
+
+
         m_LinearLayout_Show_Wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,8 +206,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
                 m_activity_choosen_wallet.setLayoutParams(params);
 
-                float xoayVong = (button_show_wallet.getRotation() == 180F) ? 0F : 180F;
-                button_show_wallet.animate().rotation(xoayVong).setInterpolator(new AccelerateDecelerateInterpolator());
+                float rotate = button_show_wallet.getRotation() + 180F;
+                button_show_wallet.animate().rotation(rotate).setInterpolator(new AccelerateDecelerateInterpolator());
 
             }
 
@@ -254,15 +249,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
                 m_activity_choosen_wallet.setLayoutParams(params);
 
-                float xoayVong = (button_show_wallet.getRotation() == 180F) ? 0F : 180F;
-                button_show_wallet.animate().rotation(xoayVong).setInterpolator(new AccelerateDecelerateInterpolator());
+                float rotate = button_show_wallet.getRotation() + 180F;
+                button_show_wallet.animate().rotation(rotate).setInterpolator(new AccelerateDecelerateInterpolator());
 
                 pick_Wallet.setText(MyWallet.listWalletName.get(position));
 
             }
         });
 
-        // Menu listview
+        // Menu list view
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -318,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra("ID", MyWallet.listWalletID.get(position));
                         intent.putExtra("WName", MyWallet.listWalletName.get(position));
                         intent.putExtra("WMoney", MyWallet.listWalletMoney.get(position));
-//                        intent.putExtra("WType", getWalletTypePos(MyWallet.listWalletMoneyType.get(position)));
+                        intent.putExtra("WType", MyWallet.listWalletMoneyType.get(position));
                         intent.putExtra("update", true);
                         startActivity(intent);
                         break;
@@ -506,9 +501,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
-//    private int getWalletTypePos(String posWalletType) {
-//        return spinnerValues.indexOf(posWalletType);
-//    }
-
 }

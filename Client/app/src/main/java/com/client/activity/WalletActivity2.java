@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.User;
@@ -28,7 +26,7 @@ public class WalletActivity2 extends Activity{
     private TextView saveButton, cancelButton;
     private EditText wallet_Name, wallet_Money;
     private DataBaseHelper dataBaseHelper;
-    private String walletName, walletMoney, walletType, idUser, idWallet, posWalletType;
+    private String walletName, walletMoney, walletType, idUser, idWallet;
     private boolean isUpdate, isDelete;
     private Spinner spinner;
     String[] spinnerValues = {"VNĐ", "USD", "EUR", "GBP"};
@@ -123,8 +121,22 @@ public class WalletActivity2 extends Activity{
             idWallet = getIntent().getExtras().getString("ID");
             walletName = getIntent().getExtras().getString("WName");
             walletMoney = getIntent().getExtras().getString("WMoney");
-//            Integer walletTypePos = getIntent().getExtras().getInt("WType");
-//            spinner.setSelection(walletTypePos);
+            walletType = getIntent().getExtras().getString("WType");
+
+            switch (walletType){
+                case "VNĐ":
+                    spinner.setSelection(0);
+                    break;
+                case "USD":
+                    spinner.setSelection(1);
+                    break;
+                case "EUR":
+                    spinner.setSelection(2);
+                    break;
+                case "GBP":
+                    spinner.setSelection(3);
+                    break;
+            }
 
             wallet_Name.setText(walletName);
             wallet_Money.setText(walletMoney);
@@ -156,11 +168,9 @@ public class WalletActivity2 extends Activity{
                 Wallet.getUserFB().setFacebookID(facebookId);
                 Wallet.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
-                if (walletName.equals("") || walletMoney.equals("") || walletType.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
-                    return;
-                }else if (!dataBaseHelper.checkWalletName(walletName)){
-                    Toast.makeText(getApplicationContext(), "Ví đã có rồi!", Toast.LENGTH_LONG).show();
+                if (walletName.equals("") || walletMoney.equals("")) {
+                    wallet_Name.setError("Chưa có thông tin");
+                    wallet_Money.setError("Chưa có thông tin");
                     return;
                 } else {
                     if (isUpdate) {

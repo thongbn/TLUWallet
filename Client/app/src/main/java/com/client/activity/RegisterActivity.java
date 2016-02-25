@@ -51,24 +51,27 @@ public class RegisterActivity extends Activity{
 				User.setPassword(password);
 				//check if any of fields are vaccant
 				if(password.equals("") || confirmPassword.equals("")|| email.equals("")){
-					Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
+					editTextEmail.setError("Chưa điền thông tin");
+					editTextPassword.setError("Chừa điền thông tin");
+					editTextConfirmPassword.setError("Chưa điền thông tin");
 					return;
 				}
 				
 				//check if both password matches
 				if(!password.equals(confirmPassword)){
-					Toast.makeText(getApplicationContext(), "Mật khẩu không khớp", Toast.LENGTH_LONG).show();
+					editTextPassword.setError("Mật khẩu không khớp");
+					editTextConfirmPassword.setError("Mật khẩu không khớp");
 					return;
 				}
 
 				if((!CheckEmail(email))){
-					Toast.makeText(getApplicationContext(),"Mời nhập lại đúng kiểu email",Toast.LENGTH_LONG).show();
+					editTextEmail.setError("Mời nhập lại đúng kiểu email");
 				}
 				else{
 					//Save the Data in Database
 
 					if(!dataBaseHelper.checkemail(email)){
-						Toast.makeText(getApplicationContext(), "Email đã có rồi", Toast.LENGTH_LONG).show();
+						editTextEmail.setError("Email đã có rồi");
 					}else {
 						dataBaseHelper.insertEntry();
 						Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_LONG).show();

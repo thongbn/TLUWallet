@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -16,11 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,27 +25,18 @@ import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
 import com.client.database.model.MyWallet;
 import com.client.database.model.Wallet;
-
-import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class DealActivity extends Activity {
-    public SQLiteDatabase db;
-    private EditText  deal_Money, deal_Detail, deal_Date, deal_Wallet;
+    private EditText  deal_Money, deal_Detail, deal_Date;
     private String dealGroup, dealMoney, dealDetail, dealDate;
     private Wallet dealWallet;
     private Spinner spinnerW, spinnerGroup;
     private TextView addButton, clearButton;
-    private  static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-    DatePickerDialog datePickerDialog;
     Calendar calendar;
     DataBaseHelper dataBaseHelper;
     String[] spinnerValues = {"Thu vào", "Chi ra"};
+    int group_images[] = {R.drawable.ic_cash_in, R.drawable.ic_cash_out};
     private boolean isUpdate;
 
     int day,month,year;
@@ -61,7 +48,6 @@ public class DealActivity extends Activity {
         dataBaseHelper = new DataBaseHelper(DealActivity.this);
         dataBaseHelper.open();
 
-//        deal_Group = (EditText) findViewById(R.id.edit_Group);
         deal_Money = (EditText) findViewById(R.id.edit_Money);
         deal_Detail = (EditText) findViewById(R.id.edit_Detail);
         deal_Date = (EditText) findViewById(R.id.edit_Date);
@@ -80,13 +66,14 @@ public class DealActivity extends Activity {
                 // TODO Auto-generated method stub
             }
         });
+
         //spinner wallet
         spinnerW = (Spinner) findViewById(R.id.spinner_wallet);
         spinnerW.setAdapter(new ArrayAdapter<>(this,R.layout.custom_spinner_wallet, MyWallet.listWalletName));
         spinnerW.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                dealWallet = (Wallet) parent.getItemAtPosition(position);
+                String idWallet = MyWallet.listWalletID.get(position);
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -147,7 +134,6 @@ public class DealActivity extends Activity {
 
         isUpdate = getIntent().getExtras().getBoolean("update");
         if(isUpdate){
-//            idWallet = getIntent().getExtras().getString("ID");
             dealMoney = getIntent().getExtras().getString("DMoney");
             dealDetail = getIntent().getExtras().getString("DDetail");
             dealDate = getIntent().getExtras().getString("DDate");
@@ -228,12 +214,7 @@ public class DealActivity extends Activity {
         year=cal.get(Calendar.YEAR);
         eDate.setText(day+"-"+(month+1)+"-"+year);
 
-//        clearButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                resetAllFields();
-//            }
-//        });
+
     }
     public class MyAdapter extends ArrayAdapter <String> {
         public MyAdapter(Context context, int txtViewResourceID, String[] objects) {
@@ -255,18 +236,10 @@ public class DealActivity extends Activity {
             View mySpinner = inflater.inflate(R.layout.custom_spinner_group, parent, false);
             TextView text_typeMoney = (TextView) mySpinner.findViewById(R.id.text_Group);
             text_typeMoney.setText(spinnerValues[position]);
+            ImageView image_group = (ImageView) mySpinner.findViewById(R.id.imageGroup);
+            image_group.setImageResource(group_images[position]);
             return mySpinner;
         }
-    }
-
-
-    protected void resetAllFields(){
-//        deal_Group.setText("");
-        deal_Money.setText("");
-        deal_Detail.setText("");
-        deal_Date.setText("");
-        if (spinnerW.getAdapter().getCount() > 0)
-            spinnerW.setSelection(0);
     }
 
 }

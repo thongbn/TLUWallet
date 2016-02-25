@@ -6,11 +6,10 @@
     android:background="@color/grey_200">
 
     <ImageView
-        android:id="@+id/imageMoney"
+        android:id="@+id/imageGroup"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:padding="5dp"
-        android:background="@drawable/ic_group_work"/>
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/text_Group"
