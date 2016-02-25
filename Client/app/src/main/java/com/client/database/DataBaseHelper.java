@@ -138,6 +138,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean checkWalletExits (String uid){
+        Cursor mCursor = db.rawQuery("SELECt * FROM " + DataBaseHelper.WALLET_TABLE + " WHERE " + DataBaseHelper.WALLET_USER_ID + " = ?", new String[]{uid});
+        if (mCursor != null) {
+            if (mCursor.getCount() > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean checkWalletFbUserExits (String uid){
+        Cursor mCursor = db.rawQuery("SELECt * FROM " + DataBaseHelper.WALLET_TABLE + " WHERE " + DataBaseHelper.WALLET_FB_ID + " = ?", new String[]{uid});
+        if (mCursor != null) {
+            if (mCursor.getCount() > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void insertEntry(){
         ContentValues newValues = new ContentValues();
         //assign values for each row
@@ -217,7 +239,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         MyWallet.listWalletName.clear();
         MyWallet.listWalletMoneyType.clear();
         getDataWalletByUserID(User.getIdNguoiDung());
-        db.close();
         return user;
     }
 
@@ -239,7 +260,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         MyWallet.listWalletName.clear();
         MyWallet.listWalletMoneyType.clear();
         getDataWalletByFbID(UserFB.getFacebookID());
-        db.close();
         return userFB;
     }
 

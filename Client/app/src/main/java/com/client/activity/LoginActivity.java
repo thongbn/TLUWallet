@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.User;
+import com.client.database.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -73,7 +74,17 @@ public class LoginActivity extends Activity{
             editTextPassword.setText(loginPreferences.getString("password", ""));
             saveLoginCheckBox.setChecked(true);
             dataBaseHelper.login(loginPreferences.getString("email", ""), loginPreferences.getString("password", ""));
-            startActivity(new Intent(getApplication(), MainActivity.class));
+
+            if(dataBaseHelper.checkWalletExits(User.getIdNguoiDung())){
+                Intent intent = new Intent(getApplication(), WalletActivity2.class);
+                intent.putExtra("update", false);
+                startActivity(intent);
+            }else {
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+            }
+
+
         }
 
         Button btnLogin = (Button)findViewById(R.id.btnLogin);
@@ -97,8 +108,17 @@ public class LoginActivity extends Activity{
                             loginPrefsEditor.putString("password", password);
                             loginPrefsEditor.apply();
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                            startActivity(i);
+
+                            if(dataBaseHelper.checkWalletExits(User.getIdNguoiDung())){
+                                Intent intent = new Intent(getApplication(), WalletActivity2.class);
+                                intent.putExtra("update", false);
+                                startActivity(intent);
+                            }else {
+                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(i);
+                            }
+
+
 
                         }
                         else
@@ -123,11 +143,19 @@ public class LoginActivity extends Activity{
         });
 
         if (AccessToken.getCurrentAccessToken() != null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
             String facebookName = idFacebook.getString("nameFB", "");
             String facebookEmail = idFacebook.getString("emailFB", "");
-            dataBaseHelper.loginFB(facebookEmail,facebookName);
+            dataBaseHelper.loginFB(facebookEmail, facebookName);
+
+            if(dataBaseHelper.checkWalletFbUserExits(UserFB.getFacebookID())){
+                Intent intent = new Intent(getApplication(), WalletActivity2.class);
+                intent.putExtra("update", false);
+                startActivity(intent);
+            }else {
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+            }
 
         }
 
@@ -168,7 +196,15 @@ public class LoginActivity extends Activity{
 
                                     dataBaseHelper.loginFB(emailFB, nameFB);
 
-                                    startActivity(new Intent(getApplication(), MainActivity.class));
+                                    if(dataBaseHelper.checkWalletFbUserExits(UserFB.getFacebookID())){
+                                        Intent intent = new Intent(getApplication(), WalletActivity2.class);
+                                        intent.putExtra("update", false);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                        startActivity(i);
+                                    }
+
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

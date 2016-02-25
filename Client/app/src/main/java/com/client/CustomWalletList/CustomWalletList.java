@@ -62,36 +62,6 @@ public class CustomWalletList extends BaseAdapter {
         holder.itemMoney.setText(MyWallet.listWalletMoney.get(position));
         holder.itemTypeMoney.setText(MyWallet.listWalletMoneyType.get(position));
 
-//        final ImageView popup_button = (ImageView) convertView.findViewById(R.id.button_menu_wallet);
-//        popup_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(final View v) {
-//                final PopupMenu popup = new PopupMenu(context, popup_button);
-//                popup.getMenuInflater().inflate(R.menu.context_menu, popup.getMenu());
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        int i = item.getItemId();
-//                        if (i == R.id.item1) {
-//
-//                            return true;
-//                        } else if (i == R.id.item2) {
-//
-//                            return true;
-//                        } else if (i == R.id.item3) {
-//
-////                            dataBaseHelper.deleteWallet(MyWallet.listWalletName.get(position));
-//                            return true;
-//                        } else {
-//                            return onMenuItemClick(item);
-//                        }
-//                    }
-//                });
-//
-//                popup.show();
-//            }
-//        });
-
         return convertView;
 
     }

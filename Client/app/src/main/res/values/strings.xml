@@ -4,6 +4,7 @@
 
     <!-- Navigation Drawer -->
     <string name="nav_drawer_item_wallet">Ví</string>
+    <string name="nav_drawer_item_report">Báo cáo hàng tháng</string>
     <string name="nav_drawer_item_plan">Dự định</string>
     <string name="nav_drawer_item_database">Cơ sở dữ liệu</string>
     <string name="nav_drawer_item_help">Hướng dẫn</string>
@@ -13,14 +14,14 @@
     <string name="navigation_drawer_closed">The navigation drawer is closed</string>
     <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>
     <string name="tag_nav_drawer_special_entry">nav_drawer_special_entry</string>
-    <string name="tools_text_account_information_username">UserName@gmail.com</string>
+
+
+    <!-- Create deal -->
     <string name="Group">Chọn Nhóm</string>
     <string name="Money">Số Tiền</string>
     <string name="Note">Ghi Chú</string>
     <string name="Date">Ngày Tháng</string>
     <string name="add">Lưu Giao Dịch</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

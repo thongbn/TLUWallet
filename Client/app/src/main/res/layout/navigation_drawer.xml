@@ -17,7 +17,7 @@
             xmlns:facebook="http://schemas.android.com/apk/res-auto"
             android:id="@+id/navigation_drawer_account_view"
             android:layout_width="wrap_content"
-            android:layout_height="192dp"
+            android:layout_height="120dp"
             android:clickable="true"
             android:background="@drawable/image_nav_drawer_account_background" >
 
@@ -25,7 +25,7 @@
                 android:id="@+id/navigation_drawer_account_information"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="192dp"
+                android:layout_height="120dp"
                 android:padding="16dp"
                 android:orientation="vertical"
                 android:gravity="bottom">>
@@ -49,12 +49,21 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="50dp" >
+                android:layout_marginTop="30dp" >
 
                 <com.facebook.login.widget.ProfilePictureView
                     android:id="@+id/imageFB"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                    <!--android:id="@+id/profile_image"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:src="@drawable/ic_avatar_default"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--app:civ_border_width="2dp"-->
+                    <!--app:civ_border_color="#FF000000"/>-->
 
 
             </FrameLayout>
@@ -92,7 +101,7 @@
                     <ImageView
                         android:id="@+id/navigation_drawer_items_list_icon_deal_details"
                         style="@style/NavDrawerRowItemIcon"
-                        android:src="@drawable/ic_account_balance_wallet"
+                        android:src="@drawable/ic_cashbook"
                         tools:tint="@color/nav_drawer_item_icon_selected"/>
 
                     <TextView
@@ -103,8 +112,22 @@
 
                 </FrameLayout>
 
-                <include
-                    layout="@layout/navigation_drawer_divider"/>
+                <FrameLayout
+                    android:id="@+id/navigation_drawer_list_linearLayout_report"
+                    style="@style/NavDrawerRowLayout.Main"
+                    tools:background="@color/nav_drawer_row_item_selected">
+
+                    <ImageView
+                        android:id="@+id/navigation_drawer_items_list_icon_report"
+                        style="@style/NavDrawerRowItemIcon"
+                        android:src="@drawable/ic_calendar" />
+
+                    <TextView
+                        android:id="@+id/navigation_drawer_item_textView_report"
+                        style="@style/NavDrawerRowItemText"
+                        android:text="@string/nav_drawer_item_report" />
+
+                </FrameLayout>
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_plan"
@@ -114,7 +137,7 @@
                     <ImageView
                         android:id="@+id/navigation_drawer_items_list_plan"
                         style="@style/NavDrawerRowItemIcon"
-                        android:src="@drawable/ic_group_work"
+                        android:src="@drawable/ic_events"
                         tools:tint="@color/nav_drawer_icon"/>
 
                     <TextView
@@ -135,7 +158,7 @@
                     <ImageView
                         android:id="@+id/navigation_drawer_items_database"
                         style="@style/NavDrawerRowItemIcon"
-                        android:src="@drawable/ic_save"
+                        android:src="@drawable/ic_tools"
 
                         />
 

@@ -41,7 +41,8 @@ import java.util.Locale;
 public class DealActivity extends Activity {
     public SQLiteDatabase db;
     private EditText  deal_Money, deal_Detail, deal_Date, deal_Wallet;
-    private String dealGroup, dealMoney, dealDetail, dealDate, dealWallet;
+    private String dealGroup, dealMoney, dealDetail, dealDate;
+    private Wallet dealWallet;
     private Spinner spinnerW, spinnerGroup;
     private TextView addButton, clearButton;
     private  static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -82,15 +83,21 @@ public class DealActivity extends Activity {
         //spinner wallet
         spinnerW = (Spinner) findViewById(R.id.spinner_wallet);
         spinnerW.setAdapter(new ArrayAdapter<>(this,R.layout.custom_spinner_wallet, MyWallet.listWalletName));
-//        spinnerW.setAdapter(new MyAdapter(this, R.layout.custom_spinner_wallet, spinnerValues));
+        spinnerW.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dealWallet = (Wallet) parent.getItemAtPosition(position);
+            }
 
-//        spinnerW.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-
-//        clearButton = (Button) findViewById(R.id.button_clear);
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         //money
         deal_Money.addTextChangedListener(new TextWatcher() {
             boolean isManualChange = false;
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
@@ -117,11 +124,13 @@ public class DealActivity extends Activity {
                     // Do nothing since not a number
                 }
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
                 // TODO Auto-generated method stub
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
@@ -162,8 +171,7 @@ public class DealActivity extends Activity {
                 Deal.setDealGroup(dealGroup);
                 Deal.setDealMoney(dealMoney);
                 Deal.setDealDetail(dealDetail);
-                Wallet selectedWal = (Wallet) spinnerW.getSelectedItem();
-                Deal.setWallet(selectedWal);
+                Deal.setWallet(dealWallet);
                 //check if any of fields are vaccant
                 if (dealGroup.equals("") || dealMoney.equals("") || dealDate.equals("")) {
                     Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
@@ -180,6 +188,15 @@ public class DealActivity extends Activity {
                 }
             }
         });
+
+        clearButton = (TextView) findViewById(R.id.cancelDeal_action_text);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
     }
     @Override
     protected Dialog onCreateDialog(int id) {

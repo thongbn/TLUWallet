@@ -28,7 +28,7 @@ public class WalletActivity2 extends Activity{
     private TextView saveButton, cancelButton;
     private EditText wallet_Name, wallet_Money;
     private DataBaseHelper dataBaseHelper;
-    private String walletName, walletMoney, walletType, idUser, idWallet;
+    private String walletName, walletMoney, walletType, idUser, idWallet, posWalletType;
     private boolean isUpdate, isDelete;
     private Spinner spinner;
     String[] spinnerValues = {"VNĐ", "USD", "EUR", "GBP"};
@@ -123,6 +123,8 @@ public class WalletActivity2 extends Activity{
             idWallet = getIntent().getExtras().getString("ID");
             walletName = getIntent().getExtras().getString("WName");
             walletMoney = getIntent().getExtras().getString("WMoney");
+//            Integer walletTypePos = getIntent().getExtras().getInt("WType");
+//            spinner.setSelection(walletTypePos);
 
             wallet_Name.setText(walletName);
             wallet_Money.setText(walletMoney);

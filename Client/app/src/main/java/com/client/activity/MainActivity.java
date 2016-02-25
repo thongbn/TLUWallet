@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,28 +40,35 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
+import com.client.database.DataBaseHelper;
 import com.client.database.model.MyWallet;
+import com.client.database.model.User;
+import com.client.database.model.UserFB;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.HelpFragment;
 import com.client.fragment.PlanFragment;
+import com.client.fragment.ReportFragment;
 import com.client.fragment.SettingsFragment;
 import com.client.ultils.UtilsDevice;
 import com.client.ultils.UtilsMiscellaneous;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.ProfilePictureView;
+import com.github.clans.fab.FloatingActionMenu;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
-    ImageButton FAB;
-    ImageView button_show_wallet;
-    TextView headerUserEmail, pick_Wallet;
+    private FloatingActionButton FAB;
+    private ImageView button_show_wallet;
+    private TextView headerUserEmail, pick_Wallet;
     private LinearLayout mNavDrawerEntriesRootView, m_LinearLayout_Show_Wallet;
     private RelativeLayout mFrameLayout_AccountView, m_activity_choosen_wallet;
-    private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails;
+    private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
     private SwipeMenuListView listWalletView;
     private CustomWalletList adapter;
     private SharedPreferences loginPreferences;
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Floating action button
 
-        FAB = (ImageButton) findViewById(R.id.imageButton);
+        FAB = (FloatingActionButton) findViewById(R.id.imageButton);
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
+
         initialise();
 
     }
@@ -114,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFrameLayout_Settings = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_settings);
 
         mFrameLayout_DealDetails = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_deal_details);
+
+        mFrameLayout_Report = (FrameLayout) findViewById(R.id.navigation_drawer_list_linearLayout_report);
 
 
         // Navigation Drawer
@@ -152,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFrameLayout_Database.setOnClickListener(this);
         mFrameLayout_Help.setOnClickListener(this);
         mFrameLayout_Settings.setOnClickListener(this);
+        mFrameLayout_Report.setOnClickListener(this);
 
         // set the first item as selected for the first time
 
@@ -180,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ProfilePictureView profilePictureView;
             profilePictureView = (ProfilePictureView) findViewById(R.id.imageFB);
             profilePictureView.setProfileId(facebookId);
+
         } else {
             headerUserEmail.setText(emailLogin);
         }
@@ -231,7 +242,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (MyWallet.listWalletName.size() > 0) {
             pick_Wallet.setText(MyWallet.listWalletName.get(0));
         } else {
-            pick_Wallet.setText("Tạo ví ");
+            Intent intent = new Intent(getApplication(), WalletActivity2.class);
+            intent.putExtra("update", false);
+            startActivity(intent);
         }
 
         listWalletView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -305,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra("ID", MyWallet.listWalletID.get(position));
                         intent.putExtra("WName", MyWallet.listWalletName.get(position));
                         intent.putExtra("WMoney", MyWallet.listWalletMoney.get(position));
-                        intent.putExtra("WType", MyWallet.listWalletMoneyType.get(position));
+//                        intent.putExtra("WType", getWalletTypePos(MyWallet.listWalletMoneyType.get(position)));
                         intent.putExtra("update", true);
                         startActivity(intent);
                         break;
@@ -400,6 +413,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fragmentTransaction.replace(R.id.containerView, planFragment, null);
                     fragmentTransaction.commit();
                 }
+                else if (view == mFrameLayout_Report){
+
+                    view.setSelected(true);
+
+                    Fragment reportFragment = new ReportFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, reportFragment, null);
+                    fragmentTransaction.commit();
+                }
                 else if (view == mFrameLayout_Database)
                 {
 
@@ -485,5 +507,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+//    private int getWalletTypePos(String posWalletType) {
+//        return spinnerValues.indexOf(posWalletType);
+//    }
 
 }
