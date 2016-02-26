@@ -4,54 +4,143 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DisplayDeal">
 
     <include
             layout="@layout/toolbar_save_deal" />
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
 
-    <Spinner
-        android:id="@+id/spinnerGroup"
-        android:layout_marginTop="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:hint="@string/Group"
-        android:nextFocusDown="@+id/edit_Money"
-        android:drawSelectorOnTop="true" />
+        <TableRow
+            android:id="@+id/dRowGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
 
-    <EditText
-        android:id="@+id/edit_Money"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:ems="10"
-        android:hint="@string/Money"
-        android:nextFocusDown="@+id/etxt_dob"
-        android:singleLine="true" />
+            <TextView
+                android:id="@+id/dTenNhom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn nhóm"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <EditText
-        android:id="@+id/edit_Detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:hint="@string/Note"
-        android:inputType="text"
-        android:singleLine="true" />
+            <Spinner
+                android:id="@+id/spinnerGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="8dip"
+                android:hint="@string/Group"
+                android:drawSelectorOnTop="true" />
 
-    <EditText
-        android:id="@+id/edit_Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:hint="@string/Date"
-        android:layout_below="@+id/edit_Detail" />
-    <Spinner
-        android:id="@+id/spinner_wallet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@+id/edit_Detail" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dRowEditMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextEditMoney"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:text="Số tiền"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/edit_Money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:hint="@string/Money"
+                android:textColor="@color/black"
+                android:singleLine="true"
+                android:inputType="numberDecimal"
+                android:digits="0123456789.,"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dRowDetailMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextDetailMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Ghi chú"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/edit_Detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:hint="@string/Note"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/black"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dRowDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextDateTime"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:text="Chọn ngày"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/edit_Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:hint="@string/Date"
+                android:textColor="@color/black"/>
+            </TableRow>
+
+        <TableRow
+            android:id="@+id/wRowPickWallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextPickWallet"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:text="Chọn ví"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <Spinner
+                android:id="@+id/spinner_wallet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip" />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>
