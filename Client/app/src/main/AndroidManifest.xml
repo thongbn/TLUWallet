@@ -29,10 +29,8 @@
 
         <activity android:name=".activity.WalletActivity2"/>
 
-        <activity
-            android:name="com.client.activity.RetrivePass"
-            android:label="Retrive Pass" >
-        </activity>
+        <activity android:name=".activity.EditWalletActivity"/>
+
         <activity
             android:name="com.client.activity.MainActivity"
             android:label="Budget App">

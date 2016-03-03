@@ -26,7 +26,7 @@
                 android:id="@+id/dTenNhom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chọn nhóm"
+                android:text="Nhóm"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -36,14 +36,13 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:layout_marginLeft="8dip"
-                android:hint="@string/Group"
                 android:drawSelectorOnTop="true" />
 
         </TableRow>
 
         <TableRow
             android:id="@+id/dRowEditMoney"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp">
@@ -60,13 +59,24 @@
                 android:id="@+id/edit_Money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:scrollHorizontally="false"
+                android:maxLength ="8"
                 android:ems="10"
-                android:hint="@string/Money"
                 android:textColor="@color/black"
                 android:singleLine="true"
                 android:inputType="numberDecimal"
                 android:digits="0123456789.,"/>
+
+            <TextView
+                android:id="@+id/deal_type_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ABC"
+                android:textSize="20sp"
+                android:textColor="@color/primary_darker"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
         </TableRow>
 
         <TableRow
@@ -86,12 +96,13 @@
 
             <EditText
                 android:id="@+id/edit_Detail"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:hint="@string/Note"
-                android:inputType="text"
-                android:singleLine="true"
+                android:inputType="text|textMultiLine"
+                android:scrollHorizontally="false"
+                android:maxLines ="4"
+                android:maxLength ="2000"
                 android:textColor="@color/black"/>
         </TableRow>
 
@@ -104,7 +115,7 @@
 
             <TextView
                 android:id="@+id/dRowTextDateTime"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="Chọn ngày"
                 android:textSize="20sp"
@@ -115,7 +126,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:hint="@string/Date"
                 android:textColor="@color/black"/>
             </TableRow>
 

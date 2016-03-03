@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -41,7 +42,7 @@ public class LoginActivity extends Activity{
     private String email,password;
     private EditText editTextEmail,editTextPassword;
     private DataBaseHelper dataBaseHelper;
-    private CheckBox saveLoginCheckBox;
+    private CheckBox saveLoginCheckBox, showPass;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
@@ -64,9 +65,21 @@ public class LoginActivity extends Activity{
 
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
+        showPass = (CheckBox) findViewById(R.id.show_pass);
         saveLoginCheckBox = (CheckBox)findViewById(R.id.saveLoginCheckBox);
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
+
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked){
+                    editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+                }else {
+                    editTextPassword.setTransformationMethod(null);
+                }
+            }
+        });
 
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
         if (saveLogin == true) {
@@ -196,12 +209,12 @@ public class LoginActivity extends Activity{
 
                                     dataBaseHelper.loginFB(emailFB, nameFB);
 
-                                    if(dataBaseHelper.checkWalletFbUserExits(UserFB.getFacebookID())){
+                                    if (dataBaseHelper.checkWalletFbUserExits(UserFB.getFacebookID())) {
                                         Intent intent = new Intent(getApplication(), WalletActivity2.class);
                                         intent.putExtra("update", false);
                                         startActivity(intent);
-                                    }else {
-                                        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                    } else {
+                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(i);
                                     }
 
@@ -241,20 +254,6 @@ public class LoginActivity extends Activity{
             public void onClick(View v) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(),RegisterActivity.class);
-                startActivity(i);
-            }
-        });
-
-        TextView retrivePass = (TextView) findViewById(R.id.forgotPass);
-
-        //Listening to register new account link
-
-        retrivePass.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(),RetrivePass.class);
                 startActivity(i);
             }
         });

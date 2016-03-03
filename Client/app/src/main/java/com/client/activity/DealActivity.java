@@ -23,16 +23,18 @@ import android.widget.Toast;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
+import com.client.database.model.MyDeal;
 import com.client.database.model.MyWallet;
 import com.client.database.model.Wallet;
+
+import java.sql.Date;
 import java.util.Calendar;
 
 public class DealActivity extends Activity {
-    private EditText  deal_Money, deal_Detail, deal_Date;
-    private String dealGroup, dealMoney, dealDetail, dealDate;
-    private Wallet dealWallet;
+    private EditText  deal_Money, deal_Detail, deal_Date, eDate;
+    private String dealGroup, dealMoney, dealDetail, dealDate, dealTypemoney, dealWallet;
     private Spinner spinnerW, spinnerGroup;
-    private TextView addButton, clearButton;
+    private TextView addButton, clearButton, deal_TypeMoney;
     Calendar calendar;
     DataBaseHelper dataBaseHelper;
     String[] spinnerValues = {"Thu vào", "Chi ra"};
@@ -49,6 +51,7 @@ public class DealActivity extends Activity {
         dataBaseHelper.open();
 
         deal_Money = (EditText) findViewById(R.id.edit_Money);
+        deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
         deal_Detail = (EditText) findViewById(R.id.edit_Detail);
         deal_Date = (EditText) findViewById(R.id.edit_Date);
         deal_Date.setInputType(InputType.TYPE_NULL);
@@ -73,7 +76,9 @@ public class DealActivity extends Activity {
         spinnerW.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idWallet = MyWallet.listWalletID.get(position);
+                dealWallet = MyWallet.listWalletID.get(position);
+                deal_TypeMoney.setText(MyWallet.listWalletMoneyType.get(position));
+
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -136,9 +141,11 @@ public class DealActivity extends Activity {
         if(isUpdate){
             dealMoney = getIntent().getExtras().getString("DMoney");
             dealDetail = getIntent().getExtras().getString("DDetail");
+            dealTypemoney = getIntent().getExtras().getString("DTypeMoney");
             dealDate = getIntent().getExtras().getString("DDate");
 
             deal_Money.setText(dealMoney);
+            deal_TypeMoney.setText(dealTypemoney);
             deal_Detail.setText(dealDetail);
             deal_Date.setText(dealDate);
         }
@@ -151,21 +158,31 @@ public class DealActivity extends Activity {
 
 //                dealGroup = deal_Group.getText().toString();
                 dealMoney = deal_Money.getText().toString();
+                dealTypemoney = deal_TypeMoney.getText().toString();
                 dealDetail = deal_Detail.getText().toString();
-                if (calendar != null)
-                    Deal.setDealDate(calendar.getTime());
-                Deal.setDealGroup(dealGroup);
+                if (eDate != null)
+                    Deal.setDealDate(eDate.getText().toString());
+
+                if(dealGroup == "Thu vào") {
+                    Deal.setDealGroup("1");
+                }else {
+                    Deal.setDealGroup("2");
+                }
+
                 Deal.setDealMoney(dealMoney);
+                Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
                 Deal.setWallet(dealWallet);
                 //check if any of fields are vaccant
-                if (dealGroup.equals("") || dealMoney.equals("") || dealDate.equals("")) {
+                if (dealMoney.equals("") || dealDetail.equals("")) {
                     Toast.makeText(getApplicationContext(), "Chưa điền thông tin", Toast.LENGTH_LONG).show();
                     return;
                 } else {
                     if (isUpdate) {
                         //update data with new data
                         dataBaseHelper.updateDeal();
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
                     } else {
                         dataBaseHelper.insertDeal();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
@@ -207,7 +224,7 @@ public class DealActivity extends Activity {
         }
     };
     private void setListener(){
-        EditText eDate=(EditText) findViewById(R.id.edit_Date);
+        eDate=(EditText) findViewById(R.id.edit_Date);
         Calendar cal=Calendar.getInstance();
         day=cal.get(Calendar.DAY_OF_MONTH);
         month=cal.get(Calendar.MONTH);

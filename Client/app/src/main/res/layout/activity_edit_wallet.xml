@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".DisplayWallet"
-    android:id="@+id/create_wallet">
+    android:id="@+id/edit_wallet">
 
     <include
         layout="@layout/toolbar_save_wallet" />
@@ -15,64 +14,42 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp">
         <TableRow
-            android:id="@+id/wRowTenVi"
+            android:id="@+id/eRowTenVi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp">
             <TextView
-                android:id="@+id/wTenVi"
+                android:id="@+id/eTenVi"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
                 android:text="Tên Ví:"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
             <EditText
-                android:id="@+id/wEditTenVi"
+                android:id="@+id/eEditTenVi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:ems="10"
                 android:textColor="@color/black"/>
         </TableRow>
+
         <TableRow
-            android:id="@+id/wRowSoTien"
+            android:id="@+id/eRowType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp">
             <TextView
-                android:id="@+id/wSoTien"
-                android:layout_width="20dp"
-                android:layout_height="60dp"
-                android:text="Số tiền ban đầu:"
-                android:textSize="20sp"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-            <EditText
-                android:id="@+id/wEditTien"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/black"
-                android:inputType="numberDecimal"
-                android:digits="0123456789.,"/>
-        </TableRow>
-        <TableRow
-            android:id="@+id/wRowType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp">
-            <TextView
-                android:id="@+id/wLoaiTien"
+                android:id="@+id/eLoaiTien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Đơn vị tiền tệ:"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinner2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dip"

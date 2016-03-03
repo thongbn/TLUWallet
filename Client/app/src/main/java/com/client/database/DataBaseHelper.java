@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.database.model.Deal;
+import com.client.database.model.MyDeal;
 import com.client.database.model.MyWallet;
 import com.client.database.model.User;
 import com.client.database.model.UserFB;
@@ -55,6 +56,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             DEAL_ID = "idDeal",
             DEAL_GROUP = "dealGroup",
             DEAL_MONEY = "dealMoney",
+            DEAL_TYPE_MONEY = "dealTypeMoney",
             DEAL_DETAIL = "dealDetail",
             DEAL_DATE = "dealDate",
             DEAL_WALLET_ID = "walletID";
@@ -74,9 +76,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     static final String DATABASE_CREATE_TABLE_DEAL = "create table " + DEAL_TABLE
             + "(" + DEAL_ID + " integer primary key autoincrement, "
             + DEAL_GROUP + " integer not null, "
-            + DEAL_MONEY + " numeric not null, "
+            + DEAL_MONEY + " text not null, "
+            + DEAL_TYPE_MONEY + " text not null, "
             + DEAL_DETAIL + " text, "
-            + DEAL_DATE + " datetime not null, "
+            + DEAL_DATE + " text not null, "
             + DEAL_WALLET_ID + " integet constraint " + DEAL_WALLET_ID + " references " + DEAL_TABLE + "(" + WALLET_ID + ") on delete cascade);";
 
     public DataBaseHelper(Context context){
@@ -213,6 +216,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         getDataWalletByUserID(User.getIdNguoiDung());
     }
 
+    public void deleteWalletbyFB(String walletID){
+        String where = DataBaseHelper.WALLET_ID + " = ? ";
+        db.delete(DataBaseHelper.WALLET_TABLE, where, new String[]{walletID});
+
+        MyWallet.listWalletID.clear();
+        MyWallet.listWalletMoney.clear();
+        MyWallet.listWalletName.clear();
+        MyWallet.listWalletMoneyType.clear();
+
+        getDataWalletByFbID(UserFB.getFacebookID());
+    }
+
     public int deleteDeal(){
         String where = DataBaseHelper.DEAL_ID + " = ? ";
         int num = db.delete(DataBaseHelper.DEAL_TABLE, where, new String[]{Deal.getIdDeal()});
@@ -298,9 +313,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
+        contentValues.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
-        contentValues.put(DataBaseHelper.DEAL_DATE, formatter.format(Deal.getDealDate()));
-        contentValues.put(DataBaseHelper.DEAL_WALLET_ID, Deal.getWallet().getIdWallet());
+        contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
+        contentValues.put(DataBaseHelper.DEAL_WALLET_ID, Deal.getWallet());
+
+        MyDeal.listDealiD.clear();
+        MyDeal.listDealDate.clear();
+        MyDeal.listDealDetails.clear();
+        MyDeal.listDealGroup.clear();
+        MyDeal.listDealMoney.clear();
+        MyDeal.listDealTypeMoney.clear();
 
         db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
     }
@@ -318,7 +341,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void updateWallet(String walletID){
         ContentValues upWallet = new ContentValues();
         upWallet.put(DataBaseHelper.WALLET_NAME, Wallet.getWalletName());
-        upWallet.put(DataBaseHelper.WALLET_MONEY, Wallet.getWalletMoney());
         upWallet.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
 
         MyWallet.listWalletID.clear();
@@ -331,10 +353,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         getDataWalletByUserID(User.getIdNguoiDung());
     }
 
+    public void updateWalletbyFB(String walletID){
+        ContentValues upWallet = new ContentValues();
+        upWallet.put(DataBaseHelper.WALLET_NAME, Wallet.getWalletName());
+        upWallet.put(DataBaseHelper.WALLET_TYPE_MONEY, Wallet.getWalletType());
+
+        MyWallet.listWalletID.clear();
+        MyWallet.listWalletMoney.clear();
+        MyWallet.listWalletName.clear();
+        MyWallet.listWalletMoneyType.clear();
+
+        String where = DataBaseHelper.WALLET_ID + "= ?";
+        db.update(DataBaseHelper.WALLET_TABLE, upWallet, where, new String[]{walletID});
+        getDataWalletByFbID(UserFB.getFacebookID());
+    }
+
     public void updateDeal(){
         ContentValues values = new ContentValues();
         values.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
         values.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
+        values.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         values.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         values.put(DataBaseHelper.DEAL_DATE, formatter.format(Deal.getDealDate()));
 
@@ -395,6 +433,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 MyWallet.listWalletName.add(name);
                 MyWallet.listWalletMoney.add(money);
                 MyWallet.listWalletMoneyType.add(typemoney);
+            }
+        }
+    }
+
+
+    private Cursor getDealbyID(String dID) {
+        db = this.getWritableDatabase();
+        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP };
+        String where = DEAL_WALLET_ID + "=?";
+        String[] whereArgs = new String[]{dID+""};
+        Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
+        return cursor;
+    }
+
+    public void getDeal (String dID) {
+        Cursor c = getDealbyID(dID);
+
+        if(c != null)
+        {
+            while(c.moveToNext()){
+                String dealID = c.getString(c.getColumnIndex(DEAL_ID));
+                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
+                String dealTypeMoney = c.getString(c.getColumnIndex(DEAL_TYPE_MONEY));
+                String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
+                String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
+                String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
+                MyDeal.listDealiD.add(dealID);
+                MyDeal.listDealMoney.add(dealMoney);
+                MyDeal.listDealTypeMoney.add(dealTypeMoney);
+                MyDeal.listDealDate.add(dealDate);
+                MyDeal.listDealDetails.add(dealDetail);
+                MyDeal.listDealGroup.add(dealGroup);
             }
         }
     }

@@ -21,6 +21,7 @@ import com.client.database.DataBaseHelper;
 import com.client.database.model.User;
 import com.client.database.model.Wallet;
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 
 public class WalletActivity2 extends Activity{
     private TextView saveButton, cancelButton;
@@ -36,6 +37,8 @@ public class WalletActivity2 extends Activity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_wallet);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         //get Instance of Database Adapter
         dataBaseHelper = new DataBaseHelper(WalletActivity2.this);
@@ -114,41 +117,19 @@ public class WalletActivity2 extends Activity{
             }
         });
 
-        // get String
-
-        isUpdate = getIntent().getExtras().getBoolean("update");
-        if(isUpdate){
-            idWallet = getIntent().getExtras().getString("ID");
-            walletName = getIntent().getExtras().getString("WName");
-            walletMoney = getIntent().getExtras().getString("WMoney");
-            walletType = getIntent().getExtras().getString("WType");
-
-            switch (walletType){
-                case "VNĐ":
-                    spinner.setSelection(0);
-                    break;
-                case "USD":
-                    spinner.setSelection(1);
-                    break;
-                case "EUR":
-                    spinner.setSelection(2);
-                    break;
-                case "GBP":
-                    spinner.setSelection(3);
-                    break;
-            }
-
-            wallet_Name.setText(walletName);
-            wallet_Money.setText(walletMoney);
-
-        }
 
         isDelete = getIntent().getExtras().getBoolean("delete");
         if(isDelete) {
             idWallet = getIntent().getExtras().getString("ID");
-            dataBaseHelper.deleteWallet(idWallet);
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(i);
+            if (AccessToken.getCurrentAccessToken() != null){
+                dataBaseHelper.deleteWalletbyFB(idWallet);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }else {
+                dataBaseHelper.deleteWallet(idWallet);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
         }
 
         saveButton = (TextView) findViewById(R.id.save_action_text);
@@ -173,25 +154,18 @@ public class WalletActivity2 extends Activity{
                     wallet_Money.setError("Chưa có thông tin");
                     return;
                 } else {
-                    if (isUpdate) {
-                        //update data with new data
-                        dataBaseHelper.updateWallet(idWallet);
+                    if (AccessToken.getCurrentAccessToken() != null) {
+                        dataBaseHelper.insertWalletByFB();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
                     } else {
-                        if (AccessToken.getCurrentAccessToken() != null) {
-                            dataBaseHelper.insertWalletByFB();
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(i);
-                        } else {
-                            //Save the Data in Database
-                            dataBaseHelper.insertWallet();
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(i);
+                        //Save the Data in Database
+                        dataBaseHelper.insertWallet();
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
 
                         }
                     }
-                }
             }
 
         });

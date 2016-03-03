@@ -27,7 +27,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_gravity="center"
         android:padding="2dp"
-        android:textColor="#33CC33" />
+        android:textColor="@color/black" />
 
     <ImageView
         android:background="@drawable/ic_navigation_arrow_down"

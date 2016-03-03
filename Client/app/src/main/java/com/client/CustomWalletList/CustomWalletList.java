@@ -3,16 +3,12 @@ package com.client.CustomWalletList;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.client.R;
-import com.client.database.DataBaseHelper;
 import com.client.database.model.MyWallet;
 
 
@@ -21,7 +17,6 @@ import com.client.database.model.MyWallet;
  */
 public class CustomWalletList extends BaseAdapter {
     private Context context;
-    private DataBaseHelper dataBaseHelper;
 
     public CustomWalletList (Context context) {
         super();

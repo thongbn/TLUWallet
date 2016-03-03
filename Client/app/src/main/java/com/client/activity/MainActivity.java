@@ -39,6 +39,8 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
+import com.client.database.DataBaseHelper;
+import com.client.database.model.MyDeal;
 import com.client.database.model.MyWallet;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
@@ -66,25 +68,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CustomWalletList adapter;
     private SharedPreferences loginPreferences;
     private final Context context = this;
+    private String dealTypeMoney;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
-
-        //Floating action button
-
-        FAB = (FloatingActionButton) findViewById(R.id.imageButton);
-        FAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplication(), DealActivity.class);
-                intent.putExtra("update", false);
-                startActivity(intent);
-            }
-        });
 
         initialise();
 
@@ -206,7 +197,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
                 m_activity_choosen_wallet.setLayoutParams(params);
 
-                float rotate = button_show_wallet.getRotation() + 180F;
+                float rotate = 0;
+                rotate = button_show_wallet.getRotation() + 180F;
                 button_show_wallet.animate().rotation(rotate).setInterpolator(new AccelerateDecelerateInterpolator());
 
             }
@@ -220,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplication(), WalletActivity2.class);
-                intent.putExtra("update", false);
+                intent.putExtra("delete", false);
                 startActivity(intent);
             }
         });
@@ -236,10 +228,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (MyWallet.listWalletName.size() > 0) {
             pick_Wallet.setText(MyWallet.listWalletName.get(0));
+            dealTypeMoney = MyWallet.listWalletMoneyType.get(0);
+            MyWallet.setIdWallet(MyWallet.listWalletID.get(0));
         } else {
-            Intent intent = new Intent(getApplication(), WalletActivity2.class);
-            intent.putExtra("update", false);
-            startActivity(intent);
+            pick_Wallet.setText("Tạo ví");
         }
 
         listWalletView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -249,10 +241,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
                 m_activity_choosen_wallet.setLayoutParams(params);
 
-                float rotate = button_show_wallet.getRotation() + 180F;
+                float rotate = 0;
+                rotate = button_show_wallet.getRotation() + 180F;
                 button_show_wallet.animate().rotation(rotate).setInterpolator(new AccelerateDecelerateInterpolator());
 
                 pick_Wallet.setText(MyWallet.listWalletName.get(position));
+                dealTypeMoney = MyWallet.listWalletMoneyType.get(position);
+                MyWallet.setIdWallet(MyWallet.listWalletID.get(position));
 
             }
         });
@@ -266,11 +261,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //create an action that will be showed on swiping an item in the list
                 SwipeMenuItem edit = new SwipeMenuItem(
                         getApplicationContext());
-                edit.setBackground(new ColorDrawable(Color.DKGRAY));
+                edit.setBackground(new ColorDrawable(Color.BLUE));
                 // set width of an option (px)
-                edit.setWidth(dp2px(90));
+                edit.setWidth(dp2px(80));
                 edit.setTitle("Chỉnh sửa");
-                edit.setTitleSize(14);
+                edit.setTitleSize(13);
                 edit.setIcon(R.drawable.ic_edit);
                 edit.setTitleColor(Color.WHITE);
                 menu.addMenuItem(edit);
@@ -279,9 +274,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         getApplicationContext());
                 // set item background
                 delete.setBackground(new ColorDrawable(Color.RED));
-                delete.setWidth(dp2px(90));
+                delete.setWidth(dp2px(80));
                 delete.setTitle("Xóa");
-                delete.setTitleSize(14);
+                delete.setTitleSize(13);
                 delete.setIcon(R.drawable.ic_delete);
                 delete.setTitleColor(Color.WHITE);
                 menu.addMenuItem(delete);
@@ -309,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (index) {
                     // Chinh sua
                     case 0:
-                        Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
+                        Intent intent = new Intent(getApplicationContext(), EditWalletActivity.class);
                         intent.putExtra("ID", MyWallet.listWalletID.get(position));
                         intent.putExtra("WName", MyWallet.listWalletName.get(position));
                         intent.putExtra("WMoney", MyWallet.listWalletMoney.get(position));

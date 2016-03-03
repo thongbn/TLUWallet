@@ -16,7 +16,7 @@ import com.client.database.model.MyWallet;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
-public class SettingsFragment extends Fragment implements View.OnClickListener{
+public class SettingsFragment extends Fragment{
 	
 	public SettingsFragment (){}
 	
@@ -26,36 +26,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
  
         View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
 
-        Button btnLogout;
-        btnLogout = (Button)rootView.findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(this);
-         
         return rootView;
-    }
-
-    @Override
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.btnLogout:
-                SharedPreferences loginPrefence = getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor mSaveState = loginPrefence.edit();
-                mSaveState.putBoolean("LoginSession", false);
-                mSaveState.clear();
-                mSaveState.commit();
-
-                SharedPreferences facebookPrefence = getActivity().getSharedPreferences("idFacebook", Context.MODE_PRIVATE);
-                SharedPreferences.Editor mSaveState1 = facebookPrefence.edit();
-                mSaveState1.putBoolean("LoginFacebookSession", false);
-                mSaveState1.clear();
-                mSaveState1.commit();
-
-                FacebookSdk.sdkInitialize(getContext());
-                LoginManager.getInstance().logOut();
-                Intent signout = new Intent(v.getContext(), LoginActivity.class);
-                signout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                signout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(signout);
-                break;
-        }
     }
 }

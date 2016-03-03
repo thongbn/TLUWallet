@@ -2,7 +2,7 @@
     android:id="@+id/text_spinWallet"
     android:layout_width="fill_parent"
     android:layout_weight="1"
-    android:layout_height="10dp"
+    android:layout_height="25dp"
     android:padding="3px"
     android:text="Wallet name"
     android:textColor="#0022ee"

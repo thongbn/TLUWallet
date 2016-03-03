@@ -50,29 +50,28 @@
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
-            android:id="@+id/saveLoginCheckBox"
+            android:id="@+id/show_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextPassword"
             android:layout_alignLeft="@+id/editTextPassword"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="170dp"
             android:layout_marginTop="16dp"
-            android:text="Nhớ mật khẩu" />
+            android:text="Hiển thị mật khẩu" />
 
-        <TextView
-            android:id="@+id/forgotPass"
+        <CheckBox
+            android:id="@+id/saveLoginCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Quên mật khẩu?"
-            android:textColor="#ffffff"
-            android:layout_below="@id/saveLoginCheckBox"
-            android:layout_alignLeft="@id/saveLoginCheckBox" />
+            android:layout_below="@id/show_pass"
+            android:layout_alignLeft="@+id/editTextPassword"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:text="Nhớ mật khẩu" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_below="@id/forgotPass"
+            android:layout_below="@id/saveLoginCheckBox"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dip"
