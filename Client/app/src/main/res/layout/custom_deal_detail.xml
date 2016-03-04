@@ -84,9 +84,9 @@
             android:id="@+id/txtDealMoney"
             android:text="$$$"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:textSize="20dp"
-            android:textColor="#fb4a45" />
+            android:layout_marginTop="10dp"
+            android:textSize="15dp"
+            android:textColor="#E84A5F" />
 
     </RelativeLayout>
 
