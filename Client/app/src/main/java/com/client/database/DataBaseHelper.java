@@ -228,11 +228,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         getDataWalletByFbID(UserFB.getFacebookID());
     }
 
-    public int deleteDeal(){
+    public void deleteDeal(String id){
         String where = DataBaseHelper.DEAL_ID + " = ? ";
-        int num = db.delete(DataBaseHelper.DEAL_TABLE, where, new String[]{Deal.getIdDeal()});
+        db.delete(DataBaseHelper.DEAL_TABLE, where, new String[]{id});
 
-        return num;
+        MyDeal.listDealGroup.clear();
+        MyDeal.listDealDate.clear();
+        MyDeal.listDealTypeMoney.clear();
+        MyDeal.listDealiD.clear();
+        MyDeal.listDealMoney.clear();
+        MyDeal.listDealDetails.clear();
+
+        getDeal(MyWallet.getIdWallet());
+
     }
 
     public User login(String Email, String Password) throws SQLException {
@@ -318,14 +326,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
         contentValues.put(DataBaseHelper.DEAL_WALLET_ID, Deal.getWallet());
 
-        MyDeal.listDealiD.clear();
-        MyDeal.listDealDate.clear();
-        MyDeal.listDealDetails.clear();
         MyDeal.listDealGroup.clear();
-        MyDeal.listDealMoney.clear();
+        MyDeal.listDealDate.clear();
         MyDeal.listDealTypeMoney.clear();
+        MyDeal.listDealiD.clear();
+        MyDeal.listDealMoney.clear();
+        MyDeal.listDealDetails.clear();
 
         db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
+
+        getDeal(MyWallet.getIdWallet());
     }
 
     public void updateEntry(String email, String password){

@@ -58,7 +58,6 @@ public class CustomWalletList extends BaseAdapter {
         holder.itemTypeMoney.setText(MyWallet.listWalletMoneyType.get(position));
 
         return convertView;
-
     }
 
     static class ViewHolder {

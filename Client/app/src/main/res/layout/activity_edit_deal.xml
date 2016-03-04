@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".EditDeal" >
+
+    <include
+        layout="@layout/toolbar_save_deal" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+
+        <TableRow
+            android:id="@+id/dRowEditGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dTenNhom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhóm"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <Spinner
+                android:id="@+id/spinnerEditGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="8dip"
+                android:drawSelectorOnTop="true" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dRowEditMoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextEditMoney"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:text="Số tiền"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/edit_Money_Deal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollHorizontally="false"
+                android:maxLength ="8"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:singleLine="true"
+                android:inputType="numberDecimal"
+                android:digits="0123456789.,"/>
+
+            <TextView
+                android:id="@+id/edit_deal_type_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ABC"
+                android:textSize="20sp"
+                android:textColor="#A7226E"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dRowDetailMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextDetailMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Ghi chú"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/edit_Detail_Deal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:inputType="text|textMultiLine"
+                android:scrollHorizontally="false"
+                android:maxLines ="4"
+                android:maxLength ="2000"
+                android:textColor="#F26B38"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dRowDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Chọn ngày"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/edit_Date_Deal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/wRowPickWallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/dRowTextPickWallet"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:text="Chọn ví"
+                android:textSize="20sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <Spinner
+                android:id="@+id/spinner_edit_wallet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip" />
+        </TableRow>
+
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_delete"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/delete_deal"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

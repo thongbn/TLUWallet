@@ -37,6 +37,7 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.client.CustomDealList.CustomDealList;
 import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
 import com.client.database.DataBaseHelper;
@@ -58,7 +59,6 @@ import com.facebook.login.widget.ProfilePictureView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
-    private FloatingActionButton FAB;
     private ImageView button_show_wallet;
     private TextView headerUserEmail, pick_Wallet;
     private LinearLayout mNavDrawerEntriesRootView, m_LinearLayout_Show_Wallet;
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
     private SwipeMenuListView listWalletView;
     private CustomWalletList adapter;
+    private CustomDealList adapter2;
     private SharedPreferences loginPreferences;
     private final Context context = this;
     private String dealTypeMoney;
@@ -82,6 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialise() {
+
+        MyDeal.listDealGroup.clear();
+        MyDeal.listDealDate.clear();
+        MyDeal.listDealTypeMoney.clear();
+        MyDeal.listDealiD.clear();
+        MyDeal.listDealMoney.clear();
+        MyDeal.listDealDetails.clear();
 
         //Toolbar
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -153,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Create the first fragment to be shown
 
-        Fragment dealDetailsFragment = new DealDetailsFragment();
+        final Fragment dealDetailsFragment = new DealDetailsFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.containerView, dealDetailsFragment, null);
         fragmentTransaction.commit();
@@ -249,6 +257,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dealTypeMoney = MyWallet.listWalletMoneyType.get(position);
                 MyWallet.setIdWallet(MyWallet.listWalletID.get(position));
 
+                dataBaseHelper = new DataBaseHelper(getApplicationContext());
+                MyDeal.listDealGroup.clear();
+                MyDeal.listDealDate.clear();
+                MyDeal.listDealTypeMoney.clear();
+                MyDeal.listDealiD.clear();
+                MyDeal.listDealMoney.clear();
+                MyDeal.listDealDetails.clear();
+                dataBaseHelper.getDeal(MyWallet.getIdWallet());
+
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+
             }
         });
 
@@ -326,10 +345,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 "Đồng ý",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
-                                        intent.putExtra("ID", MyWallet.listWalletID.get(position));
-                                        intent.putExtra("delete", true);
-                                        startActivity(intent);
+//                                        Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
+//                                        intent.putExtra("ID", MyWallet.listWalletID.get(position));
+//                                        intent.putExtra("delete", true);
+//                                        startActivity(intent);
+
+                                        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+                                        if(AccessToken.getCurrentAccessToken() != null){
+                                            dataBaseHelper.deleteWalletbyFB(MyWallet.listWalletID.get(position));
+                                        }else {
+                                            dataBaseHelper.deleteWallet(MyWallet.listWalletID.get(position));
+                                        }
+
 
                                         dialog.cancel();
                                     }
@@ -496,4 +523,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
+
 }

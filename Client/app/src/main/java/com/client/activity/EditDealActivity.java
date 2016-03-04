@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
@@ -28,32 +29,37 @@ import com.client.fragment.DealDetailsFragment;
 
 import java.util.Calendar;
 
-public class DealActivity extends Activity {
-    private EditText  deal_Money, deal_Detail, deal_Date, eDate;
-    private String dealGroup, dealMoney, dealDetail, dealDate, dealTypemoney, dealWallet;
+/**
+ * Created by ToanNguyen on 04/03/2016.
+ */
+public class EditDealActivity extends Activity{
+
+    private EditText deal_Money, deal_Detail, deal_Date, eDate;
+    private String dealGroup, dealMoney, dealDetail, dealDate, dealTypemoney, dealWallet, dealID;
     private Spinner spinnerW, spinnerGroup;
     private TextView addButton, clearButton, deal_TypeMoney;
     DataBaseHelper dataBaseHelper;
     String[] spinnerValues = {"Thu vào", "Chi ra"};
     int group_images[] = {R.drawable.ic_cash_in, R.drawable.ic_cash_out};
+    private ImageView deleteButton;
+    private boolean isUpdate;
 
     int day,month,year;
-
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_deal);
-        dataBaseHelper = new DataBaseHelper(DealActivity.this);
+        setContentView(R.layout.activity_edit_deal);
+
+        dataBaseHelper = new DataBaseHelper(EditDealActivity.this);
         dataBaseHelper.open();
 
-        deal_Money = (EditText) findViewById(R.id.edit_Money);
-        deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
-        deal_Detail = (EditText) findViewById(R.id.edit_Detail);
-        deal_Date = (EditText) findViewById(R.id.edit_Date);
+        deal_Money = (EditText) findViewById(R.id.edit_Money_Deal);
+        deal_TypeMoney = (TextView) findViewById(R.id.edit_deal_type_money);
+        deal_Detail = (EditText) findViewById(R.id.edit_Detail_Deal);
+        deal_Date = (EditText) findViewById(R.id.edit_Date_Deal);
         deal_Date.setInputType(InputType.TYPE_NULL);
 
-        //spinner group
-        spinnerGroup = (Spinner) findViewById(R.id.spinnerGroup);
+        spinnerGroup = (Spinner) findViewById(R.id.spinnerEditGroup);
         spinnerGroup.setAdapter(new MyAdapter(this, R.layout.custom_spinner_group, spinnerValues));
         spinnerGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -61,14 +67,16 @@ public class DealActivity extends Activity {
 
                 dealGroup = parent.getItemAtPosition(position).toString();
             }
+
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
             }
         });
 
+
         //spinner wallet
-        spinnerW = (Spinner) findViewById(R.id.spinner_wallet);
-        spinnerW.setAdapter(new ArrayAdapter<>(this,R.layout.custom_spinner_wallet, MyWallet.listWalletName));
+        spinnerW = (Spinner) findViewById(R.id.spinner_edit_wallet);
+        spinnerW.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner_wallet, MyWallet.listWalletName));
         spinnerW.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -132,23 +140,45 @@ public class DealActivity extends Activity {
                 showDialog(113);
             }
         });
+        isUpdate = getIntent().getExtras().getBoolean("update");
+        if(isUpdate) {
+            dealID = getIntent().getExtras().getString("DId");
+            dealMoney = getIntent().getExtras().getString("DMoney");
+            dealDetail = getIntent().getExtras().getString("DDetail");
+            dealTypemoney = getIntent().getExtras().getString("DTypeMoney");
+            dealDate = getIntent().getExtras().getString("DDate");
+            dealGroup = getIntent().getExtras().getString("DGroup");
 
-        addButton = (TextView) findViewById(R.id.saveDeal_action_text);
+            switch (dealGroup) {
+                case "Thu vào":
+                    spinnerGroup.setSelection(0);
+                    break;
+                case "Chi ra":
+                    spinnerGroup.setSelection(1);
+                    break;
+            }
+
+            dealWallet = getIntent().getExtras().getString("DWallet");
+
+
+            deal_Money.setText(dealMoney);
+            deal_TypeMoney.setText(dealTypemoney);
+            deal_Detail.setText(dealDetail);
+            deal_Date.setText(dealDate);
+        }
+
         addButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-//                dealGroup = deal_Group.getText().toString();
                 dealMoney = deal_Money.getText().toString();
                 dealTypemoney = deal_TypeMoney.getText().toString();
                 dealDetail = deal_Detail.getText().toString();
                 if (eDate != null)
                     Deal.setDealDate(eDate.getText().toString());
 
-                if(dealGroup == "Thu vào") {
+                if (dealGroup == "Thu vào") {
                     Deal.setDealGroup("1");
-                }else {
+                } else {
                     Deal.setDealGroup("2");
                 }
 
@@ -162,10 +192,8 @@ public class DealActivity extends Activity {
                     deal_Detail.setError("Chưa điền thông tin");
                     return;
                 } else {
-                    dataBaseHelper.insertDeal();
+                    dataBaseHelper.updateDeal();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-
                 }
             }
         });
@@ -178,7 +206,18 @@ public class DealActivity extends Activity {
             }
         });
 
+        deleteButton = (ImageView) findViewById(R.id.delete_deal);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataBaseHelper.deleteDeal(dealID);
+                Intent i = new Intent(getApplicationContext(), DealDetailsFragment.class);
+                startActivity(i);
+            }
+        });
+
     }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
@@ -207,11 +246,11 @@ public class DealActivity extends Activity {
         day=cal.get(Calendar.DAY_OF_MONTH);
         month=cal.get(Calendar.MONTH);
         year=cal.get(Calendar.YEAR);
-        eDate.setText(day+"-"+(month+1)+"-"+year);
+        eDate.setText(day + "-" + (month + 1) + "-" + year);
 
 
     }
-    public class MyAdapter extends ArrayAdapter <String> {
+    public class MyAdapter extends ArrayAdapter<String> {
         public MyAdapter(Context context, int txtViewResourceID, String[] objects) {
             super(context, txtViewResourceID, objects);
         }
@@ -236,5 +275,4 @@ public class DealActivity extends Activity {
             return mySpinner;
         }
     }
-
 }

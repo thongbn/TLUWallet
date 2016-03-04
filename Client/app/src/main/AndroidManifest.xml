@@ -31,6 +31,8 @@
 
         <activity android:name=".activity.EditWalletActivity"/>
 
+        <activity android:name=".activity.EditDealActivity"/>
+
         <activity
             android:name="com.client.activity.MainActivity"
             android:label="Budget App">

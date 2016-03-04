@@ -118,19 +118,19 @@ public class WalletActivity2 extends Activity{
         });
 
 
-        isDelete = getIntent().getExtras().getBoolean("delete");
-        if(isDelete) {
-            idWallet = getIntent().getExtras().getString("ID");
-            if (AccessToken.getCurrentAccessToken() != null){
-                dataBaseHelper.deleteWalletbyFB(idWallet);
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-            }else {
-                dataBaseHelper.deleteWallet(idWallet);
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-            }
-        }
+//        isDelete = getIntent().getExtras().getBoolean("delete");
+//        if(isDelete) {
+//            idWallet = getIntent().getExtras().getString("ID");
+//            if (AccessToken.getCurrentAccessToken() != null){
+//                dataBaseHelper.deleteWalletbyFB(idWallet);
+//                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(i);
+//            }else {
+//                dataBaseHelper.deleteWallet(idWallet);
+//                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(i);
+//            }
+//        }
 
         saveButton = (TextView) findViewById(R.id.save_action_text);
         saveButton.setOnClickListener(new View.OnClickListener() {

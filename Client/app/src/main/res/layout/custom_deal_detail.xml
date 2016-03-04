@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/border"
-    android:clickable="true"
     android:id="@+id/deal_Details"
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
@@ -19,7 +18,7 @@
         android:layout_marginStart="10dp"
         android:id="@+id/date_Deal"
         android:text="XX - XX - XXXX"
-        android:textColor="@color/com_facebook_button_background_color"/>
+        android:textColor="@color/com_facebook_button_background_color" />
 
     <View
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -87,7 +86,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:textSize="20dp"
-            android:textColor="#fb4a45"/>
+            android:textColor="#fb4a45" />
 
     </RelativeLayout>
 
