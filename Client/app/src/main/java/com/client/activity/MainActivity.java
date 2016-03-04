@@ -84,13 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initialise() {
 
-        MyDeal.listDealGroup.clear();
-        MyDeal.listDealDate.clear();
-        MyDeal.listDealTypeMoney.clear();
-        MyDeal.listDealiD.clear();
-        MyDeal.listDealMoney.clear();
-        MyDeal.listDealDetails.clear();
-
         //Toolbar
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

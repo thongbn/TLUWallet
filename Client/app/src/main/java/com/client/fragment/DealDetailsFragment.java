@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.client.CustomDealList.CustomDealList;
 import com.client.R;
@@ -22,6 +23,7 @@ public class DealDetailsFragment extends Fragment {
 
     private ListView listDeal;
     private FloatingActionButton FAB;
+    private TextView totalIncome, totalOutcome;
     private DataBaseHelper dataBaseHelper;
 
     public DealDetailsFragment (){}
@@ -31,6 +33,13 @@ public class DealDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
+
+        MyDeal.listDealGroup.clear();
+        MyDeal.listDealDate.clear();
+        MyDeal.listDealTypeMoney.clear();
+        MyDeal.listDealiD.clear();
+        MyDeal.listDealMoney.clear();
+        MyDeal.listDealDetails.clear();
 
         dataBaseHelper = new DataBaseHelper(rootView.getContext());
         dataBaseHelper.getDeal(MyWallet.getIdWallet());
@@ -66,6 +75,10 @@ public class DealDetailsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
+
+        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
 
         return rootView;
     }
