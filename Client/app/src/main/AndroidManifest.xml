@@ -27,11 +27,9 @@
 
         <activity android:name=".activity.RegisterActivity" />
 
-        <activity android:name=".activity.WalletActivity2"/>
-
-        <activity android:name=".activity.EditWalletActivity"/>
-
         <activity android:name=".activity.EditDealActivity"/>
+
+        <activity android:name=".activity.PickGroupActivity" />
 
         <activity
             android:name="com.client.activity.MainActivity"

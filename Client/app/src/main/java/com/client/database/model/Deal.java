@@ -8,22 +8,13 @@ import java.util.Date;
 public class Deal {
     private static String idDeal;
     private static String dealGroup;
+    private static String dealGroupDetails;
     private static String dealMoney;
     private static String dealTypeMoney;
     private static String dealDetail;
-
-    public static String getDealDate() {
-        return dealDate;
-    }
-
-    public static void setDealDate(String dealDate) {
-        Deal.dealDate = dealDate;
-    }
-
-    //    private static Date dealDate;
+    private static User user;
+    private static UserFB userFB;
     private static String dealDate;
-
-    private static String wallet;
 
     public Deal (){
         super();
@@ -45,6 +36,15 @@ public class Deal {
         Deal.dealGroup = dealGroup;
     }
 
+    public static String getDealGroupDetails() {
+        return dealGroupDetails;
+    }
+
+    public static void setDealGroupDetails(String dealGroupDetails) {
+        Deal.dealGroupDetails = dealGroupDetails;
+    }
+
+
     public static String getDealMoney(){
         return dealMoney;
     }
@@ -61,15 +61,6 @@ public class Deal {
         Deal.dealDetail = dealDetail;
     }
 
-//    public static Date getDealDate(){
-//        return dealDate;
-//    }
-//
-//    public static void setDealDate(Date dealDate){
-//        Deal.dealDate = dealDate;
-//    }
-
-
     public static String getDealTypeMoney() {
         return dealTypeMoney;
     }
@@ -78,11 +69,26 @@ public class Deal {
         Deal.dealTypeMoney = dealTypeMoney;
     }
 
-    public static String getWallet() {
-        return wallet;
+    public static String getDealDate() {
+        return dealDate;
     }
 
-    public static void setWallet(String wallet) {
-        Deal.wallet = wallet;
+    public static void setDealDate(String dealDate) {
+        Deal.dealDate = dealDate;
     }
+
+    public static User getUser(){
+        return  user;
+    }
+    public static void setUser(User user){
+        Deal.user = user;
+    }
+
+    public static UserFB getUserFB(){
+        return userFB;
+    }
+    public static void setUserFB (UserFB userFB){
+        Deal.userFB = userFB;
+    }
+
 }

@@ -1,48 +1,23 @@
 package com.client.activity;
 
-import android.animation.LayoutTransition;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.ScrimInsetsFrameLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.client.CustomDealList.CustomDealList;
-import com.client.CustomWalletList.CustomWalletList;
 import com.client.R;
-import com.client.database.DataBaseHelper;
-import com.client.database.model.MyDeal;
-import com.client.database.model.MyWallet;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.HelpFragment;
@@ -59,18 +34,11 @@ import com.facebook.login.widget.ProfilePictureView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
-    private ImageView button_show_wallet;
-    private TextView headerUserEmail, pick_Wallet;
-    private LinearLayout mNavDrawerEntriesRootView, m_LinearLayout_Show_Wallet;
-    private RelativeLayout mFrameLayout_AccountView, m_activity_choosen_wallet;
+    private TextView headerUserEmail;
+    private LinearLayout mNavDrawerEntriesRootView;
+    private RelativeLayout mFrameLayout_AccountView;
     private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
-    private SwipeMenuListView listWalletView;
-    private CustomWalletList adapter;
-    private CustomDealList adapter2;
     private SharedPreferences loginPreferences;
-    private final Context context = this;
-    private String dealTypeMoney;
-    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,212 +148,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             headerUserEmail.setText(emailLogin);
         }
 
-        //Wallet choosen
-
-        m_LinearLayout_Show_Wallet = (LinearLayout) findViewById(R.id.show_wallet);
-        button_show_wallet = (ImageView) findViewById(R.id.click_to_slide);
-
-        mNavDrawerEntriesRootView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-        m_activity_choosen_wallet = (RelativeLayout) findViewById(R.id.activity_choosen_wallet);
-
-
-
-        m_LinearLayout_Show_Wallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ViewGroup.LayoutParams params = m_activity_choosen_wallet.getLayoutParams();
-                params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
-                m_activity_choosen_wallet.setLayoutParams(params);
-
-                float rotate = 0;
-                rotate = button_show_wallet.getRotation() + 180F;
-                button_show_wallet.animate().rotation(rotate).setInterpolator(new AccelerateDecelerateInterpolator());
-
-            }
-
-        });
-
-
-        final TextView addWallet = (TextView) findViewById(R.id.addWallet);
-        addWallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplication(), WalletActivity2.class);
-                intent.putExtra("delete", false);
-                startActivity(intent);
-            }
-        });
-
-
-
-        //My Wallet List
-        adapter = new CustomWalletList(getApplication());
-        listWalletView = (SwipeMenuListView) findViewById(R.id.listWallet);
-        listWalletView.setAdapter(adapter);
-
-        pick_Wallet = (TextView) findViewById(R.id.navigation_drawer_item_textView_wallet);
-
-        if (MyWallet.listWalletName.size() > 0) {
-            pick_Wallet.setText(MyWallet.listWalletName.get(0));
-            dealTypeMoney = MyWallet.listWalletMoneyType.get(0);
-            MyWallet.setIdWallet(MyWallet.listWalletID.get(0));
-        } else {
-            pick_Wallet.setText("Tạo ví");
-        }
-
-        listWalletView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ViewGroup.LayoutParams params = m_activity_choosen_wallet.getLayoutParams();
-                params.height = params.height == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : 0;
-                m_activity_choosen_wallet.setLayoutParams(params);
-
-                float rotate = 0;
-                rotate = button_show_wallet.getRotation() + 180F;
-                button_show_wallet.animate().rotation(rotate).setInterpolator(new AccelerateDecelerateInterpolator());
-
-                pick_Wallet.setText(MyWallet.listWalletName.get(position));
-                dealTypeMoney = MyWallet.listWalletMoneyType.get(position);
-                MyWallet.setIdWallet(MyWallet.listWalletID.get(position));
-
-                dataBaseHelper = new DataBaseHelper(getApplicationContext());
-                MyDeal.listDealGroup.clear();
-                MyDeal.listDealDate.clear();
-                MyDeal.listDealTypeMoney.clear();
-                MyDeal.listDealiD.clear();
-                MyDeal.listDealMoney.clear();
-                MyDeal.listDealDetails.clear();
-                dataBaseHelper.getDeal(MyWallet.getIdWallet());
-
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-
-            }
-        });
-
-        // Menu list view
-
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                //create an action that will be showed on swiping an item in the list
-                SwipeMenuItem edit = new SwipeMenuItem(
-                        getApplicationContext());
-                edit.setBackground(new ColorDrawable(Color.BLUE));
-                // set width of an option (px)
-                edit.setWidth(dp2px(80));
-                edit.setTitle("Chỉnh sửa");
-                edit.setTitleSize(13);
-                edit.setIcon(R.drawable.ic_edit);
-                edit.setTitleColor(Color.WHITE);
-                menu.addMenuItem(edit);
-
-                SwipeMenuItem delete = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                delete.setBackground(new ColorDrawable(Color.RED));
-                delete.setWidth(dp2px(80));
-                delete.setTitle("Xóa");
-                delete.setTitleSize(13);
-                delete.setIcon(R.drawable.ic_delete);
-                delete.setTitleColor(Color.WHITE);
-                menu.addMenuItem(delete);
-            }
-        };
-
-        listWalletView.setMenuCreator(creator);
-
-        listWalletView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
-
-            @Override
-            public void onSwipeStart(int position) {
-
-            }
-
-            @Override
-            public void onSwipeEnd(int position) {
-
-            }
-        });
-
-        listWalletView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
-                switch (index) {
-                    // Chinh sua
-                    case 0:
-                        Intent intent = new Intent(getApplicationContext(), EditWalletActivity.class);
-                        intent.putExtra("ID", MyWallet.listWalletID.get(position));
-                        intent.putExtra("WName", MyWallet.listWalletName.get(position));
-                        intent.putExtra("WMoney", MyWallet.listWalletMoney.get(position));
-                        intent.putExtra("WType", MyWallet.listWalletMoneyType.get(position));
-                        intent.putExtra("update", true);
-                        startActivity(intent);
-                        break;
-
-                    // Xoa
-                    case 1:
-
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AppTheme_Dark_Dialog));
-                        builder.setTitle("Wait a second...");
-                        builder.setMessage("Bạn có chắc chắn muốn xóa " + MyWallet.listWalletName.get(position));
-                        builder.setCancelable(true);
-
-
-                        builder.setPositiveButton(
-                                "Đồng ý",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-//                                        Intent intent = new Intent(getApplicationContext(), WalletActivity2.class);
-//                                        intent.putExtra("ID", MyWallet.listWalletID.get(position));
-//                                        intent.putExtra("delete", true);
-//                                        startActivity(intent);
-
-                                        dataBaseHelper = new DataBaseHelper(getApplicationContext());
-                                        if(AccessToken.getCurrentAccessToken() != null){
-                                            dataBaseHelper.deleteWalletbyFB(MyWallet.listWalletID.get(position));
-                                        }else {
-                                            dataBaseHelper.deleteWallet(MyWallet.listWalletID.get(position));
-                                        }
-
-
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Hủy bỏ",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert = builder.create();
-                        alert.show();
-
-                        break;
-                }
-                return false;
-            }
-        });
-
-        listWalletView.setOnMenuStateChangeListener(new SwipeMenuListView.OnMenuStateChangeListener() {
-            @Override
-            public void onMenuOpen(int position) {
-            }
-
-            @Override
-            public void onMenuClose(int position) {
-            }
-        });
-
-        listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
-        listWalletView.setOpenInterpolator(new BounceInterpolator());
-        listWalletView.setCloseInterpolator(new BounceInterpolator());
-
 
     }
 
@@ -488,33 +250,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_left) {
-            listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
-            return true;
-        }
-        if (id == R.id.action_right) {
-            listWalletView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }

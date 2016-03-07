@@ -16,8 +16,10 @@ import com.client.R;
 import com.client.activity.DealActivity;
 import com.client.activity.EditDealActivity;
 import com.client.database.DataBaseHelper;
+import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
-import com.client.database.model.MyWallet;
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 
 public class DealDetailsFragment extends Fragment {
 
@@ -25,6 +27,7 @@ public class DealDetailsFragment extends Fragment {
     private FloatingActionButton FAB;
     private TextView totalIncome, totalOutcome;
     private DataBaseHelper dataBaseHelper;
+    private CustomDealList adapter;
 
     public DealDetailsFragment (){}
 
@@ -33,16 +36,15 @@ public class DealDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
-
-        MyDeal.listDealGroup.clear();
-        MyDeal.listDealDate.clear();
-        MyDeal.listDealTypeMoney.clear();
-        MyDeal.listDealiD.clear();
-        MyDeal.listDealMoney.clear();
-        MyDeal.listDealDetails.clear();
+        FacebookSdk.sdkInitialize(rootView.getContext());
 
         dataBaseHelper = new DataBaseHelper(rootView.getContext());
-        dataBaseHelper.getDeal(MyWallet.getIdWallet());
+
+        if (AccessToken.getCurrentAccessToken() != null){
+            dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());
+        }else {
+            dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung());
+        }
 
         //Floating action button
 
@@ -59,7 +61,9 @@ public class DealDetailsFragment extends Fragment {
 
         //Custom deal list
         listDeal = (ListView) rootView.findViewById(R.id.listDealDetails);
-        listDeal.setAdapter(new CustomDealList(rootView.getContext()));
+
+        adapter = new CustomDealList(rootView.getContext());
+        listDeal.setAdapter(adapter);
 
         listDeal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,5 +85,10 @@ public class DealDetailsFragment extends Fragment {
         totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
 
         return rootView;
+    }
+
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

@@ -62,12 +62,6 @@
 
         <!-- Drawer Item -->
 
-        <include
-            layout="@layout/show_wallet" />
-
-        <include
-            layout="@layout/activity_chosen_wallet"/>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -83,8 +77,6 @@
                 android:id="@+id/navigation_drawer_linearLayout_entries_root_view"
                 android:animateLayoutChanges="true">
 
-                <include
-                    layout="@layout/navigation_drawer_divider"/>
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_deal_details"

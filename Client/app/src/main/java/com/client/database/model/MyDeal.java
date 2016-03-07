@@ -41,6 +41,8 @@ public class MyDeal {
 
     public static ArrayList<String> listDealTypeMoney = new ArrayList<String>();
 
+    public static ArrayList<String> listDealGroupDetails = new ArrayList<>();
+
     public  MyDeal (){
         super();
     }

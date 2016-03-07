@@ -3,9 +3,13 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.app.FragmentManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -16,26 +20,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
-import com.client.database.model.MyWallet;
-import com.client.fragment.DealDetailsFragment;
+import com.client.database.model.User;
+import com.client.fragment.IncomeGroupFragment;
+import com.facebook.AccessToken;
 
 import java.util.Calendar;
 
 public class DealActivity extends Activity {
     private EditText  deal_Money, deal_Detail, deal_Date, eDate;
-    private String dealGroup, dealMoney, dealDetail, dealDate, dealTypemoney, dealWallet;
-    private Spinner spinnerW, spinnerGroup;
+    private String dealMoney, dealDetail, dealTypemoney, idUser, moneyType;
     private TextView addButton, clearButton, deal_TypeMoney;
     DataBaseHelper dataBaseHelper;
-    String[] spinnerValues = {"Thu vào", "Chi ra"};
-    int group_images[] = {R.drawable.ic_cash_in, R.drawable.ic_cash_out};
+    private Spinner spinner;
+    private TableRow pickGroup;
+    String[] spinnerValues = {"VNĐ", "USD", "EUR", "GBP"};
+    int money_images[] = {R.drawable.ic_currency_vnd, R.drawable.ic_currency_usd, R.drawable.ic_currency_eur, R.drawable.ic_currency_gbp};
 
     int day,month,year;
 
@@ -52,33 +60,34 @@ public class DealActivity extends Activity {
         deal_Date = (EditText) findViewById(R.id.edit_Date);
         deal_Date.setInputType(InputType.TYPE_NULL);
 
-        //spinner group
-        spinnerGroup = (Spinner) findViewById(R.id.spinnerGroup);
-        spinnerGroup.setAdapter(new MyAdapter(this, R.layout.custom_spinner_group, spinnerValues));
-        spinnerGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner = (Spinner) findViewById(R.id.spinner);
+
+        spinner.setAdapter(new MyAdapter(this, R.layout.custom_spinner_money_type, spinnerValues));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
+
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                dealGroup = parent.getItemAtPosition(position).toString();
+                moneyType = parent.getItemAtPosition(position).toString();
+                deal_TypeMoney.setText(moneyType);
+
             }
+
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
             }
+
         });
 
-        //spinner wallet
-        spinnerW = (Spinner) findViewById(R.id.spinner_wallet);
-        spinnerW.setAdapter(new ArrayAdapter<>(this,R.layout.custom_spinner_wallet, MyWallet.listWalletName));
-        spinnerW.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //pick group
+
+        pickGroup = (TableRow) findViewById(R.id.pickGroup);
+        pickGroup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                dealWallet = MyWallet.listWalletID.get(position);
-                deal_TypeMoney.setText(MyWallet.listWalletMoneyType.get(position));
-
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PickGroupActivity.class));
             }
         });
 
@@ -139,31 +148,34 @@ public class DealActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-//                dealGroup = deal_Group.getText().toString();
                 dealMoney = deal_Money.getText().toString();
                 dealTypemoney = deal_TypeMoney.getText().toString();
                 dealDetail = deal_Detail.getText().toString();
                 if (eDate != null)
                     Deal.setDealDate(eDate.getText().toString());
 
-                if(dealGroup == "Thu vào") {
-                    Deal.setDealGroup("1");
-                }else {
-                    Deal.setDealGroup("2");
-                }
-
                 Deal.setDealMoney(dealMoney);
                 Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
-                Deal.setWallet(dealWallet);
+                idUser = User.getIdNguoiDung();
+                SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
+                String facebookId = idFacebook.getString("idFB", "");
+                Deal.getUserFB().setFacebookID(facebookId);
+                Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (dealMoney.equals("") || dealDetail.equals("")) {
                     deal_Money.setError("Chưa điền thông tin");
                     deal_Detail.setError("Chưa điền thông tin");
                     return;
                 } else {
-                    dataBaseHelper.insertDeal();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    if(AccessToken.getCurrentAccessToken() != null){
+                        dataBaseHelper.insertDealbyFB();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }else {
+                        dataBaseHelper.insertDeal();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
+
 
 
                 }
@@ -211,28 +223,29 @@ public class DealActivity extends Activity {
 
 
     }
+
     public class MyAdapter extends ArrayAdapter <String> {
-        public MyAdapter(Context context, int txtViewResourceID, String[] objects) {
+        public MyAdapter (Context context, int txtViewResourceID, String[] objects) {
             super(context, txtViewResourceID, objects);
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        public View getDropDownView (int position, View convertView, ViewGroup parent)  {
             return getCustomView(position, convertView, parent);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView (int position, View convertView, ViewGroup parent) {
             return getCustomView(position, convertView, parent);
         }
 
-        public View getCustomView(int position, View convertView, ViewGroup parent) {
+        public View getCustomView (int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
-            View mySpinner = inflater.inflate(R.layout.custom_spinner_group, parent, false);
-            TextView text_typeMoney = (TextView) mySpinner.findViewById(R.id.text_Group);
+            View mySpinner = inflater.inflate(R.layout.custom_spinner_money_type, parent, false);
+            TextView text_typeMoney = (TextView) mySpinner.findViewById(R.id.text_typeMoney);
             text_typeMoney.setText(spinnerValues[position]);
-            ImageView image_group = (ImageView) mySpinner.findViewById(R.id.imageGroup);
-            image_group.setImageResource(group_images[position]);
+            ImageView image_typeMomey = (ImageView) mySpinner.findViewById(R.id.imageMoney);
+            image_typeMomey.setImageResource(money_images[position]);
             return mySpinner;
         }
     }

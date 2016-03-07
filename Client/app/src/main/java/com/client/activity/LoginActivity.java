@@ -87,15 +87,9 @@ public class LoginActivity extends Activity{
             editTextPassword.setText(loginPreferences.getString("password", ""));
             saveLoginCheckBox.setChecked(true);
             dataBaseHelper.login(loginPreferences.getString("email", ""), loginPreferences.getString("password", ""));
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(i);
 
-            if(dataBaseHelper.checkWalletExits(User.getIdNguoiDung())){
-                Intent intent = new Intent(getApplication(), WalletActivity2.class);
-                intent.putExtra("update", false);
-                startActivity(intent);
-            }else {
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
-            }
 
 
         }
@@ -122,14 +116,8 @@ public class LoginActivity extends Activity{
                             loginPrefsEditor.apply();
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
 
-                            if(dataBaseHelper.checkWalletExits(User.getIdNguoiDung())){
-                                Intent intent = new Intent(getApplication(), WalletActivity2.class);
-                                intent.putExtra("update", false);
-                                startActivity(intent);
-                            }else {
-                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(i);
-                            }
+                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(i);
 
 
 
@@ -161,14 +149,9 @@ public class LoginActivity extends Activity{
             String facebookEmail = idFacebook.getString("emailFB", "");
             dataBaseHelper.loginFB(facebookEmail, facebookName);
 
-            if(dataBaseHelper.checkWalletFbUserExits(UserFB.getFacebookID())){
-                Intent intent = new Intent(getApplication(), WalletActivity2.class);
-                intent.putExtra("update", false);
-                startActivity(intent);
-            }else {
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
-            }
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(i);
+
 
         }
 
@@ -209,14 +192,8 @@ public class LoginActivity extends Activity{
 
                                     dataBaseHelper.loginFB(emailFB, nameFB);
 
-                                    if (dataBaseHelper.checkWalletFbUserExits(UserFB.getFacebookID())) {
-                                        Intent intent = new Intent(getApplication(), WalletActivity2.class);
-                                        intent.putExtra("update", false);
-                                        startActivity(intent);
-                                    } else {
-                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(i);
-                                    }
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(i);
 
 
                                 } catch (JSONException e) {
