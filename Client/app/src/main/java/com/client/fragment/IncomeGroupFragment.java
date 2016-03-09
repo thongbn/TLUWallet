@@ -46,8 +46,9 @@ public class IncomeGroupFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyDeal.setDealGroup("1");
-                MyDeal.setDealGroupDetail(incomeText[position]);
-                MyDeal.setDealGroupImg(icons.getIndex(position));
+                MyDeal.setDealGroupDetailPos(position);
+                MyDeal.setDealGroupDetailName(incomeText[position]);
+                MyDeal.setDealGroupImg(icons.getDrawable(position));
                 startActivity(new Intent(rootView.getContext(), DealActivity.class));
             }
         });

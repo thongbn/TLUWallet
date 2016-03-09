@@ -1,5 +1,7 @@
 package com.client.database.model;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.ArrayList;
 
 /**
@@ -11,17 +13,9 @@ public class MyDeal {
 
     private static String dealGroup;
 
-    private static int dealGroupImg;
+    private static Drawable dealGroupImg;
 
     private static String dealMoney;
-
-    public static String getDealMoneyType() {
-        return dealMoneyType;
-    }
-
-    public static void setDealMoneyType(String dealMoneyType) {
-        MyDeal.dealMoneyType = dealMoneyType;
-    }
 
     private static String dealMoneyType;
 
@@ -29,7 +23,9 @@ public class MyDeal {
 
     private static String dealDate;
 
-    private static String dealGroupDetail;
+    private static int dealGroupDetailPos;
+
+    private static String dealGroupDetailName;
 
     public static ArrayList<String> listDealiD = new ArrayList<String>();
 
@@ -43,7 +39,7 @@ public class MyDeal {
 
     public static ArrayList<String> listDealTypeMoney = new ArrayList<String>();
 
-    public static ArrayList<String> listDealGroupDetails = new ArrayList<>();
+    public static ArrayList<Integer> listDealGroupDetails = new ArrayList<Integer>();
 
     public  MyDeal (){
         super();
@@ -89,21 +85,36 @@ public class MyDeal {
         MyDeal.dealDate = dealDate;
     }
 
-    public static String getDealGroupDetail() {
-        return dealGroupDetail;
+    public static int getDealGroupDetailPos() {
+        return dealGroupDetailPos;
     }
 
-    public static void setDealGroupDetail(String dealGroupDetail) {
-        MyDeal.dealGroupDetail = dealGroupDetail;
+    public static void setDealGroupDetailPos(int dealGroupDetailPos) {
+        MyDeal.dealGroupDetailPos = dealGroupDetailPos;
     }
 
-    public static int getDealGroupImg() {
+    public static Drawable getDealGroupImg() {
         return dealGroupImg;
     }
 
-    public static void setDealGroupImg(int dealGroupImg) {
+    public static void setDealGroupImg(Drawable dealGroupImg) {
         MyDeal.dealGroupImg = dealGroupImg;
     }
 
+    public static String getDealMoneyType() {
+        return dealMoneyType;
+    }
 
+    public static void setDealMoneyType(String dealMoneyType) {
+        MyDeal.dealMoneyType = dealMoneyType;
+    }
+
+
+    public static String getDealGroupDetailName() {
+        return dealGroupDetailName;
+    }
+
+    public static void setDealGroupDetailName(String dealGroupDetailName) {
+        MyDeal.dealGroupDetailName = dealGroupDetailName;
+    }
 }

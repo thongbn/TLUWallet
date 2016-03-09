@@ -57,7 +57,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     static final String DATABASE_CREATE_TABLE_DEAL = "create table " + DEAL_TABLE
             + "(" + DEAL_ID + " integer primary key autoincrement, "
             + DEAL_GROUP + " integer not null, "
-            + DEAL_GROUP_DETAILS + " text not null, "
+            + DEAL_GROUP_DETAILS + " integer not null, "
             + DEAL_MONEY + " text not null, "
             + DEAL_TYPE_MONEY + " text not null, "
             + DEAL_DETAIL + " text, "
@@ -280,7 +280,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
                 String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
-                String dealGroupDetails = c.getString(c.getColumnIndex(DEAL_GROUP_DETAILS));
+                Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
                 MyDeal.listDealiD.add(dealID);
                 MyDeal.listDealMoney.add(dealMoney);
                 MyDeal.listDealTypeMoney.add(dealTypeMoney);
@@ -313,7 +313,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
                 String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
-                String dealGroupDetails = c.getString(c.getColumnIndex(DEAL_GROUP_DETAILS));
+                Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
                 MyDeal.listDealiD.add(dealID);
                 MyDeal.listDealMoney.add(dealMoney);
                 MyDeal.listDealTypeMoney.add(dealTypeMoney);

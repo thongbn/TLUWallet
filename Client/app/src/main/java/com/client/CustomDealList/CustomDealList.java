@@ -13,6 +13,8 @@ import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.MyDeal;
 
+import java.util.Arrays;
+
 /**
  * Created by ToanNguyen on 03/03/2016.
  */
@@ -47,6 +49,7 @@ public class CustomDealList extends BaseAdapter {
             convertView = inflater.inflate(R.layout.custom_deal_detail, null);
             holder = new ViewHolder();
             holder.dateDeal = (TextView) convertView.findViewById(R.id.date_Deal);
+            holder.dealGroupDetails = (TextView) convertView.findViewById(R.id.txt_deal_group_details);
             holder.dealGroup = (TextView) convertView.findViewById(R.id.txtDealGroup);
             holder.dealDetails = (TextView) convertView.findViewById(R.id.txtDealDetail);
             holder.dealMoney = (TextView) convertView.findViewById(R.id.txtDealMoney);
@@ -61,9 +64,13 @@ public class CustomDealList extends BaseAdapter {
 
         if (MyDeal.listDealGroup.get(position).equals("1")){
             holder.dealGroup.setText("Thu nhập");
+            String income [] = convertView.getResources().getStringArray(R.array.income_categories);
+            holder.dealGroupDetails.setText(income[MyDeal.listDealGroupDetails.get(position)]);
             holder.transaction_image.setImageResource(R.drawable.ic_category_family);
         }else {
             holder.dealGroup.setText("Chi tiêu");
+            String outcome [] = convertView.getResources().getStringArray(R.array.outcome_categories);
+            holder.dealGroupDetails.setText(outcome[MyDeal.listDealGroupDetails.get(position)]);
             holder.transaction_image.setImageResource(R.drawable.ic_category_give);
         }
 
@@ -75,7 +82,7 @@ public class CustomDealList extends BaseAdapter {
     }
 
     static class ViewHolder {
-        TextView dateDeal , dealGroup, dealMoney, dealDetails;
+        TextView dateDeal , dealGroup, dealMoney, dealDetails, dealGroupDetails;
         ImageView transaction_image;
     }
 }

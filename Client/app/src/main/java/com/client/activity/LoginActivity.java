@@ -85,12 +85,15 @@ public class LoginActivity extends Activity{
         if (saveLogin == true) {
             editTextEmail.setText(loginPreferences.getString("email", ""));
             editTextPassword.setText(loginPreferences.getString("password", ""));
-            saveLoginCheckBox.setChecked(true);
-            dataBaseHelper.login(loginPreferences.getString("email", ""), loginPreferences.getString("password", ""));
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(i);
-
-
+            if(editTextEmail.equals("") || editTextPassword.equals("")){
+                editTextEmail.setError("Chưa có thông tin");
+                editTextPassword.setError("Chưa có thông tin");
+            }else {
+                saveLoginCheckBox.setChecked(true);
+                dataBaseHelper.login(loginPreferences.getString("email", ""), loginPreferences.getString("password", ""));
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+            }
 
         }
 

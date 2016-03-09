@@ -3,16 +3,12 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.app.FragmentManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -23,18 +19,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
 import com.client.database.model.User;
-import com.client.fragment.IncomeGroupFragment;
 import com.facebook.AccessToken;
 
 import java.util.Arrays;
@@ -100,15 +93,8 @@ public class DealActivity extends Activity {
         textGroup = (TextView) findViewById(R.id.textGroup);
         imgGroup = (ImageView) findViewById(R.id.imageGroup);
 
-        textGroup.setText(MyDeal.getDealGroupDetail());
-        Resources res = getApplicationContext().getResources();
-        final TypedArray icons = res.obtainTypedArray(R.array.income_img);
-        Drawable groupIcon = icons.getDrawable(MyDeal.getDealGroupImg());
-        if (groupIcon != null){
-            imgGroup.setImageDrawable(icons.getDrawable(MyDeal.getDealGroupImg()));
-        }
-
-
+        textGroup.setText(MyDeal.getDealGroupDetailName());
+        imgGroup.setImageDrawable(MyDeal.getDealGroupImg());
 
         //money
         deal_Money.addTextChangedListener(new TextWatcher() {
@@ -177,7 +163,7 @@ public class DealActivity extends Activity {
                 Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
                 Deal.setDealGroup(MyDeal.getDealGroup());
-                Deal.setDealGroupDetails(MyDeal.getDealGroupDetail());
+                Deal.setDealGroupDetails(MyDeal.getDealGroupDetailPos());
                 idUser = User.getIdNguoiDung();
                 SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
                 String facebookId = idFacebook.getString("idFB", "");

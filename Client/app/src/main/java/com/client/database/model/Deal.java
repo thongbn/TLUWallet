@@ -1,5 +1,7 @@
 package com.client.database.model;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Date;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Date;
 public class Deal {
     private static String idDeal;
     private static String dealGroup;
-    private static String dealGroupDetails;
+    private static int dealGroupDetails;
     private static String dealMoney;
     private static String dealTypeMoney;
     private static String dealDetail;
@@ -36,11 +38,11 @@ public class Deal {
         Deal.dealGroup = dealGroup;
     }
 
-    public static String getDealGroupDetails() {
+    public static int getDealGroupDetails() {
         return dealGroupDetails;
     }
 
-    public static void setDealGroupDetails(String dealGroupDetails) {
+    public static void setDealGroupDetails(int dealGroupDetails) {
         Deal.dealGroupDetails = dealGroupDetails;
     }
 

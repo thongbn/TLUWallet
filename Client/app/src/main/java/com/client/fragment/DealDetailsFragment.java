@@ -38,14 +38,6 @@ public class DealDetailsFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
         FacebookSdk.sdkInitialize(rootView.getContext());
 
-        dataBaseHelper = new DataBaseHelper(rootView.getContext());
-
-        if (AccessToken.getCurrentAccessToken() != null){
-            dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());
-        }else {
-            dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung());
-        }
-
         //Floating action button
 
         FAB = (FloatingActionButton) rootView.findViewById(R.id.imageButton);

@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.client.R;
+import com.client.database.DataBaseHelper;
+import com.client.database.model.Deal;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.HelpFragment;
@@ -39,12 +41,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout mFrameLayout_AccountView;
     private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
     private SharedPreferences loginPreferences;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
+        if (AccessToken.getCurrentAccessToken() != null){
+            dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());
+        }else {
+            dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung());
+        }
 
         initialise();
 

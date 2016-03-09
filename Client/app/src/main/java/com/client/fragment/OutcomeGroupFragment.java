@@ -1,6 +1,7 @@
 package com.client.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -8,10 +9,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.client.CustomAdapter.CustomIncomeGroup;
 import com.client.R;
+import com.client.activity.DealActivity;
+import com.client.database.model.MyDeal;
 
 /**
  * Created by ToanNguyen on 07/03/2016.
@@ -31,10 +35,20 @@ public class OutcomeGroupFragment extends Fragment{
             Context context = rootView.getContext();
             outcomeText = getResources().getStringArray(R.array.outcome_categories);
             Resources res = context.getResources();
-            TypedArray icons = res.obtainTypedArray(R.array.outcome_img);
+            final TypedArray icons = res.obtainTypedArray(R.array.outcome_img);
             listView = (ListView) rootView.findViewById(R.id.list_outcome_categories);
             listView.setAdapter(new CustomIncomeGroup(rootView.getContext(), outcomeText, icons));
 
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MyDeal.setDealGroup("2");
+                MyDeal.setDealGroupDetailName(outcomeText[position]);
+                MyDeal.setDealGroupDetailPos(position);
+                MyDeal.setDealGroupImg(icons.getDrawable(position));
+                startActivity(new Intent(rootView.getContext(), DealActivity.class));
+            }
+        });
 
             return rootView;
         }

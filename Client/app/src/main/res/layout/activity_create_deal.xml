@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollHorizontally="false"
-                android:maxLength ="8"
+                android:maxLength ="13"
                 android:ems="10"
                 android:textColor="@color/black"
                 android:singleLine="true"
