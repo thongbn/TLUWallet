@@ -8,6 +8,8 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.FragmentManager;
@@ -99,7 +101,13 @@ public class DealActivity extends Activity {
         imgGroup = (ImageView) findViewById(R.id.imageGroup);
 
         textGroup.setText(MyDeal.getDealGroupDetail());
-        imgGroup.setImageResource(groupIMG);
+        Resources res = getApplicationContext().getResources();
+        final TypedArray icons = res.obtainTypedArray(R.array.income_img);
+        Drawable groupIcon = icons.getDrawable(MyDeal.getDealGroupImg());
+        if (groupIcon != null){
+            imgGroup.setImageDrawable(icons.getDrawable(MyDeal.getDealGroupImg()));
+        }
+
 
 
         //money
