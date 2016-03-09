@@ -6,11 +6,14 @@ import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.client.R;
+import com.client.database.model.MyDeal;
 import com.client.fragment.IncomeGroupFragment;
 
 /**
@@ -21,6 +24,7 @@ public class CustomIncomeGroup extends BaseAdapter{
     private String [] income_categories;
     private TypedArray income_categories_img;
     private Context context;
+    private ListView listIncome;
 
     public CustomIncomeGroup (Context context, String [] income_text, TypedArray income_img){
         super();

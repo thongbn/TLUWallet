@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.text.Editable;
@@ -29,16 +30,19 @@ import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
+import com.client.database.model.MyDeal;
 import com.client.database.model.User;
 import com.client.fragment.IncomeGroupFragment;
 import com.facebook.AccessToken;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class DealActivity extends Activity {
     private EditText  deal_Money, deal_Detail, deal_Date, eDate;
+    private ImageView imgGroup;
     private String dealMoney, dealDetail, dealTypemoney, idUser, moneyType;
-    private TextView addButton, clearButton, deal_TypeMoney;
+    private TextView addButton, clearButton, deal_TypeMoney, textGroup;
     DataBaseHelper dataBaseHelper;
     private Spinner spinner;
     private TableRow pickGroup;
@@ -90,6 +94,13 @@ public class DealActivity extends Activity {
                 startActivity(new Intent(getApplicationContext(), PickGroupActivity.class));
             }
         });
+
+        textGroup = (TextView) findViewById(R.id.textGroup);
+        imgGroup = (ImageView) findViewById(R.id.imageGroup);
+
+        textGroup.setText(MyDeal.getDealGroupDetail());
+        imgGroup.setImageResource(groupIMG);
+
 
         //money
         deal_Money.addTextChangedListener(new TextWatcher() {
@@ -157,13 +168,15 @@ public class DealActivity extends Activity {
                 Deal.setDealMoney(dealMoney);
                 Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
+                Deal.setDealGroup(MyDeal.getDealGroup());
+                Deal.setDealGroupDetails(MyDeal.getDealGroupDetail());
                 idUser = User.getIdNguoiDung();
                 SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
                 String facebookId = idFacebook.getString("idFB", "");
                 Deal.getUserFB().setFacebookID(facebookId);
                 Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
-                if (dealMoney.equals("") || dealDetail.equals("")) {
+                if (dealMoney.equals("") || dealDetail.equals("") || textGroup.equals("")) {
                     deal_Money.setError("Chưa điền thông tin");
                     deal_Detail.setError("Chưa điền thông tin");
                     return;

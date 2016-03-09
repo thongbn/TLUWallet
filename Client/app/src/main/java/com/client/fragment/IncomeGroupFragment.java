@@ -2,6 +2,7 @@ package com.client.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.ListView;
 
 import com.client.CustomAdapter.CustomIncomeGroup;
 import com.client.R;
+import com.client.activity.DealActivity;
+import com.client.database.model.MyDeal;
 
 /**
  * Created by ToanNguyen on 07/03/2016.
@@ -34,7 +37,7 @@ public class IncomeGroupFragment extends Fragment{
         Context context = rootView.getContext();
         incomeText = getResources().getStringArray(R.array.income_categories);
         Resources res = context.getResources();
-        TypedArray icons = res.obtainTypedArray(R.array.income_img);
+        final TypedArray icons = res.obtainTypedArray(R.array.income_img);
 
         listView = (ListView) rootView.findViewById(R.id.list_income_categories);
         listView.setAdapter(new CustomIncomeGroup(rootView.getContext(), incomeText, icons));
@@ -42,7 +45,10 @@ public class IncomeGroupFragment extends Fragment{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                MyDeal.setDealGroup("1");
+                MyDeal.setDealGroupDetail(incomeText[position]);
+//                MyDeal.setDealGroupImg(icons.getI(position));
+                startActivity(new Intent(rootView.getContext(), DealActivity.class));
             }
         });
 

@@ -11,6 +11,8 @@ public class MyDeal {
 
     private static String dealGroup;
 
+    private static int dealGroupImg;
+
     private static String dealMoney;
 
     public static String getDealMoneyType() {
@@ -27,7 +29,7 @@ public class MyDeal {
 
     private static String dealDate;
 
-    private static String walletID;
+    private static String dealGroupDetail;
 
     public static ArrayList<String> listDealiD = new ArrayList<String>();
 
@@ -87,12 +89,21 @@ public class MyDeal {
         MyDeal.dealDate = dealDate;
     }
 
-    public static String getWalletID() {
-        return walletID;
+    public static String getDealGroupDetail() {
+        return dealGroupDetail;
     }
 
-    public static void setWalletID(String walletID) {
-        MyDeal.walletID = walletID;
+    public static void setDealGroupDetail(String dealGroupDetail) {
+        MyDeal.dealGroupDetail = dealGroupDetail;
     }
+
+    public static int getDealGroupImg() {
+        return dealGroupImg;
+    }
+
+    public static void setDealGroupImg(int dealGroupImg) {
+        MyDeal.dealGroupImg = dealGroupImg;
+    }
+
 
 }

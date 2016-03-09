@@ -34,11 +34,11 @@
 
             <TextView
                 android:id="@+id/textGroup"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25dp"
-                android:text="Chọn nhóm" />
+                android:hint="Chọn nhóm"
+                android:layout_marginTop="5dp"/>
 
         </TableRow>
 
