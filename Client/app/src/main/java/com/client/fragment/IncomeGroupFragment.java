@@ -43,10 +43,11 @@ public class IncomeGroupFragment extends Fragment{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MyDeal.setDealGroup("1");
-                MyDeal.setDealGroupDetailPos(position);
-                MyDeal.setDealGroupDetailName(incomeText[position]);
-                MyDeal.setDealGroupImg(income[position]);
+                MyDeal myDeal = new MyDeal();
+                myDeal.setDealGroup(1);
+                myDeal.setDealGroupDetailPos(position);
+                myDeal.setDealGroupDetailName(incomeText[position]);
+                myDeal.setDealGroupImg(income[position]);
                 startActivity(new Intent(rootView.getContext(), DealActivity.class));
             }
         });

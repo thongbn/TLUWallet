@@ -45,10 +45,11 @@ public class OutcomeGroupFragment extends Fragment{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MyDeal.setDealGroup("2");
-                MyDeal.setDealGroupDetailName(outcomeText[position]);
-                MyDeal.setDealGroupDetailPos(position);
-                MyDeal.setDealGroupImg(outcome[position]);
+                MyDeal mydeal = new MyDeal();
+                mydeal.setDealGroup(2);
+                mydeal.setDealGroupDetailName(outcomeText[position]);
+                mydeal.setDealGroupDetailPos(position);
+                mydeal.setDealGroupImg(outcome[position]);
                 startActivity(new Intent(rootView.getContext(), DealActivity.class));
             }
         });

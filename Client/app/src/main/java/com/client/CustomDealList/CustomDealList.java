@@ -63,7 +63,7 @@ public class CustomDealList extends BaseAdapter {
 
         holder.dateDeal.setText(MyDeal.listDealDate.get(position));
 
-        if (MyDeal.listDealGroup.get(position).equals("1")){
+        if (MyDeal.listDealGroup.get(position).equals(1)){
             holder.dealGroup.setText("Thu nhập");
             String income [] = convertView.getResources().getStringArray(R.array.income_categories);
             holder.dealGroupDetails.setText(income[MyDeal.listDealGroupDetailsPos.get(position)]);

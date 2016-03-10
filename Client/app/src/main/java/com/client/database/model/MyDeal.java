@@ -11,7 +11,7 @@ public class MyDeal {
 
     private static String idDeal;
 
-    private static String dealGroup;
+    private static int dealGroup;
 
     private static int dealGroupImg;
 
@@ -29,7 +29,7 @@ public class MyDeal {
 
     public static ArrayList<String> listDealiD = new ArrayList<String>();
 
-    public static ArrayList<String> listDealGroup = new ArrayList<String>();
+    public static ArrayList<Integer> listDealGroup = new ArrayList<Integer>();
 
     public static ArrayList<String> listDealMoney = new ArrayList<String>();
 
@@ -55,11 +55,11 @@ public class MyDeal {
         MyDeal.idDeal = idDeal;
     }
 
-    public static String getDealGroup() {
+    public static int getDealGroup() {
         return dealGroup;
     }
 
-    public static void setDealGroup(String dealGroup) {
+    public static void setDealGroup(int dealGroup) {
         MyDeal.dealGroup = dealGroup;
     }
 

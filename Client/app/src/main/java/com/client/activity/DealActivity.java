@@ -30,7 +30,7 @@ import com.facebook.AccessToken;
 import java.util.Calendar;
 
 public class DealActivity extends Activity {
-    private EditText  deal_Money, deal_Detail, deal_Date, eDate;
+    private EditText  deal_Money, deal_Detail, eDate;
     private ImageView imgGroup;
     private String dealMoney, dealDetail, dealTypemoney, idUser, moneyType;
     private TextView addButton, clearButton, deal_TypeMoney, textGroup;
@@ -52,8 +52,7 @@ public class DealActivity extends Activity {
         deal_Money = (EditText) findViewById(R.id.edit_Money);
         deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
         deal_Detail = (EditText) findViewById(R.id.edit_Detail);
-        deal_Date = (EditText) findViewById(R.id.edit_Date);
-        deal_Date.setInputType(InputType.TYPE_NULL);
+        eDate=(EditText) findViewById(R.id.edit_Date);
 
         spinner = (Spinner) findViewById(R.id.spinner);
 
@@ -142,7 +141,7 @@ public class DealActivity extends Activity {
         });
 
         setListener();
-        deal_Date.setOnClickListener(new View.OnClickListener() {
+        eDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(113);
@@ -224,7 +223,7 @@ public class DealActivity extends Activity {
         }
     };
     private void setListener(){
-        eDate=(EditText) findViewById(R.id.edit_Date);
+        eDate.setInputType(InputType.TYPE_NULL);
         Calendar cal=Calendar.getInstance();
         day=cal.get(Calendar.DAY_OF_MONTH);
         month=cal.get(Calendar.MONTH);

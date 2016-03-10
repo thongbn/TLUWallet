@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Deal {
     private static String idDeal;
-    private static String dealGroup;
+    private static int dealGroup;
     private static int dealGroupDetailsPos;
 
     public static int getDealGroupIcon() {
@@ -40,11 +40,11 @@ public class Deal {
         Deal.idDeal = idDeal;
     }
 
-    public static String getDealGroup(){
+    public static int getDealGroup(){
         return  dealGroup;
     }
 
-    public static void setDealGroup(String dealGroup){
+    public static void setDealGroup(int dealGroup){
         Deal.dealGroup = dealGroup;
     }
 

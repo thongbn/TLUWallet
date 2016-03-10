@@ -241,7 +241,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
         values.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         values.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
-        values.put(DataBaseHelper.DEAL_DATE, formatter.format(Deal.getDealDate()));
+        values.put(DataBaseHelper.DEAL_DATE, (Deal.getDealDate()));
         values.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
 
         String where = DataBaseHelper.DEAL_ID + " = ? ";
@@ -268,7 +268,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String dealTypeMoney = c.getString(c.getColumnIndex(DEAL_TYPE_MONEY));
                 String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
-                String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
+                Integer dealGroup = c.getInt(c.getColumnIndex(DEAL_GROUP));
                 Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
                 Integer dealGroupIcon = c.getInt(c.getColumnIndex(DEAL_GROUP_ICON));
 
@@ -304,7 +304,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String dealTypeMoney = c.getString(c.getColumnIndex(DEAL_TYPE_MONEY));
                 String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
-                String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
+                Integer dealGroup = c.getInt(c.getColumnIndex(DEAL_GROUP));
                 Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
                 Integer dealGroupIcon = c.getInt(c.getColumnIndex(DEAL_GROUP_ICON));
 
