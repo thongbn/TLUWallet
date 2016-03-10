@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
+import com.client.database.model.MyDeal;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.HelpFragment;
@@ -50,6 +51,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
+        MyDeal.listDealGroupDetailsPos.clear();
+        MyDeal.listDealGroup.clear();
+        MyDeal.listDealGroupIcon.clear();
+        MyDeal.listDealiD.clear();
+        MyDeal.listDealDetails.clear();
+        MyDeal.listDealMoney.clear();
+        MyDeal.listDealTypeMoney.clear();
+        MyDeal.listDealDate.clear();
 
         if (AccessToken.getCurrentAccessToken() != null){
             dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());

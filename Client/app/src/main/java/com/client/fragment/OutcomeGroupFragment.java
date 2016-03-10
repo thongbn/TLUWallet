@@ -24,6 +24,9 @@ public class OutcomeGroupFragment extends Fragment{
 
     private ListView listView;
     private String [] outcomeText;
+    private int outcome [] = {R.drawable.ic_category_travel, R.drawable.ic_category_foodndrink, R.drawable.ic_category_entertainment, R.drawable.ic_category_friendnlover,
+            R.drawable.ic_category_family, R.drawable.ic_category_transport, R.drawable.ic_category_medical, R.drawable.ic_category_education, R.drawable.ic_category_shopping,
+            R.drawable.ic_category_invest, R.drawable.ic_category_other_expense};
 
 
     @Override
@@ -34,18 +37,18 @@ public class OutcomeGroupFragment extends Fragment{
 
             Context context = rootView.getContext();
             outcomeText = getResources().getStringArray(R.array.outcome_categories);
-            Resources res = context.getResources();
-            final TypedArray icons = res.obtainTypedArray(R.array.outcome_img);
+//            Resources res = context.getResources();
+//            final TypedArray icons = res.obtainTypedArray(R.array.outcome_img);
             listView = (ListView) rootView.findViewById(R.id.list_outcome_categories);
-            listView.setAdapter(new CustomIncomeGroup(rootView.getContext(), outcomeText, icons));
+            listView.setAdapter(new CustomIncomeGroup(rootView.getContext(), outcomeText, outcome));
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyDeal.setDealGroup("2");
                 MyDeal.setDealGroupDetailName(outcomeText[position]);
                 MyDeal.setDealGroupDetailPos(position);
-                MyDeal.setDealGroupImg(icons.getDrawable(position));
+                MyDeal.setDealGroupImg(outcome[position]);
                 startActivity(new Intent(rootView.getContext(), DealActivity.class));
             }
         });

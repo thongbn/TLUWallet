@@ -6,8 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -29,8 +27,6 @@ import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
 import com.client.database.model.User;
 import com.facebook.AccessToken;
-
-import java.util.Arrays;
 import java.util.Calendar;
 
 public class DealActivity extends Activity {
@@ -94,7 +90,13 @@ public class DealActivity extends Activity {
         imgGroup = (ImageView) findViewById(R.id.imageGroup);
 
         textGroup.setText(MyDeal.getDealGroupDetailName());
-        imgGroup.setImageDrawable(MyDeal.getDealGroupImg());
+
+        if (MyDeal.getDealGroupImg() != 0){
+            imgGroup.setImageResource(MyDeal.getDealGroupImg());
+        } else {
+            imgGroup.setImageResource(R.drawable.ic_category_all);
+        }
+
 
         //money
         deal_Money.addTextChangedListener(new TextWatcher() {
@@ -163,7 +165,8 @@ public class DealActivity extends Activity {
                 Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
                 Deal.setDealGroup(MyDeal.getDealGroup());
-                Deal.setDealGroupDetails(MyDeal.getDealGroupDetailPos());
+                Deal.setDealGroupDetailsPos(MyDeal.getDealGroupDetailPos());
+                Deal.setDealGroupIcon(MyDeal.getDealGroupImg());
                 idUser = User.getIdNguoiDung();
                 SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
                 String facebookId = idFacebook.getString("idFB", "");

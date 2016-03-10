@@ -40,6 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             DEAL_ID = "idDeal",
             DEAL_GROUP = "dealGroup",
             DEAL_GROUP_DETAILS = "dealGroupDetails",
+            DEAL_GROUP_ICON = "dealGroupIcon",
             DEAL_MONEY = "dealMoney",
             DEAL_TYPE_MONEY = "dealTypeMoney",
             DEAL_DETAIL = "dealDetail",
@@ -58,6 +59,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + "(" + DEAL_ID + " integer primary key autoincrement, "
             + DEAL_GROUP + " integer not null, "
             + DEAL_GROUP_DETAILS + " integer not null, "
+            + DEAL_GROUP_ICON + " int not null, "
             + DEAL_MONEY + " text not null, "
             + DEAL_TYPE_MONEY + " text not null, "
             + DEAL_DETAIL + " text, "
@@ -196,20 +198,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void insertDeal(){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
-        contentValues.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetails());
+        contentValues.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetailsPos());
+        contentValues.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
         contentValues.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
         contentValues.put(DataBaseHelper.DEAL_USER_ID, Deal.getUser().getIdNguoiDung());
-
-        MyDeal.listDealGroupDetails.add(Deal.getDealGroupDetails());
-        MyDeal.listDealGroup.add(Deal.getDealGroup());
-        MyDeal.listDealTypeMoney.add(Deal.getDealTypeMoney());
-        MyDeal.listDealDate.add(Deal.getDealDate());
-        MyDeal.listDealMoney.add(Deal.getDealMoney());
-        MyDeal.listDealiD.add(Deal.getIdDeal());
-        MyDeal.listDealDetails.add(Deal.getDealDetail());
 
         db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
     }
@@ -217,20 +212,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void insertDealbyFB(){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
-        contentValues.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetails());
+        contentValues.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetailsPos());
+        contentValues.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
         contentValues.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
         contentValues.put(DataBaseHelper.DEAL_USER_ID, Deal.getUserFB().getFacebookID());
-
-        MyDeal.listDealGroupDetails.add(Deal.getDealGroupDetails());
-        MyDeal.listDealGroup.add(Deal.getDealGroup());
-        MyDeal.listDealTypeMoney.add(Deal.getDealTypeMoney());
-        MyDeal.listDealDate.add(Deal.getDealDate());
-        MyDeal.listDealMoney.add(Deal.getDealMoney());
-        MyDeal.listDealiD.add(Deal.getIdDeal());
-        MyDeal.listDealDetails.add(Deal.getDealDetail());
 
         db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
     }
@@ -249,11 +237,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void updateDeal(String id){
         ContentValues values = new ContentValues();
         values.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
-        values.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetails());
+        values.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetailsPos());
         values.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
         values.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         values.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         values.put(DataBaseHelper.DEAL_DATE, formatter.format(Deal.getDealDate()));
+        values.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
 
         String where = DataBaseHelper.DEAL_ID + " = ? ";
         db.update(DataBaseHelper.DEAL_TABLE, values, where, new String[]{id});
@@ -261,7 +250,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private Cursor getDealbyID(String dID) {
         db = this.getWritableDatabase();
-        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS };
+        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
         String where = DEAL_USER_ID + "=?";
         String[] whereArgs = new String[]{dID+""};
         Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
@@ -281,20 +270,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
                 String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
                 Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
+                Integer dealGroupIcon = c.getInt(c.getColumnIndex(DEAL_GROUP_ICON));
+
                 MyDeal.listDealiD.add(dealID);
                 MyDeal.listDealMoney.add(dealMoney);
                 MyDeal.listDealTypeMoney.add(dealTypeMoney);
                 MyDeal.listDealDate.add(dealDate);
                 MyDeal.listDealDetails.add(dealDetail);
                 MyDeal.listDealGroup.add(dealGroup);
-                MyDeal.listDealGroupDetails.add(dealGroupDetails);
+                MyDeal.listDealGroupDetailsPos.add(dealGroupDetails);
+                MyDeal.listDealGroupIcon.add(dealGroupIcon);
             }
         }
     }
 
     private Cursor getDealbyFbID(String dID) {
         db = this.getWritableDatabase();
-        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS };
+        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
         String where = DEAL_FB_ID + "=?";
         String[] whereArgs = new String[]{dID+""};
         Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
@@ -302,7 +294,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void getDealbyFB (String dID) {
-        Cursor c = getDealbyID(dID);
+        Cursor c = getDealbyFbID(dID);
 
         if(c != null)
         {
@@ -314,13 +306,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
                 String dealGroup = c.getString(c.getColumnIndex(DEAL_GROUP));
                 Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
+                Integer dealGroupIcon = c.getInt(c.getColumnIndex(DEAL_GROUP_ICON));
+
                 MyDeal.listDealiD.add(dealID);
                 MyDeal.listDealMoney.add(dealMoney);
                 MyDeal.listDealTypeMoney.add(dealTypeMoney);
                 MyDeal.listDealDate.add(dealDate);
                 MyDeal.listDealDetails.add(dealDetail);
                 MyDeal.listDealGroup.add(dealGroup);
-                MyDeal.listDealGroupDetails.add(dealGroupDetails);
+                MyDeal.listDealGroupDetailsPos.add(dealGroupDetails);
+                MyDeal.listDealGroupIcon.add(dealGroupIcon);
             }
         }
     }

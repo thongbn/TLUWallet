@@ -2,6 +2,7 @@ package com.client.CustomDealList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +66,13 @@ public class CustomDealList extends BaseAdapter {
         if (MyDeal.listDealGroup.get(position).equals("1")){
             holder.dealGroup.setText("Thu nhập");
             String income [] = convertView.getResources().getStringArray(R.array.income_categories);
-            holder.dealGroupDetails.setText(income[MyDeal.listDealGroupDetails.get(position)]);
-            holder.transaction_image.setImageResource(R.drawable.ic_category_family);
+            holder.dealGroupDetails.setText(income[MyDeal.listDealGroupDetailsPos.get(position)]);
+            holder.transaction_image.setImageResource(MyDeal.listDealGroupIcon.get(position));
         }else {
             holder.dealGroup.setText("Chi tiêu");
             String outcome [] = convertView.getResources().getStringArray(R.array.outcome_categories);
-            holder.dealGroupDetails.setText(outcome[MyDeal.listDealGroupDetails.get(position)]);
-            holder.transaction_image.setImageResource(R.drawable.ic_category_give);
+            holder.dealGroupDetails.setText(outcome[MyDeal.listDealGroupDetailsPos.get(position)]);
+            holder.transaction_image.setImageResource(MyDeal.listDealGroupIcon.get(position));
         }
 
         holder.dealDetails.setText(MyDeal.listDealDetails.get(position));

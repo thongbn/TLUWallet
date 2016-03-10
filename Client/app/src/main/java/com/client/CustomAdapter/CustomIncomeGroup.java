@@ -22,11 +22,11 @@ import com.client.fragment.IncomeGroupFragment;
 public class CustomIncomeGroup extends BaseAdapter{
 
     private String [] income_categories;
-    private TypedArray income_categories_img;
+    private int [] income_categories_img;
     private Context context;
     private ListView listIncome;
 
-    public CustomIncomeGroup (Context context, String [] income_text, TypedArray income_img){
+    public CustomIncomeGroup (Context context, String [] income_text, int [] income_img){
         super();
         this.context = context;
         income_categories = income_text;
@@ -74,7 +74,7 @@ public class CustomIncomeGroup extends BaseAdapter{
         }
 
         holder.tv.setText(income_categories[position]);
-        holder.img.setImageDrawable(income_categories_img.getDrawable(position));
+        holder.img.setImageResource(income_categories_img[position]);
 
         return convertView;
     }

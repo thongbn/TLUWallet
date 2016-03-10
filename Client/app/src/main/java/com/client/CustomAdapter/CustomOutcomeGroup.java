@@ -17,10 +17,10 @@ import com.client.R;
  */
 public class CustomOutcomeGroup extends BaseAdapter{
     private String [] outcome_categories;
-    private TypedArray outcome_categories_img;
+    private int [] outcome_categories_img;
     private Context context;
 
-    public CustomOutcomeGroup (Context context, String [] outcome_text, TypedArray outcome_img){
+    public CustomOutcomeGroup (Context context, String [] outcome_text, int [] outcome_img){
         super();
         this.context = context;
         outcome_categories = outcome_text;
@@ -68,7 +68,7 @@ public class CustomOutcomeGroup extends BaseAdapter{
         }
 
         holder.tv.setText(outcome_categories[position]);
-        holder.img.setImageDrawable(outcome_categories_img.getDrawable(position));
+        holder.img.setImageResource(outcome_categories_img[position]);
 
         return convertView;
     }

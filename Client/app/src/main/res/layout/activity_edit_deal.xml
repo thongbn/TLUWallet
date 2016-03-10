@@ -21,24 +21,20 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp">
 
-            <TextView
-                android:id="@+id/dGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nhóm"
-                android:textSize="20sp"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <ImageView
+                android:id="@+id/dGroupImg"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_category_all"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/dGroupDetails"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_marginLeft="8dip"
-                android:drawSelectorOnTop="true"
+                android:textSize="25dp"
                 android:hint="Chọn nhóm"
-                android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:layout_marginTop="5dp"/>
 
         </TableRow>
 
@@ -62,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollHorizontally="false"
-                android:maxLength ="8"
+                android:maxLength ="13"
                 android:ems="10"
                 android:textColor="@color/black"
                 android:singleLine="true"

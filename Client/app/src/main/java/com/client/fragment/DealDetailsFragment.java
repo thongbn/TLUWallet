@@ -2,6 +2,7 @@ package com.client.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,13 +27,12 @@ public class DealDetailsFragment extends Fragment {
     private ListView listDeal;
     private FloatingActionButton FAB;
     private TextView totalIncome, totalOutcome;
-    private DataBaseHelper dataBaseHelper;
     private CustomDealList adapter;
 
     public DealDetailsFragment (){}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
@@ -67,6 +67,8 @@ public class DealDetailsFragment extends Fragment {
                 intent.putExtra("DTypeMoney", MyDeal.listDealTypeMoney.get(position));
                 intent.putExtra("DGroup", MyDeal.listDealGroup.get(position));
                 intent.putExtra("DDate", MyDeal.listDealDate.get(position));
+                intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position));
+                intent.putExtra("DGroupDetails", MyDeal.listDealGroupDetailsPos.get(position));
                 intent.putExtra("update", true);
                 startActivity(intent);
             }

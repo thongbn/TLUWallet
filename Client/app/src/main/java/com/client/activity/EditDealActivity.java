@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -14,10 +15,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
+import com.client.database.model.MyDeal;
 import com.client.database.model.User;
 import com.client.fragment.DealDetailsFragment;
 
@@ -30,11 +33,12 @@ public class EditDealActivity extends Activity{
 
     private EditText deal_Money, deal_Detail, deal_Date, eDate;
     private String dealGroup, dealMoney, dealDetail, dealDate, dealTypemoney, idUser, dealID;
-    private Spinner spinnerW, spinnerGroup;
-    private TextView addButton, clearButton, deal_TypeMoney;
+    private Integer dealGroupDetailsPos, dealIcon;
+    private TextView saveButton, clearButton, deal_TypeMoney, dealGroupText;
     DataBaseHelper dataBaseHelper;
-    private ImageView deleteButton;
+    private ImageView deleteButton, dealGroupIcon;
     private boolean isUpdate;
+    private TableRow pickGroup;
 
     int day,month,year;
     @Override
@@ -50,6 +54,17 @@ public class EditDealActivity extends Activity{
         deal_Detail = (EditText) findViewById(R.id.edit_Detail_Deal);
         deal_Date = (EditText) findViewById(R.id.edit_Date_Deal);
         deal_Date.setInputType(InputType.TYPE_NULL);
+        dealGroupText = (TextView) findViewById(R.id.dGroupDetails);
+        dealGroupIcon = (ImageView)findViewById(R.id.dGroupImg);
+
+
+        pickGroup = (TableRow) findViewById(R.id.dRowEditGroup);
+        pickGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PickGroupActivity.class));
+            }
+        });
 
         //money
         deal_Money.addTextChangedListener(new TextWatcher() {
@@ -94,7 +109,6 @@ public class EditDealActivity extends Activity{
             }
         });
 
-        setListener();
         deal_Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,14 +123,22 @@ public class EditDealActivity extends Activity{
             dealTypemoney = getIntent().getExtras().getString("DTypeMoney");
             dealDate = getIntent().getExtras().getString("DDate");
             dealGroup = getIntent().getExtras().getString("DGroup");
+            dealGroupDetailsPos = getIntent().getExtras().getInt("DGroupDetails");
+            dealIcon = getIntent().getExtras().getInt("DGroupImg");
 
             deal_Money.setText(dealMoney);
             deal_TypeMoney.setText(dealTypemoney);
             deal_Detail.setText(dealDetail);
             deal_Date.setText(dealDate);
+            String income [] = getResources().getStringArray(R.array.income_categories);
+            dealGroupText.setText(income[dealGroupDetailsPos]);
+
+            dealGroupIcon.setImageResource(dealIcon);
         }
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        setListener();
+        saveButton = (TextView) findViewById(R.id.saveDeal_action_text);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dealMoney = deal_Money.getText().toString();
@@ -128,6 +150,9 @@ public class EditDealActivity extends Activity{
                 Deal.setDealMoney(dealMoney);
                 Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
+                Deal.setDealGroup(MyDeal.getDealGroup());
+                Deal.setDealGroupDetailsPos(MyDeal.getDealGroupDetailPos());
+                Deal.setDealGroupIcon(MyDeal.getDealGroupImg());
                 idUser = User.getIdNguoiDung();
                 SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
                 String facebookId = idFacebook.getString("idFB", "");

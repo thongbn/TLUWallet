@@ -10,7 +10,17 @@ import java.util.Date;
 public class Deal {
     private static String idDeal;
     private static String dealGroup;
-    private static int dealGroupDetails;
+    private static int dealGroupDetailsPos;
+
+    public static int getDealGroupIcon() {
+        return dealGroupIcon;
+    }
+
+    public static void setDealGroupIcon(int dealGroupIcon) {
+        Deal.dealGroupIcon = dealGroupIcon;
+    }
+
+    private static int dealGroupIcon;
     private static String dealMoney;
     private static String dealTypeMoney;
     private static String dealDetail;
@@ -38,12 +48,12 @@ public class Deal {
         Deal.dealGroup = dealGroup;
     }
 
-    public static int getDealGroupDetails() {
-        return dealGroupDetails;
+    public static int getDealGroupDetailsPos() {
+        return dealGroupDetailsPos;
     }
 
-    public static void setDealGroupDetails(int dealGroupDetails) {
-        Deal.dealGroupDetails = dealGroupDetails;
+    public static void setDealGroupDetailsPos(int dealGroupDetailsPos) {
+        Deal.dealGroupDetailsPos = dealGroupDetailsPos;
     }
 
 

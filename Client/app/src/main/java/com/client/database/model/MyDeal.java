@@ -13,7 +13,7 @@ public class MyDeal {
 
     private static String dealGroup;
 
-    private static Drawable dealGroupImg;
+    private static int dealGroupImg;
 
     private static String dealMoney;
 
@@ -39,7 +39,9 @@ public class MyDeal {
 
     public static ArrayList<String> listDealTypeMoney = new ArrayList<String>();
 
-    public static ArrayList<Integer> listDealGroupDetails = new ArrayList<Integer>();
+    public static ArrayList<Integer> listDealGroupDetailsPos = new ArrayList<Integer>();
+
+    public static ArrayList<Integer> listDealGroupIcon = new ArrayList<Integer>();
 
     public  MyDeal (){
         super();
@@ -93,11 +95,11 @@ public class MyDeal {
         MyDeal.dealGroupDetailPos = dealGroupDetailPos;
     }
 
-    public static Drawable getDealGroupImg() {
+    public static int getDealGroupImg() {
         return dealGroupImg;
     }
 
-    public static void setDealGroupImg(Drawable dealGroupImg) {
+    public static void setDealGroupImg(int dealGroupImg) {
         MyDeal.dealGroupImg = dealGroupImg;
     }
 

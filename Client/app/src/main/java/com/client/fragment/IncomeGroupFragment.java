@@ -27,6 +27,7 @@ public class IncomeGroupFragment extends Fragment{
 
     private ListView listView;
     private String [] incomeText;
+    private int income [] = {R.drawable.ic_category_salary, R.drawable.ic_category_award, R.drawable.ic_category_selling, R.drawable.ic_category_give, R.drawable.ic_category_interestmoney, R.drawable.ic_category_other_income};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,13 +35,10 @@ public class IncomeGroupFragment extends Fragment{
 
         final View rootView = inflater.inflate(R.layout.income_fragment, container, false);
 
-        Context context = rootView.getContext();
         incomeText = getResources().getStringArray(R.array.income_categories);
-        Resources res = context.getResources();
-        final TypedArray icons = res.obtainTypedArray(R.array.income_img);
 
         listView = (ListView) rootView.findViewById(R.id.list_income_categories);
-        listView.setAdapter(new CustomIncomeGroup(rootView.getContext(), incomeText, icons));
+        listView.setAdapter(new CustomIncomeGroup(rootView.getContext(), incomeText, income));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,7 +46,7 @@ public class IncomeGroupFragment extends Fragment{
                 MyDeal.setDealGroup("1");
                 MyDeal.setDealGroupDetailPos(position);
                 MyDeal.setDealGroupDetailName(incomeText[position]);
-                MyDeal.setDealGroupImg(icons.getDrawable(position));
+                MyDeal.setDealGroupImg(income[position]);
                 startActivity(new Intent(rootView.getContext(), DealActivity.class));
             }
         });
