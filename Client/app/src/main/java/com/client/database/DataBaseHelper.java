@@ -320,4 +320,80 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void getAllIncome (String dID, String gID) {
+        Cursor c = getAllIncomeData(dID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
+
+                MyDeal.listAllIncome.add(dealMoney);
+            }
+        }
+    }
+
+    public Cursor getAllIncomeData (String dID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.DEAL_MONEY + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_USER_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        return cursor;
+    }
+
+    public void getAllIncomebyFB (String dID, String gID) {
+        Cursor c = getAllIncomeDatabyFB(dID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
+
+                MyDeal.listAllIncome.add(dealMoney);
+            }
+        }
+    }
+
+    public Cursor getAllIncomeDatabyFB (String dID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.DEAL_MONEY + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_FB_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        return cursor;
+    }
+
+    public void getAllOutcomebyFB (String dID, String gID) {
+        Cursor c = getAllOutcomeDatabyFB(dID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
+
+                MyDeal.listAllOutcome.add(dealMoney);
+            }
+        }
+    }
+
+    public Cursor getAllOutcomeDatabyFB (String dID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.DEAL_MONEY + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_FB_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        return cursor;
+    }
+
+    public void getAllOutcome (String dID, String gID) {
+        Cursor c = getAllOutcomeData(dID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
+
+                MyDeal.listAllOutcome.add(dealMoney);
+            }
+        }
+    }
+
+    public Cursor getAllOutcomeData (String dID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.DEAL_MONEY + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_USER_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        return cursor;
+    }
+
 }

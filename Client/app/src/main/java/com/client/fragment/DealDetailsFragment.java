@@ -2,7 +2,6 @@ package com.client.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,22 +10,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.client.CustomDealList.CustomDealList;
 import com.client.R;
 import com.client.activity.DealActivity;
 import com.client.activity.EditDealActivity;
-import com.client.database.DataBaseHelper;
-import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
-import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
 
 public class DealDetailsFragment extends Fragment {
 
     private ListView listDeal;
     private FloatingActionButton FAB;
-    private TextView totalIncome, totalOutcome;
+    private TextView totalIncome, totalOutcome, total_Money;
     private CustomDealList adapter;
 
     public DealDetailsFragment (){}
@@ -74,9 +73,48 @@ public class DealDetailsFragment extends Fragment {
             }
         });
 
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+
         totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
 
+        int number1 [] = new int[MyDeal.listAllIncome.size()];
+
+        for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
+            number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
+        }
+
+        int sumIncome = 0;
+        for (int i = 0; i < number1.length; i++){
+            sumIncome += number1[i];
+        }
+
+        String income = numberFormat.format(sumIncome);
+
+        totalIncome.setText(income);
+
+
         totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
+
+        int number [] = new int[MyDeal.listAllOutcome.size()];
+
+        for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
+            number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
+        }
+
+        int sumOutcome = 0;
+        for (int i = 0; i < number.length; i++){
+            sumOutcome += number[i];
+        }
+
+        String outcome = numberFormat.format(sumOutcome);
+
+        totalOutcome.setText(outcome);
+
+        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
+
+        String totalmoney = numberFormat.format(sumIncome - sumOutcome);
+
+        total_Money.setText(totalmoney);
 
         return rootView;
     }

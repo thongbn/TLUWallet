@@ -44,4 +44,12 @@
     <color name="white">#FFFFFF</color>
     <color name="black_alpha_50">#80000000</color>
 
+    <!-- Red -->
+    <color name="red">#E8175D</color>
+
+    <!-- Green -->
+    <color name="green">#61d06e</color>
+
+    <color name="background">#E5FCC2</color>
+
 </resources>

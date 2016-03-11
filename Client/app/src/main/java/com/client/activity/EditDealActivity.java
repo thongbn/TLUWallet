@@ -96,7 +96,7 @@ public class EditDealActivity extends Activity{
                     return;
                 }
                 try {
-                    String value = s.toString().replace(".", "");
+                    String value = s.toString().replace(",", "");
                     String reverseValue = new StringBuilder(value).reverse()
                             .toString();
                     StringBuilder finalValue = new StringBuilder();
@@ -104,7 +104,7 @@ public class EditDealActivity extends Activity{
                         char val = reverseValue.charAt(i - 1);
                         finalValue.append(val);
                         if (i % 3 == 0 && i != reverseValue.length() && i > 0) {
-                            finalValue.append(".");
+                            finalValue.append(",");
                         }
                     }
                     isManualChange = true;

@@ -43,6 +43,10 @@ public class MyDeal {
 
     public static ArrayList<Integer> listDealGroupIcon = new ArrayList<Integer>();
 
+    public static ArrayList<String> listAllIncome = new ArrayList<String>();
+
+    public static ArrayList<String> listAllOutcome = new ArrayList<String>();
+
     public  MyDeal (){
         super();
     }

@@ -60,11 +60,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MyDeal.listDealMoney.clear();
         MyDeal.listDealTypeMoney.clear();
         MyDeal.listDealDate.clear();
+        MyDeal.listAllIncome.clear();
+        MyDeal.listAllOutcome.clear();
 
         if (AccessToken.getCurrentAccessToken() != null){
             dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());
+            dataBaseHelper.getAllIncomebyFB(Deal.getUserFB().getFacebookID(), "1");
+            dataBaseHelper.getAllOutcomebyFB(Deal.getUserFB().getFacebookID(), "2");
         }else {
             dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung());
+            dataBaseHelper.getAllIncome(Deal.getUser().getIdNguoiDung(), "1");
+            dataBaseHelper.getAllOutcome(Deal.getUser().getIdNguoiDung(), "2");
         }
 
         initialise();
