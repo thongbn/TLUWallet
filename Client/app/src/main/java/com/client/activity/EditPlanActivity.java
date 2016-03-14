@@ -3,50 +3,39 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
 import com.client.database.model.Plan;
 import com.client.database.model.User;
 import com.client.database.model.UserFB;
-import com.client.fragment.DealDetailsFragment;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
 import java.util.Calendar;
 
 /**
- * Created by ToanNguyen on 04/03/2016.
+ * Created by ToanNguyen on 14/03/2016.
  */
-public class EditDealActivity extends Activity{
-
-    private EditText deal_Money, deal_Detail, eDate;
-    private String dealMoney, dealDetail, dealTypemoney, idUser, dealID, dealDate;
-    private Integer dealGroupDetailsPos, dealIcon, dealGroup;
-    private TextView deal_TypeMoney, dealGroupText;
+public class EditPlanActivity extends Activity{
+    private EditText plan_Money, plan_Detail, eDate;
+    private String planMoney, planDetail, planTypemoney, idUser, planID, planDate;
+    private Integer planGroupDetailsPos, planIcon, planGroup;
+    private TextView plan_TypeMoney, planGroupText;
     DataBaseHelper dataBaseHelper;
-    private ImageView deleteButton, dealGroupIcon, tranferButton;
+    private ImageView deleteButton, planGroupIcon, tranferButton;
     private boolean isUpdate;
     private RelativeLayout saveButton, clearButton;
 
@@ -54,28 +43,28 @@ public class EditDealActivity extends Activity{
     @Override
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_deal);
+        setContentView(R.layout.activity_edit_plan);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        dataBaseHelper = new DataBaseHelper(EditDealActivity.this);
+        dataBaseHelper = new DataBaseHelper(EditPlanActivity.this);
         dataBaseHelper.open();
 
-        deal_Money = (EditText) findViewById(R.id.edit_Money_Deal);
-        deal_TypeMoney = (TextView) findViewById(R.id.edit_deal_type_money);
-        deal_Detail = (EditText) findViewById(R.id.edit_Detail_Deal);
-        dealGroupText = (TextView) findViewById(R.id.dGroupDetails);
-        dealGroupIcon = (ImageView)findViewById(R.id.dGroupImg);
-        eDate=(EditText) findViewById(R.id.edit_Date_Deal);
+        plan_Money = (EditText) findViewById(R.id.edit_Money_Plan);
+        plan_TypeMoney = (TextView) findViewById(R.id.edit_plan_type_money);
+        plan_Detail = (EditText) findViewById(R.id.edit_Detail_Plan);
+        planGroupText = (TextView) findViewById(R.id.pGroupDetails);
+        planGroupIcon = (ImageView)findViewById(R.id.pGroupImg);
+        eDate=(EditText) findViewById(R.id.edit_Date_Plan);
 
         if(AccessToken.getCurrentAccessToken() != null){
-            deal_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
+            plan_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
         }else {
-            deal_TypeMoney.setText(User.getIdMoneyType());
+            plan_TypeMoney.setText(User.getIdMoneyType());
         }
 
 
         //money
-        deal_Money.addTextChangedListener(new TextWatcher() {
+        plan_Money.addTextChangedListener(new TextWatcher() {
             boolean isManualChange = false;
 
             @Override
@@ -98,8 +87,8 @@ public class EditDealActivity extends Activity{
                         }
                     }
                     isManualChange = true;
-                    deal_Money.setText(finalValue.reverse());
-                    deal_Money.setSelection(finalValue.length());
+                    plan_Money.setText(finalValue.reverse());
+                    plan_Money.setSelection(finalValue.length());
                 } catch (Exception e) {
                     // Do nothing since not a number
                 }
@@ -125,70 +114,70 @@ public class EditDealActivity extends Activity{
         });
         isUpdate = getIntent().getExtras().getBoolean("update");
         if(isUpdate) {
-            dealID = getIntent().getExtras().getString("DId");
-            dealMoney = getIntent().getExtras().getString("DMoney");
-            dealDetail = getIntent().getExtras().getString("DDetail");
-            dealTypemoney = getIntent().getExtras().getString("DTypeMoney");
-            dealDate = getIntent().getExtras().getString("DDate");
-            dealGroup = getIntent().getExtras().getInt("DGroup");
-            dealGroupDetailsPos = getIntent().getExtras().getInt("DGroupDetails");
-            dealIcon = getIntent().getExtras().getInt("DGroupImg");
+            planID = getIntent().getExtras().getString("PId");
+            planMoney = getIntent().getExtras().getString("PMoney");
+            planDetail = getIntent().getExtras().getString("PDetail");
+            planTypemoney = getIntent().getExtras().getString("PTypeMoney");
+            planDate = getIntent().getExtras().getString("PDate");
+            planGroup = getIntent().getExtras().getInt("PGroup");
+            planGroupDetailsPos = getIntent().getExtras().getInt("PGroupDetails");
+            planIcon = getIntent().getExtras().getInt("PGroupImg");
 
-            deal_Money.setText(dealMoney);
+            plan_Money.setText(planMoney);
 
-            deal_TypeMoney.setText(dealTypemoney);
+            plan_TypeMoney.setText(planTypemoney);
 
-            deal_Detail.setText(dealDetail);
+            plan_Detail.setText(planDetail);
 
-            eDate.setText(dealDate);
-            if (dealGroup == 1){
+            eDate.setText(planDate);
+            if (planGroup == 1){
                 String income [] = getResources().getStringArray(R.array.income_categories);
-                dealGroupText.setText(income[dealGroupDetailsPos]);
+                planGroupText.setText(income[planGroupDetailsPos]);
             } else {
                 String outcome [] = getResources().getStringArray(R.array.outcome_categories);
-                dealGroupText.setText(outcome[dealGroupDetailsPos]);
+                planGroupText.setText(outcome[planGroupDetailsPos]);
             }
 
 
 
-            dealGroupIcon.setImageResource(dealIcon);
+            planGroupIcon.setImageResource(planIcon);
         }
 
         setListener();
-        saveButton = (RelativeLayout) findViewById(R.id.saveDeal_action_text);
+        saveButton = (RelativeLayout) findViewById(R.id.savePlan_action_text);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dealMoney = deal_Money.getText().toString();
-                dealTypemoney = deal_TypeMoney.getText().toString();
-                dealDetail = deal_Detail.getText().toString();
+                planMoney = plan_Money.getText().toString();
+                planTypemoney = plan_TypeMoney.getText().toString();
+                planDetail = plan_Detail.getText().toString();
                 if (eDate != null)
-                    Deal.setDealDate(eDate.getText().toString());
+                    Plan.setPlanDate(eDate.getText().toString());
 
-                Deal.setDealMoney(dealMoney);
-                Deal.setDealGroup(dealGroup);
-                Deal.setDealGroupDetailsPos(dealGroupDetailsPos);
-                Deal.setDealGroupIcon(dealIcon);
+                Plan.setPlanMoney(planMoney);
+                Plan.setPlanGroup(planGroup);
+                Plan.setPlanGroupDetailsPos(planGroupDetailsPos);
+                Plan.setPlanGroupIcon(planIcon);
 
-                Deal.setDealDetail(dealDetail);
+                Plan.setPlanDetail(planDetail);
                 idUser = User.getIdNguoiDung();
                 SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
                 String facebookId = idFacebook.getString("idFB", "");
-                Deal.getUserFB().setFacebookID(facebookId);
-                Deal.getUser().setIdNguoiDung(idUser);
+                Plan.getUserFB().setFacebookID(facebookId);
+                Plan.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
-                if (dealMoney.equals("") || dealDetail.equals("")) {
-                    deal_Money.setError("Chưa điền thông tin");
-                    deal_Detail.setError("Chưa điền thông tin");
+                if (planMoney.equals("") || planDetail.equals("")) {
+                    plan_Money.setError("Chưa điền thông tin");
+                    plan_Detail.setError("Chưa điền thông tin");
                     return;
                 } else {
-                    dataBaseHelper.updateDeal(dealID);
+                    dataBaseHelper.updatePlan(planID);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
             }
         });
 
-        clearButton = (RelativeLayout) findViewById(R.id.cancelDeal_action_text);
+        clearButton = (RelativeLayout) findViewById(R.id.cancelPlan_action_text);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,44 +185,45 @@ public class EditDealActivity extends Activity{
             }
         });
 
-        deleteButton = (ImageView) findViewById(R.id.delete_deal);
+        deleteButton = (ImageView) findViewById(R.id.delete_plan);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataBaseHelper.deleteDeal(dealID);
+                dataBaseHelper.deletePlan(planID);
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
             }
         });
 
         tranferButton = (ImageView) findViewById(R.id.tranfer_plan);
+
         tranferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dealMoney = deal_Money.getText().toString();
-                dealTypemoney = deal_TypeMoney.getText().toString();
-                dealDetail = deal_Detail.getText().toString();
+                planMoney = plan_Money.getText().toString();
+                planTypemoney = plan_TypeMoney.getText().toString();
+                planDetail = plan_Detail.getText().toString();
                 if (eDate != null)
-                    Plan.setPlanDate(eDate.getText().toString());
+                    Deal.setDealDate(eDate.getText().toString());
 
-                Plan.setPlanMoney(dealMoney);
-                Plan.setPlanGroup(dealGroup);
-                Plan.setPlanGroupDetailsPos(dealGroupDetailsPos);
-                Plan.setPlanGroupIcon(dealIcon);
+                Deal.setDealMoney(planMoney);
+                Deal.setDealGroup(planGroup);
+                Deal.setDealGroupDetailsPos(planGroupDetailsPos);
+                Deal.setDealGroupIcon(planIcon);
 
-                Plan.setPlanDetail(dealDetail);
+                Deal.setDealDetail(planDetail);
                 idUser = User.getIdNguoiDung();
                 SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
                 String facebookId = idFacebook.getString("idFB", "");
-                Plan.getUserFB().setFacebookID(facebookId);
-                Plan.getUser().setIdNguoiDung(idUser);
+                Deal.getUserFB().setFacebookID(facebookId);
+                Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
-                if (dealMoney.equals("") || dealDetail.equals("")) {
-                    deal_Money.setError("Chưa điền thông tin");
-                    deal_Detail.setError("Chưa điền thông tin");
+                if (planMoney.equals("") || planDetail.equals("")) {
+                    plan_Money.setError("Chưa điền thông tin");
+                    plan_Detail.setError("Chưa điền thông tin");
                     return;
                 } else {
-                    dataBaseHelper.insertPlan();
+                    dataBaseHelper.insertDeal();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
             }
@@ -271,5 +261,4 @@ public class EditDealActivity extends Activity{
         eDate.setText(day + "-" + (month + 1) + "-" + year);
 
     }
-
 }

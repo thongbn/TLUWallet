@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.client.CustomDealList.CustomDealList;
+import com.client.CustomAdapter.CustomDealList;
 import com.client.R;
 import com.client.activity.DealActivity;
 import com.client.activity.EditDealActivity;

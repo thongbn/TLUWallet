@@ -9,17 +9,9 @@ import java.util.ArrayList;
  */
 public class MyDeal {
 
-    private static String idDeal;
-
     private static int dealGroup;
 
     private static int dealGroupImg;
-
-    private static String dealMoney;
-
-    private static String dealDetais;
-
-    private static String dealDate;
 
     private static int dealGroupDetailPos;
 
@@ -48,44 +40,12 @@ public class MyDeal {
         super();
     }
 
-    public static String getIdDeal() {
-        return idDeal;
-    }
-
-    public static void setIdDeal(String idDeal) {
-        MyDeal.idDeal = idDeal;
-    }
-
     public static int getDealGroup() {
         return dealGroup;
     }
 
     public static void setDealGroup(int dealGroup) {
         MyDeal.dealGroup = dealGroup;
-    }
-
-    public static String getDealMoney() {
-        return dealMoney;
-    }
-
-    public static void setDealMoney(String dealMoney) {
-        MyDeal.dealMoney = dealMoney;
-    }
-
-    public static String getDealDetais() {
-        return dealDetais;
-    }
-
-    public static void setDealDetais(String dealDetais) {
-        MyDeal.dealDetais = dealDetais;
-    }
-
-    public static String getDealDate() {
-        return dealDate;
-    }
-
-    public static void setDealDate(String dealDate) {
-        MyDeal.dealDate = dealDate;
     }
 
     public static int getDealGroupDetailPos() {

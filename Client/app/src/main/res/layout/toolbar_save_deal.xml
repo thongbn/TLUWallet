@@ -11,23 +11,62 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:id="@+id/cancelDeal_action_text"/>
+            android:layout_alignParentStart="true"
+            android:id="@+id/cancelDeal_action_text"
+            android:gravity="center">
 
-        <TextView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cancel"
+                    android:layout_marginTop="1dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" | Hủy"
+                    android:gravity="center"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lưu"
-            android:gravity="center"
-            android:textSize="20dp"
             android:layout_alignParentEnd="true"
-            android:paddingRight="20dp"
-            android:id="@+id/saveDeal_action_text"/>
+            android:id="@+id/saveDeal_action_text"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_check"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" | Lưu"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:layout_marginEnd="10dp"/>
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
+import com.client.database.model.MyPlan;
+import com.client.database.model.Plan;
 import com.client.database.model.User;
 import com.client.database.model.UserFB;
 import java.text.SimpleDateFormat;
@@ -49,6 +51,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             DEAL_USER_ID = "dealUserID",
             DEAL_FB_ID = "dealFbID";
 
+    public static final String PLAN_TABLE = "plan",
+            PLAN_ID = "idPlan",
+            PLAN_GROUP = "planGroup",
+            PLAN_GROUP_DETAILS = "planGroupDetails",
+            PLAN_GROUP_ICON = "planGroupIcon",
+            PLAN_MONEY = "planMoney",
+            PLAN_DETAIL = "planDetail",
+            PLAN_DATE = "planDate",
+            PLAN_USER_ID = "planUserID",
+            PLAN_FB_ID = "planFbID";
+
     static final String DATABASE_CREATE_TABLE_NGUOIDUNG = "create table " +  NGUOIDUNG_TABLE
             + "(" + USER_ID + " integer primary key autoincrement,"
             +  PASSWORD + " text," +  EMAIL + " text, "
@@ -69,6 +82,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + DEAL_USER_ID + " integet constraint " + DEAL_USER_ID + " references " + DEAL_TABLE + "(" + USER_ID + ") on delete cascade, "
             + DEAL_FB_ID + " string " + DEAL_FB_ID + " references " + DEAL_TABLE + "(" + FB_ID + ") on delete cascade);";
 
+    static final String DATABASE_CREATE_TABLE_PLAN = "create table " + PLAN_TABLE
+            + "(" + PLAN_ID + " integer primary key autoincrement, "
+            + PLAN_GROUP + " integer not null, "
+            + PLAN_GROUP_DETAILS + " integer not null, "
+            + PLAN_GROUP_ICON + " int not null, "
+            + PLAN_MONEY + " text not null, "
+            + PLAN_DETAIL + " text, "
+            + PLAN_DATE + " text not null, "
+            + PLAN_USER_ID + " integet constraint " + PLAN_USER_ID + " references " + PLAN_TABLE + "(" + USER_ID + ") on delete cascade, "
+            + PLAN_FB_ID + " string " + PLAN_FB_ID + " references " + PLAN_TABLE + "(" + FB_ID + ") on delete cascade);";
+
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -79,6 +103,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_CREATE_TABLE_NGUOIDUNG);
         db.execSQL(DATABASE_CREATE_TABLE_FACEBOOK);
         db.execSQL(DATABASE_CREATE_TABLE_DEAL);
+        db.execSQL(DATABASE_CREATE_TABLE_PLAN);
     }
 
     @Override
@@ -87,6 +112,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXITS " + NGUOIDUNG_TABLE);
         db.execSQL("DROP TABLE IF EXITS " + FACEBOOK_TABLE);
         db.execSQL("DROP TABLE IF EXITS " + DEAL_TABLE);
+        db.execSQL("DROP TABLE IF EXITS " + PLAN_TABLE);
 
         onCreate(db);
     }
@@ -113,48 +139,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
         return true;
-    }
-
-    public boolean checkTypemoney(String email){
-        Cursor mCursor = db.rawQuery("SELECT " + DataBaseHelper.MONEYTYPE + " FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + " = ?", new String[]{email});
-        if (mCursor != null) {
-            if (mCursor.getCount() > 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public boolean checkTypemoneyFB(String email){
-        Cursor mCursor = db.rawQuery("SELECT " + DataBaseHelper.FB_MONEYTYPE + " FROM " + DataBaseHelper.FACEBOOK_TABLE + " WHERE " + DataBaseHelper.EMAIL + " = ?", new String[]{email});
-        if (mCursor != null) {
-            if (mCursor.getCount() > 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public void inserMoney(String id){
-        db = this.getWritableDatabase();
-        ContentValues newValues = new ContentValues();
-
-        newValues.put(DataBaseHelper.MONEYTYPE, User.getIdMoneyType());
-
-        String where = DataBaseHelper.USER_ID + " = ? ";
-        db.update(DataBaseHelper.NGUOIDUNG_TABLE, newValues, where, new String[]{id});
-    }
-
-    public void inserMoneyFB(String id){
-        db = this.getWritableDatabase();
-        ContentValues newValues = new ContentValues();
-
-        newValues.put(DataBaseHelper.FB_MONEYTYPE, UserFB.getIdMoneyTypebyFB());
-
-        String where = DataBaseHelper.FB_ID + " = ? ";
-        db.update(DataBaseHelper.FACEBOOK_TABLE, newValues, where, new String[]{id});
     }
 
     public void insertEntry(){
@@ -188,21 +172,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
         return true;
-    }
-
-    public int deleteEntry(String email){
-        //String id = String.valueOf(idNguoiDung);
-        String where = DataBaseHelper.EMAIL + "=?";
-        int numberOFEntriesDeleted = db.delete(DataBaseHelper.NGUOIDUNG_TABLE, where, new String[]{email});
-
-        return numberOFEntriesDeleted;
-    }
-
-
-    public void deleteDeal(String id){
-        String where = DataBaseHelper.DEAL_ID + " = ? ";
-        db.delete(DataBaseHelper.DEAL_TABLE, where, new String[]{id});
-
     }
 
     public User login(String Email, String Password) throws SQLException {
@@ -241,6 +210,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return userFB;
     }
 
+    public void updateEntry(String email, String password){
+        //define the update row content
+        ContentValues updateValues = new ContentValues();
+        //Assign values for each row
+        updateValues.put(DataBaseHelper.PASSWORD, password);
+
+        String where = DataBaseHelper.EMAIL + " = ?";
+        db.update(DataBaseHelper.NGUOIDUNG_TABLE, updateValues, where, new String[]{email});
+    }
+
+    public void inserMoney(String id){
+        db = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(DataBaseHelper.MONEYTYPE, User.getIdMoneyType());
+
+        String where = DataBaseHelper.USER_ID + " = ? ";
+        db.update(DataBaseHelper.NGUOIDUNG_TABLE, newValues, where, new String[]{id});
+    }
+
+    public void inserMoneyFB(String id){
+        db = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(DataBaseHelper.FB_MONEYTYPE, UserFB.getIdMoneyTypebyFB());
+
+        String where = DataBaseHelper.FB_ID + " = ? ";
+        db.update(DataBaseHelper.FACEBOOK_TABLE, newValues, where, new String[]{id});
+    }
+
+    /* Deal helper */
+
     public void insertDeal(){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
@@ -267,17 +268,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
     }
 
-
-    public void updateEntry(String email, String password){
-        //define the update row content
-        ContentValues updateValues = new ContentValues();
-        //Assign values for each row
-        updateValues.put(DataBaseHelper.PASSWORD, password);
-
-        String where = DataBaseHelper.EMAIL + " = ?";
-        db.update(DataBaseHelper.NGUOIDUNG_TABLE, updateValues, where, new String[]{email});
-    }
-
     public void updateDeal(String id){
         ContentValues values = new ContentValues();
         values.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
@@ -289,6 +279,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         String where = DataBaseHelper.DEAL_ID + " = ? ";
         db.update(DataBaseHelper.DEAL_TABLE, values, where, new String[]{id});
+    }
+
+    public void deleteDeal(String id){
+        String where = DataBaseHelper.DEAL_ID + " = ? ";
+        db.delete(DataBaseHelper.DEAL_TABLE, where, new String[]{id});
+
     }
 
     private Cursor getDealbyID(String dID) {
@@ -432,6 +428,198 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         String query = "Select " + DataBaseHelper.DEAL_MONEY + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_USER_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
         Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        return cursor;
+    }
+
+
+    /* Plan helper */
+
+    public void insertPlan(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseHelper.PLAN_GROUP, Plan.getPlanGroup());
+        contentValues.put(DataBaseHelper.PLAN_GROUP_DETAILS, Plan.getPlanGroupDetailsPos());
+        contentValues.put(DataBaseHelper.PLAN_GROUP_ICON, Plan.getPlanGroupIcon());
+        contentValues.put(DataBaseHelper.PLAN_MONEY, Plan.getPlanMoney());
+        contentValues.put(DataBaseHelper.PLAN_DETAIL, Plan.getPlanDetail());
+        contentValues.put(DataBaseHelper.PLAN_DATE, Plan.getPlanDate());
+        contentValues.put(DataBaseHelper.PLAN_USER_ID, Plan.getUser().getIdNguoiDung());
+
+        db.insert(DataBaseHelper.PLAN_TABLE, null, contentValues);
+    }
+
+    public void insertPlanbyFB(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseHelper.PLAN_GROUP, Plan.getPlanGroup());
+        contentValues.put(DataBaseHelper.PLAN_GROUP_DETAILS, Plan.getPlanGroupDetailsPos());
+        contentValues.put(DataBaseHelper.PLAN_GROUP_ICON, Plan.getPlanGroupIcon());
+        contentValues.put(DataBaseHelper.PLAN_MONEY, Plan.getPlanMoney());
+        contentValues.put(DataBaseHelper.PLAN_DETAIL, Plan.getPlanDetail());
+        contentValues.put(DataBaseHelper.PLAN_DATE, Plan.getPlanDate());
+        contentValues.put(DataBaseHelper.PLAN_FB_ID, Plan.getUserFB().getFacebookID());
+
+        db.insert(DataBaseHelper.PLAN_TABLE, null, contentValues);
+    }
+
+    public void updatePlan(String id){
+        ContentValues values = new ContentValues();
+        values.put(DataBaseHelper.PLAN_GROUP, Plan.getPlanGroup());
+        values.put(DataBaseHelper.PLAN_GROUP_DETAILS, Plan.getPlanGroupDetailsPos());
+        values.put(DataBaseHelper.PLAN_MONEY, Plan.getPlanMoney());
+        values.put(DataBaseHelper.PLAN_DETAIL, Plan.getPlanDetail());
+        values.put(DataBaseHelper.PLAN_DATE, Plan.getPlanDate());
+        values.put(DataBaseHelper.PLAN_GROUP_ICON, Plan.getPlanGroupIcon());
+
+        String where = DataBaseHelper.PLAN_ID + " = ? ";
+        db.update(DataBaseHelper.PLAN_TABLE, values, where, new String[]{id});
+    }
+
+    public void deletePlan(String id){
+        String where = DataBaseHelper.PLAN_ID + " = ? ";
+        db.delete(DataBaseHelper.PLAN_TABLE, where, new String[]{id});
+
+    }
+
+    private Cursor getPlanbyID(String pID) {
+        db = this.getWritableDatabase();
+        String from[] = { PLAN_ID, PLAN_MONEY, PLAN_DATE, PLAN_DETAIL, PLAN_GROUP, PLAN_GROUP_DETAILS, PLAN_GROUP_ICON };
+        String where = PLAN_USER_ID + "=?";
+        String[] whereArgs = new String[]{pID+""};
+        Cursor cursor = db.query(PLAN_TABLE, from, where, whereArgs, null, null, null, null);
+        return cursor;
+    }
+
+    public void getPlan (String pID) {
+        Cursor c = getPlanbyID(pID);
+
+        if(c != null)
+        {
+            while(c.moveToNext()){
+                String planID = c.getString(c.getColumnIndex(PLAN_ID));
+                String planMoney = c.getString(c.getColumnIndex(PLAN_MONEY));
+                String planDate = c.getString(c.getColumnIndex(PLAN_DATE));
+                String planDetail = c.getString(c.getColumnIndex(PLAN_DETAIL));
+                Integer planGroup = c.getInt(c.getColumnIndex(PLAN_GROUP));
+                Integer planGroupDetails = c.getInt(c.getColumnIndex(PLAN_GROUP_DETAILS));
+                Integer planGroupIcon = c.getInt(c.getColumnIndex(PLAN_GROUP_ICON));
+
+                MyPlan.listPlaniD.add(planID);
+                MyPlan.listPlanMoney.add(planMoney);
+                MyPlan.listPlanDate.add(planDate);
+                MyPlan.listPlanDetails.add(planDetail);
+                MyPlan.listPlanGroup.add(planGroup);
+                MyPlan.listPlanGroupDetailsPos.add(planGroupDetails);
+                MyPlan.listPlanGroupIcon.add(planGroupIcon);
+            }
+        }
+    }
+
+    private Cursor getPlanbyFbID(String pID) {
+        db = this.getWritableDatabase();
+        String from[] = { PLAN_ID, PLAN_MONEY, PLAN_DATE, PLAN_DETAIL, PLAN_GROUP, PLAN_GROUP_DETAILS, PLAN_GROUP_ICON };
+        String where = PLAN_FB_ID + "=?";
+        String[] whereArgs = new String[]{pID+""};
+        Cursor cursor = db.query(PLAN_TABLE, from, where, whereArgs, null, null, null, null);
+        return cursor;
+    }
+
+    public void getPlanbyFB (String pID) {
+        Cursor c = getPlanbyFbID(pID);
+
+        if(c != null)
+        {
+            while(c.moveToNext()){
+                String planID = c.getString(c.getColumnIndex(PLAN_ID));
+                String planMoney = c.getString(c.getColumnIndex(PLAN_MONEY));
+                String planDate = c.getString(c.getColumnIndex(PLAN_DATE));
+                String planDetail = c.getString(c.getColumnIndex(PLAN_DETAIL));
+                Integer planGroup = c.getInt(c.getColumnIndex(PLAN_GROUP));
+                Integer planGroupDetails = c.getInt(c.getColumnIndex(PLAN_GROUP_DETAILS));
+                Integer planGroupIcon = c.getInt(c.getColumnIndex(PLAN_GROUP_ICON));
+
+                MyPlan.listPlaniD.add(planID);
+                MyPlan.listPlanMoney.add(planMoney);
+                MyPlan.listPlanDate.add(planDate);
+                MyPlan.listPlanDetails.add(planDetail);
+                MyPlan.listPlanGroup.add(planGroup);
+                MyPlan.listPlanGroupDetailsPos.add(planGroupDetails);
+                MyPlan.listPlanGroupIcon.add(planGroupIcon);
+            }
+        }
+    }
+
+    public void getAllPlanIncome (String pID, String gID) {
+        Cursor c = getAllPlanIncomeData(pID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String planMoney = c.getString(c.getColumnIndex(PLAN_MONEY));
+
+                MyPlan.listAllIncome.add(planMoney);
+            }
+        }
+    }
+
+    public Cursor getAllPlanIncomeData (String pID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.PLAN_MONEY + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_USER_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        return cursor;
+    }
+
+    public void getAllPlanIncomebyFB (String pID, String gID) {
+        Cursor c = getAllPlanIncomeDatabyFB(pID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String planMoney = c.getString(c.getColumnIndex(PLAN_MONEY));
+
+                MyPlan.listAllIncome.add(planMoney);
+            }
+        }
+    }
+
+    public Cursor getAllPlanIncomeDatabyFB (String pID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.PLAN_MONEY + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_FB_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        return cursor;
+    }
+
+    public void getAllPlanOutcomebyFB (String pID, String gID) {
+        Cursor c = getAllPlanOutcomeDatabyFB(pID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String planMoney = c.getString(c.getColumnIndex(PLAN_MONEY));
+
+                MyPlan.listAllOutcome.add(planMoney);
+            }
+        }
+    }
+
+    public Cursor getAllPlanOutcomeDatabyFB (String pID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.PLAN_MONEY + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_FB_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        return cursor;
+    }
+
+    public void getAllPlanOutcome (String pID, String gID) {
+        Cursor c = getAllPlanOutcomeData(pID, gID);
+
+        if (c != null){
+            while (c.moveToNext()){
+                String planMoney = c.getString(c.getColumnIndex(PLAN_MONEY));
+
+                MyPlan.listAllOutcome.add(planMoney);
+            }
+        }
+    }
+
+    public Cursor getAllPlanOutcomeData (String pID, String gID) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DataBaseHelper.PLAN_MONEY + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_USER_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
         return cursor;
     }
 

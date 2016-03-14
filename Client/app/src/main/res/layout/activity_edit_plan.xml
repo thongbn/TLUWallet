@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".EditDeal" >
+    tools:context=".EditPlan" >
 
     <include
-        layout="@layout/toolbar_save_deal" />
+        layout="@layout/toolbar_save_plan" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:id="@+id/dGroupImg"
+                android:id="@+id/pGroupImg"
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -36,7 +36,7 @@
                 android:src="@drawable/icon_not_selected" />
 
             <TextView
-                android:id="@+id/dGroupDetails"
+                android:id="@+id/pGroupDetails"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:id="@+id/edit_deal_type_money"
+                android:id="@+id/edit_plan_type_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
@@ -64,7 +64,7 @@
 
 
             <EditText
-                android:id="@+id/edit_Money_Deal"
+                android:id="@+id/edit_Money_Plan"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -85,7 +85,7 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:id="@+id/dRowTextDetailMoney"
+                android:id="@+id/pRowTextDetailMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
@@ -94,7 +94,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <EditText
-                android:id="@+id/edit_Detail_Deal"
+                android:id="@+id/edit_Detail_Plan"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -113,7 +113,7 @@
             android:layout_marginBottom="10dp">
 
             <ImageView
-                android:id="@+id/dRowTextDateTime"
+                android:id="@+id/pRowTextDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
@@ -122,7 +122,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <EditText
-                android:id="@+id/edit_Date_Deal"
+                android:id="@+id/edit_Date_Plan"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -152,7 +152,7 @@
                 android:src="@drawable/ic_delete"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/delete_deal"/>
+                android:id="@+id/delete_plan"/>
 
         </RelativeLayout>
 
@@ -171,7 +171,6 @@
                 android:id="@+id/tranfer_plan"/>
 
         </RelativeLayout>
-
     </RelativeLayout>
 
 </RelativeLayout>
