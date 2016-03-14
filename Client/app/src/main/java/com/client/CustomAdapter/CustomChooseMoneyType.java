@@ -15,7 +15,7 @@ import com.client.R;
  * Created by ToanNguyen on 11/03/2016.
  */
 public class CustomChooseMoneyType extends BaseAdapter{
-    private String [] moneytype = {"VNĐ", "USD", "EUR", "GBP", "CNY", "SGD", "JPY", "KRW", "HKD", "THB"};
+    private String [] moneytype = {"Việt Nam Đồng", "United States dollar", "Euro", "Pound sterling", "Chinese Yuan", "Singapore dollar", "Japanese yen", "Korean Republic Won", "Hong Kong dollar", "Thai baht"};
     private int [] imagemoney = {R.drawable.ic_currency_vnd, R.drawable.ic_currency_usd, R.drawable.ic_currency_eur,
             R.drawable.ic_currency_gbp, R.drawable.ic_currency_cny, R.drawable.ic_currency_sgd, R.drawable.ic_currency_jpy,
             R.drawable.ic_currency_krw, R.drawable.ic_currency_hkd, R.drawable.ic_currency_thb};

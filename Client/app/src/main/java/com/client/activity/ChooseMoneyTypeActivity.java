@@ -2,7 +2,6 @@ package com.client.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +20,7 @@ import com.facebook.FacebookSdk;
  */
 public class ChooseMoneyTypeActivity extends Activity{
 
-    private String [] moneytype = {"VNĐ", "USD", "EUR", "GBP", "CNY", "SGD", "JPY", "KRW", "HKD", "THB"};
+    private String [] moneytype = {"đ", "$", "€", "£", "¥", "$", " ¥", "₩", "$", "฿"};
     private ListView listMoneyType;
     private DataBaseHelper dataBaseHelper;
     private CustomChooseMoneyType adapter;
