@@ -11,6 +11,8 @@ public class UserFB {
 
     private static String nameFB;
 
+    private static String idMoneyTypebyFB;
+
     public String getEmailFB() {
         return emailFB;
     }
@@ -33,6 +35,14 @@ public class UserFB {
 
     public static void setNameFB(String nameFB) {
         UserFB.nameFB = nameFB;
+    }
+
+    public static String getIdMoneyTypebyFB() {
+        return idMoneyTypebyFB;
+    }
+
+    public static void setIdMoneyTypebyFB(String idMoneyTypebyFB) {
+        UserFB.idMoneyTypebyFB = idMoneyTypebyFB;
     }
 }
 

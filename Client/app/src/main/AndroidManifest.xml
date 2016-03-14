@@ -31,6 +31,8 @@
 
         <activity android:name=".activity.PickGroupActivity" />
 
+        <activity android:name=".activity.ChooseMoneyTypeActivity" />
+
         <activity
             android:name="com.client.activity.MainActivity"
             android:label="Budget App">

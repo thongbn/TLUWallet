@@ -17,8 +17,6 @@ public class MyDeal {
 
     private static String dealMoney;
 
-    private static String dealMoneyType;
-
     private static String dealDetais;
 
     private static String dealDate;
@@ -37,7 +35,6 @@ public class MyDeal {
 
     public static ArrayList<String> listDealDate = new ArrayList<String>();
 
-    public static ArrayList<String> listDealTypeMoney = new ArrayList<String>();
 
     public static ArrayList<Integer> listDealGroupDetailsPos = new ArrayList<Integer>();
 
@@ -106,15 +103,6 @@ public class MyDeal {
     public static void setDealGroupImg(int dealGroupImg) {
         MyDeal.dealGroupImg = dealGroupImg;
     }
-
-    public static String getDealMoneyType() {
-        return dealMoneyType;
-    }
-
-    public static void setDealMoneyType(String dealMoneyType) {
-        MyDeal.dealMoneyType = dealMoneyType;
-    }
-
 
     public static String getDealGroupDetailName() {
         return dealGroupDetailName;

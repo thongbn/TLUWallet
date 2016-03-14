@@ -11,6 +11,8 @@ public class User {
 
     private static String password;
 
+    private static String idMoneyType;
+
     public User (){
         super();
     }
@@ -38,5 +40,14 @@ public class User {
     public static void setPassword(String password) {
         User.password = password;
     }
+
+    public static String getIdMoneyType() {
+        return idMoneyType;
+    }
+
+    public static void setIdMoneyType(String idMoneyType) {
+        User.idMoneyType = idMoneyType;
+    }
+
 
 }

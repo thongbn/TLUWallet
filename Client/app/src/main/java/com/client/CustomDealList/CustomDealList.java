@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.MyDeal;
+import com.client.database.model.User;
+import com.client.database.model.UserFB;
+import com.facebook.AccessToken;
 
 import java.util.Arrays;
 
@@ -77,7 +80,11 @@ public class CustomDealList extends BaseAdapter {
 
         holder.dealDetails.setText(MyDeal.listDealDetails.get(position));
 
-        holder.dealMoney.setText(MyDeal.listDealMoney.get(position) + " " + MyDeal.listDealTypeMoney.get(position));
+        if (AccessToken.getCurrentAccessToken() != null){
+            holder.dealMoney.setText(MyDeal.listDealMoney.get(position) + " " + UserFB.getIdMoneyTypebyFB());
+        }else {
+            holder.dealMoney.setText(MyDeal.listDealMoney.get(position) + " " + User.getIdMoneyType());
+        }
 
         return convertView;
     }

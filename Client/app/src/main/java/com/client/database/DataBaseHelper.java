@@ -29,12 +29,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String NGUOIDUNG_TABLE = "nguoidung",
             USER_ID = "idNguoiDung",
             EMAIL = "Email",
-            PASSWORD = "Pass";
+            PASSWORD = "Pass",
+            MONEYTYPE = "MoneyType";
 
     public static final String FACEBOOK_TABLE = "facebook",
             FB_ID = "idFacebook",
             FB_EMAIL = "facebookEmail",
-            FB_NAME = "facebookName";
+            FB_NAME = "facebookName",
+            FB_MONEYTYPE = "facebookMoneyType";
 
     public static final String DEAL_TABLE = "deal",
             DEAL_ID = "idDeal",
@@ -42,7 +44,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             DEAL_GROUP_DETAILS = "dealGroupDetails",
             DEAL_GROUP_ICON = "dealGroupIcon",
             DEAL_MONEY = "dealMoney",
-            DEAL_TYPE_MONEY = "dealTypeMoney",
             DEAL_DETAIL = "dealDetail",
             DEAL_DATE = "dealDate",
             DEAL_USER_ID = "dealUserID",
@@ -50,18 +51,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_CREATE_TABLE_NGUOIDUNG = "create table " +  NGUOIDUNG_TABLE
             + "(" + USER_ID + " integer primary key autoincrement,"
-            +  PASSWORD + " text," +  EMAIL + " text);";
+            +  PASSWORD + " text," +  EMAIL + " text, "
+            + MONEYTYPE + " string);";
 
     static final String DATABASE_CREATE_TABLE_FACEBOOK = "create table " + FACEBOOK_TABLE
             + "(" + FB_ID + " string primary key,"
-            + FB_EMAIL + " text not null, " + FB_NAME + " text);";
+            + FB_EMAIL + " text not null, " + FB_NAME + " text, "
+            + FB_MONEYTYPE + " string);";
     static final String DATABASE_CREATE_TABLE_DEAL = "create table " + DEAL_TABLE
             + "(" + DEAL_ID + " integer primary key autoincrement, "
             + DEAL_GROUP + " integer not null, "
             + DEAL_GROUP_DETAILS + " integer not null, "
             + DEAL_GROUP_ICON + " int not null, "
             + DEAL_MONEY + " text not null, "
-            + DEAL_TYPE_MONEY + " text not null, "
             + DEAL_DETAIL + " text, "
             + DEAL_DATE + " text not null, "
             + DEAL_USER_ID + " integet constraint " + DEAL_USER_ID + " references " + DEAL_TABLE + "(" + USER_ID + ") on delete cascade, "
@@ -113,6 +115,48 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean checkTypemoney(String email){
+        Cursor mCursor = db.rawQuery("SELECT " + DataBaseHelper.MONEYTYPE + " FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + " = ?", new String[]{email});
+        if (mCursor != null) {
+            if (mCursor.getCount() > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean checkTypemoneyFB(String email){
+        Cursor mCursor = db.rawQuery("SELECT " + DataBaseHelper.FB_MONEYTYPE + " FROM " + DataBaseHelper.FACEBOOK_TABLE + " WHERE " + DataBaseHelper.EMAIL + " = ?", new String[]{email});
+        if (mCursor != null) {
+            if (mCursor.getCount() > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void inserMoney(String id){
+        db = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(DataBaseHelper.MONEYTYPE, User.getIdMoneyType());
+
+        String where = DataBaseHelper.USER_ID + " = ? ";
+        db.update(DataBaseHelper.NGUOIDUNG_TABLE, newValues, where, new String[]{id});
+    }
+
+    public void inserMoneyFB(String id){
+        db = this.getWritableDatabase();
+        ContentValues newValues = new ContentValues();
+
+        newValues.put(DataBaseHelper.FB_MONEYTYPE, UserFB.getIdMoneyTypebyFB());
+
+        String where = DataBaseHelper.FB_ID + " = ? ";
+        db.update(DataBaseHelper.FACEBOOK_TABLE, newValues, where, new String[]{id});
+    }
+
     public void insertEntry(){
         ContentValues newValues = new ContentValues();
         //assign values for each row
@@ -162,7 +206,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public User login(String Email, String Password) throws SQLException {
-        String query = "SELECT " + DataBaseHelper.USER_ID + ", " + DataBaseHelper.EMAIL + "," + DataBaseHelper.PASSWORD + " FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?";
+        String query = "SELECT " + DataBaseHelper.USER_ID + ", " + DataBaseHelper.EMAIL + "," + DataBaseHelper.PASSWORD + " ," + DataBaseHelper.MONEYTYPE + " FROM " + DataBaseHelper.NGUOIDUNG_TABLE + " WHERE " + DataBaseHelper.EMAIL + "=? AND " + DataBaseHelper.PASSWORD + "=?";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor mCursor = db.rawQuery(query, new String[]{Email, Password});
         User user = new User();
@@ -171,6 +215,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             user.setIdNguoiDung(mCursor.getString(0));
             user.setEmail(mCursor.getString(1));
             user.setPassword(mCursor.getString(2));
+            user.setIdMoneyType(mCursor.getString(3));
             mCursor.close();
         } else {
             user = null;
@@ -180,7 +225,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public UserFB loginFB (String fbEmail, String fbName) throws SQLException{
         UserFB userFB = new UserFB();
-        String query = "Select " + DataBaseHelper.FB_ID + ", " + DataBaseHelper.FB_EMAIL + "," + DataBaseHelper.FB_NAME + " from " + DataBaseHelper.FACEBOOK_TABLE + " where " + DataBaseHelper.FB_EMAIL + "=? And " + DataBaseHelper.FB_NAME + "=?";
+        String query = "Select " + DataBaseHelper.FB_ID + ", " + DataBaseHelper.FB_EMAIL + "," + DataBaseHelper.FB_NAME + " ," + DataBaseHelper.FB_MONEYTYPE + " from " + DataBaseHelper.FACEBOOK_TABLE + " where " + DataBaseHelper.FB_EMAIL + "=? And " + DataBaseHelper.FB_NAME + "=?";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, new String[]{fbEmail, fbName});
         if (cursor.moveToFirst()){
@@ -188,6 +233,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             userFB.setFacebookID(cursor.getString(0));
             userFB.setEmailFB(cursor.getString(1));
             userFB.setNameFB(cursor.getString(2));
+            userFB.setIdMoneyTypebyFB(cursor.getString(3));
             cursor.close();
         } else {
             userFB = null;
@@ -201,7 +247,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetailsPos());
         contentValues.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
-        contentValues.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
         contentValues.put(DataBaseHelper.DEAL_USER_ID, Deal.getUser().getIdNguoiDung());
@@ -215,7 +260,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetailsPos());
         contentValues.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
-        contentValues.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
         contentValues.put(DataBaseHelper.DEAL_USER_ID, Deal.getUserFB().getFacebookID());
@@ -239,7 +283,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(DataBaseHelper.DEAL_GROUP, Deal.getDealGroup());
         values.put(DataBaseHelper.DEAL_GROUP_DETAILS, Deal.getDealGroupDetailsPos());
         values.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
-        values.put(DataBaseHelper.DEAL_TYPE_MONEY, Deal.getDealTypeMoney());
         values.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         values.put(DataBaseHelper.DEAL_DATE, (Deal.getDealDate()));
         values.put(DataBaseHelper.DEAL_GROUP_ICON, Deal.getDealGroupIcon());
@@ -250,7 +293,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private Cursor getDealbyID(String dID) {
         db = this.getWritableDatabase();
-        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
+        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
         String where = DEAL_USER_ID + "=?";
         String[] whereArgs = new String[]{dID+""};
         Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
@@ -265,7 +308,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             while(c.moveToNext()){
                 String dealID = c.getString(c.getColumnIndex(DEAL_ID));
                 String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
-                String dealTypeMoney = c.getString(c.getColumnIndex(DEAL_TYPE_MONEY));
                 String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
                 Integer dealGroup = c.getInt(c.getColumnIndex(DEAL_GROUP));
@@ -274,7 +316,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
                 MyDeal.listDealiD.add(dealID);
                 MyDeal.listDealMoney.add(dealMoney);
-                MyDeal.listDealTypeMoney.add(dealTypeMoney);
                 MyDeal.listDealDate.add(dealDate);
                 MyDeal.listDealDetails.add(dealDetail);
                 MyDeal.listDealGroup.add(dealGroup);
@@ -286,7 +327,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private Cursor getDealbyFbID(String dID) {
         db = this.getWritableDatabase();
-        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_TYPE_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
+        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
         String where = DEAL_FB_ID + "=?";
         String[] whereArgs = new String[]{dID+""};
         Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
@@ -301,7 +342,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             while(c.moveToNext()){
                 String dealID = c.getString(c.getColumnIndex(DEAL_ID));
                 String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
-                String dealTypeMoney = c.getString(c.getColumnIndex(DEAL_TYPE_MONEY));
                 String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
                 String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
                 Integer dealGroup = c.getInt(c.getColumnIndex(DEAL_GROUP));
@@ -310,7 +350,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
                 MyDeal.listDealiD.add(dealID);
                 MyDeal.listDealMoney.add(dealMoney);
-                MyDeal.listDealTypeMoney.add(dealTypeMoney);
                 MyDeal.listDealDate.add(dealDate);
                 MyDeal.listDealDetails.add(dealDetail);
                 MyDeal.listDealGroup.add(dealGroup);

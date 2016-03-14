@@ -15,6 +15,9 @@ import com.client.R;
 import com.client.activity.DealActivity;
 import com.client.activity.EditDealActivity;
 import com.client.database.model.MyDeal;
+import com.client.database.model.User;
+import com.client.database.model.UserFB;
+import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
 import java.text.NumberFormat;
@@ -63,7 +66,7 @@ public class DealDetailsFragment extends Fragment {
                 intent.putExtra("DId", MyDeal.listDealiD.get(position));
                 intent.putExtra("DMoney", MyDeal.listDealMoney.get(position));
                 intent.putExtra("DDetail", MyDeal.listDealDetails.get(position));
-                intent.putExtra("DTypeMoney", MyDeal.listDealTypeMoney.get(position));
+                intent.putExtra("DTypeMoney", User.getIdMoneyType());
                 intent.putExtra("DGroup", MyDeal.listDealGroup.get(position));
                 intent.putExtra("DDate", MyDeal.listDealDate.get(position));
                 intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position));
@@ -74,47 +77,52 @@ public class DealDetailsFragment extends Fragment {
         });
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+        int sumIncome = 0;
+        int sumOutcome = 0;
+        int number1 [] = new int[MyDeal.listAllIncome.size()];
+        int number [] = new int[MyDeal.listAllOutcome.size()];
 
         totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
+        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
+        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
 
-        int number1 [] = new int[MyDeal.listAllIncome.size()];
 
         for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
             number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
         }
 
-        int sumIncome = 0;
         for (int i = 0; i < number1.length; i++){
             sumIncome += number1[i];
         }
-
-        String income = numberFormat.format(sumIncome);
-
-        totalIncome.setText(income);
-
-
-        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
-
-        int number [] = new int[MyDeal.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
             number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
         }
 
-        int sumOutcome = 0;
+
         for (int i = 0; i < number.length; i++){
             sumOutcome += number[i];
         }
 
+        String income = numberFormat.format(sumIncome);
         String outcome = numberFormat.format(sumOutcome);
 
-        totalOutcome.setText(outcome);
-
-        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
+        if (AccessToken.getCurrentAccessToken() != null){
+            totalIncome.setText(income + " " + UserFB.getIdMoneyTypebyFB());
+            totalOutcome.setText(outcome + " " + UserFB.getIdMoneyTypebyFB());
+        }else {
+            totalIncome.setText(income + " " + User.getIdMoneyType());
+            totalOutcome.setText(outcome + " " + User.getIdMoneyType());
+        }
 
         String totalmoney = numberFormat.format(sumIncome - sumOutcome);
 
-        total_Money.setText(totalmoney);
+        if (AccessToken.getCurrentAccessToken() != null){
+            total_Money.setText(totalmoney + " " + UserFB.getIdMoneyTypebyFB());
+        }else {
+            total_Money.setText(totalmoney + " " + User.getIdMoneyType());
+        }
+
 
         return rootView;
     }

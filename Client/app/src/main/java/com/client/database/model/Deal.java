@@ -22,7 +22,6 @@ public class Deal {
 
     private static int dealGroupIcon;
     private static String dealMoney;
-    private static String dealTypeMoney;
     private static String dealDetail;
     private static User user;
     private static UserFB userFB;
@@ -71,14 +70,6 @@ public class Deal {
 
     public static void setDealDetail(String dealDetail){
         Deal.dealDetail = dealDetail;
-    }
-
-    public static String getDealTypeMoney() {
-        return dealTypeMoney;
-    }
-
-    public static void setDealTypeMoney(String dealTypeMoney) {
-        Deal.dealTypeMoney = dealTypeMoney;
     }
 
     public static String getDealDate() {

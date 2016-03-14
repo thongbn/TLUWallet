@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MyDeal.listDealiD.clear();
         MyDeal.listDealDetails.clear();
         MyDeal.listDealMoney.clear();
-        MyDeal.listDealTypeMoney.clear();
         MyDeal.listDealDate.clear();
         MyDeal.listAllIncome.clear();
         MyDeal.listAllOutcome.clear();

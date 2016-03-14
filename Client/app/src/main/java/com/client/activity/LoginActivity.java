@@ -91,8 +91,14 @@ public class LoginActivity extends Activity{
             }else {
                 saveLoginCheckBox.setChecked(true);
                 dataBaseHelper.login(loginPreferences.getString("email", ""), loginPreferences.getString("password", ""));
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
+                if (User.getIdMoneyType() == null){
+                    Intent i = new Intent(getApplicationContext(),ChooseMoneyTypeActivity.class);
+                    startActivity(i);
+                }else {
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(i);
+                }
+
             }
 
         }
@@ -119,10 +125,13 @@ public class LoginActivity extends Activity{
                             loginPrefsEditor.apply();
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
 
-                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                            startActivity(i);
-
-
+                            if (User.getIdMoneyType() == null){
+                                Intent i = new Intent(getApplicationContext(),ChooseMoneyTypeActivity.class);
+                                startActivity(i);
+                            }else {
+                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(i);
+                            }
 
                         }
                         else
@@ -152,8 +161,13 @@ public class LoginActivity extends Activity{
             String facebookEmail = idFacebook.getString("emailFB", "");
             dataBaseHelper.loginFB(facebookEmail, facebookName);
 
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(i);
+            if (UserFB.getIdMoneyTypebyFB() == null){
+                Intent i = new Intent(getApplicationContext(),ChooseMoneyTypeActivity.class);
+                startActivity(i);
+            }else {
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+            }
 
 
         }
@@ -195,8 +209,13 @@ public class LoginActivity extends Activity{
 
                                     dataBaseHelper.loginFB(emailFB, nameFB);
 
-                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(i);
+                                    if (UserFB.getIdMoneyTypebyFB() == null){
+                                        Intent i = new Intent(getApplicationContext(),ChooseMoneyTypeActivity.class);
+                                        startActivity(i);
+                                    }else {
+                                        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                        startActivity(i);
+                                    }
 
 
                                 } catch (JSONException e) {

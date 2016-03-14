@@ -3,18 +3,13 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,19 +21,19 @@ import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
 import com.client.database.model.User;
+import com.client.database.model.UserFB;
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+
 import java.util.Calendar;
 
 public class DealActivity extends Activity {
     private EditText  deal_Money, deal_Detail, eDate;
     private ImageView imgGroup;
-    private String dealMoney, dealDetail, dealTypemoney, idUser, moneyType;
+    private String dealMoney, dealDetail, idUser;
     private TextView addButton, clearButton, deal_TypeMoney, textGroup;
     DataBaseHelper dataBaseHelper;
-    private Spinner spinner;
     private TableRow pickGroup;
-    String[] spinnerValues = {"VNĐ", "USD", "EUR", "GBP"};
-    int money_images[] = {R.drawable.ic_currency_vnd, R.drawable.ic_currency_usd, R.drawable.ic_currency_eur, R.drawable.ic_currency_gbp};
 
     int day,month,year;
 
@@ -46,6 +41,7 @@ public class DealActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_deal);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         dataBaseHelper = new DataBaseHelper(DealActivity.this);
         dataBaseHelper.open();
 
@@ -54,26 +50,11 @@ public class DealActivity extends Activity {
         deal_Detail = (EditText) findViewById(R.id.edit_Detail);
         eDate=(EditText) findViewById(R.id.edit_Date);
 
-        spinner = (Spinner) findViewById(R.id.spinner);
-
-        spinner.setAdapter(new MyAdapter(this, R.layout.custom_spinner_money_type, spinnerValues));
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                moneyType = parent.getItemAtPosition(position).toString();
-                deal_TypeMoney.setText(moneyType);
-
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-
-        });
+        if(AccessToken.getCurrentAccessToken() != null){
+            deal_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
+        }else {
+            deal_TypeMoney.setText(User.getIdMoneyType());
+        }
 
         //pick group
 
@@ -155,13 +136,11 @@ public class DealActivity extends Activity {
             public void onClick(View v) {
 
                 dealMoney = deal_Money.getText().toString();
-                dealTypemoney = deal_TypeMoney.getText().toString();
                 dealDetail = deal_Detail.getText().toString();
                 if (eDate != null)
                     Deal.setDealDate(eDate.getText().toString());
 
                 Deal.setDealMoney(dealMoney);
-                Deal.setDealTypeMoney(dealTypemoney);
                 Deal.setDealDetail(dealDetail);
                 Deal.setDealGroup(MyDeal.getDealGroup());
                 Deal.setDealGroupDetailsPos(MyDeal.getDealGroupDetailPos());
@@ -231,32 +210,6 @@ public class DealActivity extends Activity {
         eDate.setText(day+"-"+(month+1)+"-"+year);
 
 
-    }
-
-    public class MyAdapter extends ArrayAdapter <String> {
-        public MyAdapter (Context context, int txtViewResourceID, String[] objects) {
-            super(context, txtViewResourceID, objects);
-        }
-
-        @Override
-        public View getDropDownView (int position, View convertView, ViewGroup parent)  {
-            return getCustomView(position, convertView, parent);
-        }
-
-        @Override
-        public View getView (int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        public View getCustomView (int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = getLayoutInflater();
-            View mySpinner = inflater.inflate(R.layout.custom_spinner_money_type, parent, false);
-            TextView text_typeMoney = (TextView) mySpinner.findViewById(R.id.text_typeMoney);
-            text_typeMoney.setText(spinnerValues[position]);
-            ImageView image_typeMomey = (ImageView) mySpinner.findViewById(R.id.imageMoney);
-            image_typeMomey.setImageResource(money_images[position]);
-            return mySpinner;
-        }
     }
 
 }

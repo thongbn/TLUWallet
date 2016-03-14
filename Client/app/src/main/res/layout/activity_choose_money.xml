@@ -1,16 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="3px"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:layout_gravity="center">
 
-    <TableLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/listMoneyType">
 
-        <TableRow></TableRow>
-
-    </TableLayout>
+    </ListView>
 
 </LinearLayout>
