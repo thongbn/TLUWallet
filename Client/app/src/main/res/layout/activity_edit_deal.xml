@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="30dp"
                 android:src="@drawable/icon_not_selected" />
 
             <TextView
@@ -49,19 +49,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/edit_deal_type_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:text="$"
                 android:textSize="20sp"
                 android:textColor="@color/primary_darker"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
-
 
             <EditText
                 android:id="@+id/edit_Money_Deal"
@@ -75,36 +75,58 @@
                 android:singleLine="true"
                 android:inputType="numberDecimal"
                 android:hint="Nhập số tiền"
-                android:digits="0123456789.,"/>
+                android:digits="0123456789.,"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="-7dp"
+            android:layout_below="@+id/text"
+            android:background="@color/iron"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <ImageView
                 android:id="@+id/dRowTextDetailMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:textSize="20sp"
                 android:src="@drawable/ic_adjustment"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <EditText
                 android:id="@+id/edit_Detail_Deal"
-                android:layout_width="250dp"
+                android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:inputType="text|textMultiLine"
                 android:hint="Ghi chú"
                 android:singleLine="true"
                 android:maxLength ="80"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:background="@color/white"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="-7dp"
+            android:layout_below="@+id/text"
+            android:background="@color/iron"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,21 +138,31 @@
                 android:id="@+id/dRowTextDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:src="@drawable/ic_calendar"
                 android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <EditText
                 android:id="@+id/edit_Date_Deal"
-                android:layout_width="250dp"
+                android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:focusable="false"
                 android:hint="Chọn ngày"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:background="@color/white"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="-7dp"
+            android:layout_below="@+id/text"
+            android:background="@color/iron"/>
 
     </LinearLayout>
 
