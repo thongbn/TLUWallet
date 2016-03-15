@@ -52,6 +52,8 @@ public class PlanActivity extends Activity{
         plan_TypeMoney = (TextView) findViewById(R.id.plan_type_money);
         plan_Detail = (EditText) findViewById(R.id.edit_Detail);
         eDate=(EditText) findViewById(R.id.edit_Date);
+        imgGroup = (ImageView) findViewById(R.id.imageGroup);
+        pickGroup = (TextView) findViewById(R.id.pickGroup);
 
         if(AccessToken.getCurrentAccessToken() != null){
             plan_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
@@ -61,23 +63,14 @@ public class PlanActivity extends Activity{
 
         //pick group
 
-        pickGroup = (TextView) findViewById(R.id.pickGroup);
+
         pickGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PickGroupPlanActivity.class));
+                Intent intent = new Intent(PlanActivity.this, PickGroupPlanActivity.class);
+                startActivityForResult(intent, 2);
             }
         });
-
-        imgGroup = (ImageView) findViewById(R.id.imageGroup);
-
-        pickGroup.setText(MyPlan.getPlanGroupDetailName());
-
-        if (MyPlan.getPlanGroupImg() != 0){
-            imgGroup.setImageResource(MyPlan.getPlanGroupImg());
-        } else {
-            imgGroup.setImageResource(R.drawable.icon_not_selected);
-        }
 
 
         //money
@@ -210,7 +203,22 @@ public class PlanActivity extends Activity{
         month=cal.get(Calendar.MONTH);
         year=cal.get(Calendar.YEAR);
         eDate.setText(day+"-"+(month+1)+"-"+year);
+    }
 
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 2 && data != null) {
+            if (resultCode == RESULT_OK) {
+                String groupName = data.getStringExtra("GroupName");
+                Integer groupIcon = data.getExtras().getInt("GroupImg");
+                pickGroup.setText(groupName);
+                imgGroup.setImageResource(groupIcon);
+            }
+
+            if (resultCode == RESULT_CANCELED) {
+                imgGroup.setImageResource(R.drawable.icon_not_selected);
+            }
+        }
     }
 }

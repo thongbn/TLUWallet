@@ -3,9 +3,11 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -15,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
@@ -190,6 +194,7 @@ public class EditPlanActivity extends Activity{
             @Override
             public void onClick(View v) {
                 dataBaseHelper.deletePlan(planID);
+                Toast.makeText(EditPlanActivity.this, "Giao dịch đã được xóa", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
             }
@@ -224,7 +229,7 @@ public class EditPlanActivity extends Activity{
                     return;
                 } else {
                     dataBaseHelper.insertDeal();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Toast.makeText(EditPlanActivity.this, "Giao dịch đã được tạo", Toast.LENGTH_LONG).show();
                 }
             }
         });

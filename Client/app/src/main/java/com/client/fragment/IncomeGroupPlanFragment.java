@@ -43,7 +43,11 @@ public class IncomeGroupPlanFragment extends Fragment{
                 myPlan.setPlanGroupDetailPos(position);
                 myPlan.setPlanGroupDetailName(incomeText[position]);
                 myPlan.setPlanGroupImg(income[position]);
-                startActivity(new Intent(rootView.getContext(), PlanActivity.class));
+                Intent intent = new Intent();
+                intent.putExtra("GroupName", incomeText[position]);
+                intent.putExtra("GroupImg", income[position]);
+                getActivity().setResult(getActivity().RESULT_OK, intent);
+                getActivity().finish();
             }
         });
 

@@ -49,6 +49,8 @@ public class DealActivity extends Activity {
         deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
         deal_Detail = (EditText) findViewById(R.id.edit_Detail);
         eDate=(EditText) findViewById(R.id.edit_Date);
+        pickGroup = (TextView) findViewById(R.id.pickGroup);
+        imgGroup = (ImageView) findViewById(R.id.imageGroup);
 
         if(AccessToken.getCurrentAccessToken() != null){
             deal_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
@@ -58,23 +60,14 @@ public class DealActivity extends Activity {
 
         //pick group
 
-        pickGroup = (TextView) findViewById(R.id.pickGroup);
+
         pickGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PickGroupActivity.class));
+                Intent intent = new Intent(DealActivity.this, PickGroupActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
-
-        imgGroup = (ImageView) findViewById(R.id.imageGroup);
-
-        pickGroup.setText(MyDeal.getDealGroupDetailName());
-
-        if (MyDeal.getDealGroupImg() != 0){
-            imgGroup.setImageResource(MyDeal.getDealGroupImg());
-        } else {
-            imgGroup.setImageResource(R.drawable.icon_not_selected);
-        }
 
 
         //money
@@ -211,4 +204,21 @@ public class DealActivity extends Activity {
 
     }
 
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && data != null){
+            if (resultCode == RESULT_OK){
+                String groupName = data.getStringExtra("GroupName");
+                Integer groupIcon = data.getExtras().getInt("GroupImg");
+                pickGroup.setText(groupName);
+                imgGroup.setImageResource(groupIcon);
+            }
+
+            if (resultCode == RESULT_CANCELED){
+                imgGroup.setImageResource(R.drawable.icon_not_selected);
+            }
+
+        }
+    }
 }

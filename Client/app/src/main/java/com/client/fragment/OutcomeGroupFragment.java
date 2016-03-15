@@ -48,7 +48,11 @@ public class OutcomeGroupFragment extends Fragment{
                 mydeal.setDealGroupDetailName(outcomeText[position]);
                 mydeal.setDealGroupDetailPos(position);
                 mydeal.setDealGroupImg(outcome[position]);
-                startActivity(new Intent(rootView.getContext(), DealActivity.class));
+                Intent intent = new Intent();
+                intent.putExtra("GroupName", outcomeText[position]);
+                intent.putExtra("GroupImg", outcome[position]);
+                getActivity().setResult(getActivity().RESULT_OK, intent);
+                getActivity().finish();
             }
         });
 

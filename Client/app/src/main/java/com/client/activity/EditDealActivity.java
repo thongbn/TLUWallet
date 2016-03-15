@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -23,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.model.Deal;
@@ -234,7 +237,7 @@ public class EditDealActivity extends Activity{
                     return;
                 } else {
                     dataBaseHelper.insertPlan();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Toast.makeText(EditDealActivity.this, "Giao dịch đã được chuyển sang mục Dự định", Toast.LENGTH_LONG).show();
                 }
             }
         });

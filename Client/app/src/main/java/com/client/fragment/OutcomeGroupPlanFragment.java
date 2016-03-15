@@ -47,7 +47,11 @@ public class OutcomeGroupPlanFragment extends Fragment{
                 myPlan.setPlanGroupDetailPos(position);
                 myPlan.setPlanGroupDetailName(outcomeText[position]);
                 myPlan.setPlanGroupImg(outcome[position]);
-                startActivity(new Intent(rootView.getContext(), PlanActivity.class));
+                Intent intent = new Intent();
+                intent.putExtra("GroupName", outcomeText[position]);
+                intent.putExtra("GroupImg", outcome[position]);
+                getActivity().setResult(getActivity().RESULT_OK, intent);
+                getActivity().finish();
             }
         });
 

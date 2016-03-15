@@ -48,7 +48,11 @@ public class IncomeGroupFragment extends Fragment{
                 myDeal.setDealGroupDetailPos(position);
                 myDeal.setDealGroupDetailName(incomeText[position]);
                 myDeal.setDealGroupImg(income[position]);
-                startActivity(new Intent(rootView.getContext(), DealActivity.class));
+                Intent intent = new Intent();
+                intent.putExtra("GroupName", incomeText[position]);
+                intent.putExtra("GroupImg", income[position]);
+                getActivity().setResult(getActivity().RESULT_OK, intent);
+                getActivity().finish();
             }
         });
 
