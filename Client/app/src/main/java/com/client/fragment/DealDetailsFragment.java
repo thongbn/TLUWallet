@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.client.CustomAdapter.CustomDealList;
@@ -18,9 +16,9 @@ import com.client.activity.DealActivity;
 import com.client.activity.EditDealActivity;
 import com.client.database.DataBaseHelper;
 import com.client.database.ShowDetails;
-import com.client.database.model.MyDeal;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.MyDeal;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
@@ -65,14 +63,19 @@ public class DealDetailsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(rootView.getContext(), EditDealActivity.class);
-                intent.putExtra("DId", MyDeal.listDealiD.get(position));
-                intent.putExtra("DMoney", MyDeal.listDealMoney.get(position));
-                intent.putExtra("DDetail", MyDeal.listDealDetails.get(position));
-                intent.putExtra("DTypeMoney", User.getIdMoneyType());
-                intent.putExtra("DGroup", MyDeal.listDealGroup.get(position));
-                intent.putExtra("DDate", MyDeal.listDealDate.get(position));
-                intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position));
-                intent.putExtra("DGroupDetails", MyDeal.listDealGroupDetailsPos.get(position));
+                intent.putExtra("DId", MyDeal.listDealiD.get(position-1));
+                intent.putExtra("DMoney", MyDeal.listDealMoney.get(position-1));
+                intent.putExtra("DDetail", MyDeal.listDealDetails.get(position - 1));
+                if (AccessToken.getCurrentAccessToken() != null){
+                    intent.putExtra("DTypeMoney", UserFB.getIdMoneyTypebyFB());
+                }else {
+                    intent.putExtra("DTypeMoney", User.getIdMoneyType());
+                }
+
+                intent.putExtra("DGroup", MyDeal.listDealGroup.get(position-1));
+                intent.putExtra("DDate", MyDeal.listDealDate.get(position-1));
+                intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position-1));
+                intent.putExtra("DGroupDetails", MyDeal.listDealGroupDetailsPos.get(position-1));
                 intent.putExtra("update", true);
                 startActivityForResult(intent, 2);
             }
@@ -89,9 +92,6 @@ public class DealDetailsFragment extends Fragment {
         countTotal();
 
         listDeal.addHeaderView(header);
-
-
-
 
         return rootView;
     }

@@ -2,19 +2,14 @@ package com.client.CustomAdapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.client.R;
-import com.client.database.model.MyDeal;
-import com.client.fragment.IncomeGroupFragment;
 
 /**
  * Created by ToanNguyen on 07/03/2016.

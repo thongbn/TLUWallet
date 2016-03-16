@@ -2,7 +2,6 @@ package com.client.CustomAdapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.client.R;
-import com.client.database.DataBaseHelper;
-import com.client.database.model.MyDeal;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.MyDeal;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 
 import java.util.Arrays;

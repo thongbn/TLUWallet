@@ -1,9 +1,9 @@
 package com.client.database;
 
-import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
-import com.client.database.model.MyPlan;
-import com.client.database.model.Plan;
+import com.client.model.Deal;
+import com.client.model.MyDeal;
+import com.client.model.MyPlan;
+import com.client.model.Plan;
 import com.facebook.AccessToken;
 
 /**

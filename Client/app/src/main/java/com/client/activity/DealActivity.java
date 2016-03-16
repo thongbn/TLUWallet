@@ -14,14 +14,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.Deal;
+import com.client.model.MyDeal;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
@@ -158,7 +157,6 @@ public class DealActivity extends Activity {
                         finish();
                     }else {
                         dataBaseHelper.insertDeal();
-                        dataBaseHelper.insertDealbyFB();
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
                         finish();

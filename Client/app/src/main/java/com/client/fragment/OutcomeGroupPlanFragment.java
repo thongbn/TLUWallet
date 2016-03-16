@@ -12,10 +12,7 @@ import android.widget.ListView;
 
 import com.client.CustomAdapter.CustomIncomeGroup;
 import com.client.R;
-import com.client.activity.DealActivity;
-import com.client.activity.PlanActivity;
-import com.client.database.model.MyDeal;
-import com.client.database.model.MyPlan;
+import com.client.model.MyPlan;
 
 /**
  * Created by ToanNguyen on 14/03/2016.

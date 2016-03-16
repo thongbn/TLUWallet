@@ -20,10 +20,6 @@ import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.ShowDetails;
-import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
-import com.client.database.model.MyPlan;
-import com.client.database.model.Plan;
 import com.client.fragment.DatabaseFragment;
 import com.client.fragment.DealDetailsFragment;
 import com.client.fragment.HelpFragment;
@@ -268,26 +264,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    private void clear_list (){
-        MyDeal.listDealGroupDetailsPos.clear();
-        MyDeal.listDealGroup.clear();
-        MyDeal.listDealGroupIcon.clear();
-        MyDeal.listDealiD.clear();
-        MyDeal.listDealDetails.clear();
-        MyDeal.listDealMoney.clear();
-        MyDeal.listDealDate.clear();
-        MyDeal.listAllIncome.clear();
-        MyDeal.listAllOutcome.clear();
-
-        MyPlan.listPlanGroupDetailsPos.clear();
-        MyPlan.listPlanGroup.clear();
-        MyPlan.listPlanGroupIcon.clear();
-        MyPlan.listPlaniD.clear();
-        MyPlan.listPlanDetails.clear();
-        MyPlan.listPlanMoney.clear();
-        MyPlan.listPlanDate.clear();
-        MyPlan.listAllIncome.clear();
-        MyPlan.listAllOutcome.clear();
-    }
 
 }

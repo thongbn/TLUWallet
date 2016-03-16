@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.model.User;
+import com.client.model.User;
 
 import java.util.regex.Pattern;
 

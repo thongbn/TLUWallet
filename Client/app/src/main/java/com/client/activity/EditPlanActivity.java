@@ -3,11 +3,9 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -21,10 +19,10 @@ import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.model.Deal;
-import com.client.database.model.Plan;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.Deal;
+import com.client.model.Plan;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
@@ -236,6 +234,9 @@ public class EditPlanActivity extends Activity{
                 } else {
                     dataBaseHelper.insertDeal();
                     Toast.makeText(EditPlanActivity.this, "Giao dịch đã được tạo", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             }
         });

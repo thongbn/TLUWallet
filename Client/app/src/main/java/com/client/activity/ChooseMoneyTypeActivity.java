@@ -10,8 +10,8 @@ import android.widget.ListView;
 import com.client.CustomAdapter.CustomChooseMoneyType;
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 

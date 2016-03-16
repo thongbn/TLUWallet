@@ -2,8 +2,6 @@ package com.client.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,8 +12,7 @@ import android.widget.ListView;
 
 import com.client.CustomAdapter.CustomIncomeGroup;
 import com.client.R;
-import com.client.activity.DealActivity;
-import com.client.database.model.MyDeal;
+import com.client.model.MyDeal;
 
 /**
  * Created by ToanNguyen on 07/03/2016.

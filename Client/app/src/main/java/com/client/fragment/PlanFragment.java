@@ -16,12 +16,9 @@ import com.client.activity.EditPlanActivity;
 import com.client.activity.PlanActivity;
 import com.client.database.DataBaseHelper;
 import com.client.database.ShowDetails;
-import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
-import com.client.database.model.MyPlan;
-import com.client.database.model.Plan;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.MyPlan;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
@@ -67,14 +64,18 @@ public class PlanFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(rootView.getContext(), EditPlanActivity.class);
-                intent.putExtra("PId", MyPlan.listPlaniD.get(position));
-                intent.putExtra("PMoney", MyPlan.listPlanMoney.get(position));
-                intent.putExtra("PDetail", MyPlan.listPlanDetails.get(position));
-                intent.putExtra("PTypeMoney", User.getIdMoneyType());
-                intent.putExtra("PGroup", MyPlan.listPlanGroup.get(position));
-                intent.putExtra("PDate", MyPlan.listPlanDate.get(position));
-                intent.putExtra("PGroupImg", MyPlan.listPlanGroupIcon.get(position));
-                intent.putExtra("PGroupDetails", MyPlan.listPlanGroupDetailsPos.get(position));
+                intent.putExtra("PId", MyPlan.listPlaniD.get(position-1));
+                intent.putExtra("PMoney", MyPlan.listPlanMoney.get(position-1));
+                intent.putExtra("PDetail", MyPlan.listPlanDetails.get(position-1));
+                if (AccessToken.getCurrentAccessToken() != null){
+                    intent.putExtra("PTypeMoney", UserFB.getIdMoneyTypebyFB());
+                }else {
+                    intent.putExtra("PTypeMoney", User.getIdMoneyType());
+                }
+                intent.putExtra("PGroup", MyPlan.listPlanGroup.get(position-1));
+                intent.putExtra("PDate", MyPlan.listPlanDate.get(position-1));
+                intent.putExtra("PGroupImg", MyPlan.listPlanGroupIcon.get(position-1));
+                intent.putExtra("PGroupDetails", MyPlan.listPlanGroupDetailsPos.get(position-1));
                 intent.putExtra("update", true);
                 startActivityForResult(intent, 2);
             }

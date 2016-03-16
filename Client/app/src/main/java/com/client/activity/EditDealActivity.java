@@ -3,37 +3,26 @@ package com.client.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.client.R;
 import com.client.database.DataBaseHelper;
-import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
-import com.client.database.model.Plan;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
-import com.client.fragment.DealDetailsFragment;
+import com.client.model.Deal;
+import com.client.model.Plan;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
@@ -245,6 +234,9 @@ public class EditDealActivity extends Activity{
                 } else {
                     dataBaseHelper.insertPlan();
                     Toast.makeText(EditDealActivity.this, "Giao dịch đã được chuyển sang mục Dự định", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             }
         });

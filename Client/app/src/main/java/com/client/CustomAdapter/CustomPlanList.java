@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.client.R;
-import com.client.database.model.MyPlan;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.MyPlan;
+import com.client.model.User;
+import com.client.model.UserFB;
 import com.facebook.AccessToken;
 
 /**

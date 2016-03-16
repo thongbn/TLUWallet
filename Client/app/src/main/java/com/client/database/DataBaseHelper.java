@@ -6,12 +6,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.client.database.model.Deal;
-import com.client.database.model.MyDeal;
-import com.client.database.model.MyPlan;
-import com.client.database.model.Plan;
-import com.client.database.model.User;
-import com.client.database.model.UserFB;
+import com.client.model.Deal;
+import com.client.model.MyDeal;
+import com.client.model.MyPlan;
+import com.client.model.Plan;
+import com.client.model.User;
+import com.client.model.UserFB;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -263,7 +263,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(DataBaseHelper.DEAL_MONEY, Deal.getDealMoney());
         contentValues.put(DataBaseHelper.DEAL_DETAIL, Deal.getDealDetail());
         contentValues.put(DataBaseHelper.DEAL_DATE, Deal.getDealDate());
-        contentValues.put(DataBaseHelper.DEAL_USER_ID, Deal.getUserFB().getFacebookID());
+        contentValues.put(DataBaseHelper.DEAL_FB_ID, Deal.getUserFB().getFacebookID());
 
         db.insert(DataBaseHelper.DEAL_TABLE, null, contentValues);
     }
