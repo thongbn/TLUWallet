@@ -1,139 +1,24 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingTop="70dp"
     android:paddingLeft="7dp"
-    android:paddingRight="7dp">
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="20dp"
-        android:background="@color/white" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tổng quan"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/devider1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_height"
-            android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
-            android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
-            android:background="@color/black" />
-
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thu nhập"
-                android:textSize="15dp"
-                android:id="@+id/inBount"
-                />
-
-            <TextView
-                android:id="@+id/total_incomeMoney"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="xxx.xxx M"
-                android:textSize="15dp"
-                android:textColor="@color/blue_500"
-                android:layout_alignParentRight="true"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chi Tiêu"
-                android:textSize="15dp"
-                android:id="@+id/outBount"
-                />
-
-            <TextView
-                android:id="@+id/total_outcomeMoney"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="xxx.xxx M"
-                android:textSize="15dp"
-                android:textColor="#FF0000"
-                android:layout_alignParentRight="true"/>
+    android:paddingRight="7dp"
+    android:id="@+id/main_content">
 
 
-        </RelativeLayout>
-
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/devider2"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="270dp"
-            android:layout_height="@dimen/divider_height"
-            android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
-            android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top"
-            android:background="@color/black" />
-
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" >
-
-            <TextView
-                android:id="@+id/total_Money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXXX M"
-                android:textSize="15dp"
-                android:layout_alignParentRight="true"/>
-
-        </RelativeLayout>
-
-    </TableLayout>
-
-    <View
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/devider3"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/divider_height"
-        android:layout_marginBottom="@dimen/nav_drawer_vertical_spacing_listing_divider_bottom"
-        android:layout_marginTop="@dimen/nav_drawer_vertical_spacing_listing_divider_top" />
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/listDealDetails"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listDealDetails"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:background="@color/white"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10.0sp">
+    </ListView>
 
-        </ListView>
+    <include layout="@layout/floating_action_button" />
 
-        <include layout="@layout/floating_action_button" />
-
-    </android.support.design.widget.CoordinatorLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

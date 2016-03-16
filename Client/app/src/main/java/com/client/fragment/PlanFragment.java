@@ -80,11 +80,15 @@ public class PlanFragment extends Fragment {
             }
         });
 
-        totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
-        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
-        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
+        View header = getLayoutInflater(savedInstanceState).inflate(R.layout.custom_header_listdeal, null);
+
+        totalIncome = (TextView) header.findViewById(R.id.total_incomeMoney);
+        totalOutcome = (TextView) header.findViewById(R.id.total_outcomeMoney);
+        total_Money = (TextView) header.findViewById(R.id.total_Money);
 
         countTotal();
+
+        listPlan.addHeaderView(header);
 
         return rootView;
     }

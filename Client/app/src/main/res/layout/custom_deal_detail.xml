@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/border"
     android:id="@+id/deal_Details"
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginStart="5dp"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:background="@color/white">
 
     <TableRow
         android:layout_width="match_parent"
@@ -95,20 +95,20 @@
                 android:focusableInTouchMode="false"/>
 
 
-                <TextView
-                    android:id="@+id/txtDealDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textSize="11dp"
-                    android:layout_marginLeft="12dp"
-                    android:padding="2dp"
-                    android:inputType="text|textMultiLine"
-                    android:scrollHorizontally="false"
-                    android:maxLines ="4"
-                    android:textColor="@color/blue_500"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"/>
+            <TextView
+                android:id="@+id/txtDealDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="11dp"
+                android:layout_marginLeft="12dp"
+                android:padding="2dp"
+                android:inputType="text|textMultiLine"
+                android:scrollHorizontally="false"
+                android:maxLines ="4"
+                android:textColor="@color/blue_500"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
 
         </LinearLayout>

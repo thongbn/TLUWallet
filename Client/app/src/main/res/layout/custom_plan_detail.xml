@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/border"
     android:id="@+id/plan_Details"
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginStart="5dp"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:background="@color/white">
 
     <TableRow
         android:layout_width="match_parent"
