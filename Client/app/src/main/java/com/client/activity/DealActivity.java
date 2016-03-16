@@ -41,6 +41,9 @@ public class DealActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_deal);
+
+        overridePendingTransition(R.anim.card_flip_left_in, R.anim.card_flip_right_out);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         dataBaseHelper = new DataBaseHelper(DealActivity.this);
         dataBaseHelper.open();
@@ -150,10 +153,15 @@ public class DealActivity extends Activity {
                 } else {
                     if(AccessToken.getCurrentAccessToken() != null){
                         dataBaseHelper.insertDealbyFB();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }else {
                         dataBaseHelper.insertDeal();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        dataBaseHelper.insertDealbyFB();
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }
 
 
@@ -220,5 +228,15 @@ public class DealActivity extends Activity {
             }
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
+
     }
 }

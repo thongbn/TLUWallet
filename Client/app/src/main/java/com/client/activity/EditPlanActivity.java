@@ -48,6 +48,9 @@ public class EditPlanActivity extends Activity{
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
+
+        overridePendingTransition(R.anim.card_flip_right_in, R.anim.card_flip_left_out);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         dataBaseHelper = new DataBaseHelper(EditPlanActivity.this);
@@ -176,7 +179,9 @@ public class EditPlanActivity extends Activity{
                     return;
                 } else {
                     dataBaseHelper.updatePlan(planID);
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             }
         });
@@ -195,8 +200,9 @@ public class EditPlanActivity extends Activity{
             public void onClick(View v) {
                 dataBaseHelper.deletePlan(planID);
                 Toast.makeText(EditPlanActivity.this, "Giao dịch đã được xóa", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -264,6 +270,16 @@ public class EditPlanActivity extends Activity{
         month=cal.get(Calendar.MONTH);
         year=cal.get(Calendar.YEAR);
         eDate.setText(day + "-" + (month + 1) + "-" + year);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
 
     }
 }

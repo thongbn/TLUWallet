@@ -58,6 +58,9 @@ public class EditDealActivity extends Activity{
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_deal);
+
+        overridePendingTransition(R.anim.card_flip_right_in, R.anim.card_flip_left_out);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         dataBaseHelper = new DataBaseHelper(EditDealActivity.this);
@@ -186,7 +189,9 @@ public class EditDealActivity extends Activity{
                     return;
                 } else {
                     dataBaseHelper.updateDeal(dealID);
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             }
         });
@@ -204,8 +209,10 @@ public class EditDealActivity extends Activity{
             @Override
             public void onClick(View v) {
                 dataBaseHelper.deleteDeal(dealID);
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
+                Toast.makeText(EditDealActivity.this, "Giao dịch đã được xóa", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -272,6 +279,16 @@ public class EditDealActivity extends Activity{
         month=cal.get(Calendar.MONTH);
         year=cal.get(Calendar.YEAR);
         eDate.setText(day + "-" + (month + 1) + "-" + year);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
 
     }
 

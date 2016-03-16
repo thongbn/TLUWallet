@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.client.R;
 import com.client.database.DataBaseHelper;
+import com.client.database.ShowDetails;
 import com.client.database.model.Deal;
 import com.client.database.model.MyDeal;
 import com.client.database.model.MyPlan;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
     private SharedPreferences loginPreferences;
     private DataBaseHelper dataBaseHelper;
+    private ShowDetails showDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,25 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
-       clear_list();
+        showDetails = new ShowDetails();
 
-        if (AccessToken.getCurrentAccessToken() != null){
-            dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());
-            dataBaseHelper.getAllIncomebyFB(Deal.getUserFB().getFacebookID(), "1");
-            dataBaseHelper.getAllOutcomebyFB(Deal.getUserFB().getFacebookID(), "2");
+        showDetails.clear_list();
 
-            dataBaseHelper.getPlanbyFB(Plan.getUserFB().getFacebookID());
-            dataBaseHelper.getAllPlanIncomebyFB(Plan.getUserFB().getFacebookID(), "1");
-            dataBaseHelper.getAllPlanOutcomebyFB(Plan.getUserFB().getFacebookID(), "2");
-        }else {
-            dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung());
-            dataBaseHelper.getAllIncome(Deal.getUser().getIdNguoiDung(), "1");
-            dataBaseHelper.getAllOutcome(Deal.getUser().getIdNguoiDung(), "2");
-
-            dataBaseHelper.getPlan(Plan.getUser().getIdNguoiDung());
-            dataBaseHelper.getAllPlanIncome(Plan.getUser().getIdNguoiDung(), "1");
-            dataBaseHelper.getAllPlanOutcome(Plan.getUser().getIdNguoiDung(), "2");
-        }
+        showDetails.showDetails(dataBaseHelper);
 
         initialise();
 

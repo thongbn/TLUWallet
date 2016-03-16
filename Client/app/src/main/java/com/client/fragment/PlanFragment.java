@@ -14,7 +14,12 @@ import com.client.CustomAdapter.CustomPlanList;
 import com.client.R;
 import com.client.activity.EditPlanActivity;
 import com.client.activity.PlanActivity;
+import com.client.database.DataBaseHelper;
+import com.client.database.ShowDetails;
+import com.client.database.model.Deal;
+import com.client.database.model.MyDeal;
 import com.client.database.model.MyPlan;
+import com.client.database.model.Plan;
 import com.client.database.model.User;
 import com.client.database.model.UserFB;
 import com.facebook.AccessToken;
@@ -29,6 +34,8 @@ public class PlanFragment extends Fragment {
     private FloatingActionButton FAB;
     private TextView totalIncome, totalOutcome, total_Money;
     private CustomPlanList adapter;
+    private DataBaseHelper dataBaseHelper;
+    private ShowDetails showDetails;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -46,7 +53,7 @@ public class PlanFragment extends Fragment {
 
                 Intent intent = new Intent(rootView.getContext(), PlanActivity.class);
                 intent.putExtra("update", false);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -69,20 +76,53 @@ public class PlanFragment extends Fragment {
                 intent.putExtra("PGroupImg", MyPlan.listPlanGroupIcon.get(position));
                 intent.putExtra("PGroupDetails", MyPlan.listPlanGroupDetailsPos.get(position));
                 intent.putExtra("update", true);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
+
+        totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
+        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
+        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
+
+        countTotal();
+
+        return rootView;
+    }
+
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && data != null || requestCode == 2){
+            if (resultCode == getActivity().RESULT_OK) {
+                showDetails = new ShowDetails();
+                showDetails.clear_list();
+                dataBaseHelper = new DataBaseHelper(getContext());
+
+                showDetails.showDetails(dataBaseHelper);
+
+                countTotal();
+
+            }
+
+            if (resultCode == getActivity().RESULT_CANCELED){
+
+            }
+        }
+
+    }
+
+    private void countTotal() {
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
         int sumIncome = 0;
         int sumOutcome = 0;
         int number1 [] = new int[MyPlan.listAllIncome.size()];
         int number [] = new int[MyPlan.listAllOutcome.size()];
-
-        totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
-        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
-        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
-
 
         for (int i = 0 ; i< MyPlan.listAllIncome.size(); i++) {
             number1 [i] = Integer.parseInt(MyPlan.listAllIncome.get(i).replace(",", ""));
@@ -119,13 +159,5 @@ public class PlanFragment extends Fragment {
         }else {
             total_Money.setText(totalmoney + " " + User.getIdMoneyType());
         }
-
-
-        return rootView;
-    }
-
-    public void onResume(){
-        super.onResume();
-        adapter.notifyDataSetChanged();
     }
 }

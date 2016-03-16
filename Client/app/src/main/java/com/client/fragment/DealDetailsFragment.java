@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.client.CustomAdapter.CustomDealList;
 import com.client.R;
 import com.client.activity.DealActivity;
 import com.client.activity.EditDealActivity;
+import com.client.database.DataBaseHelper;
+import com.client.database.ShowDetails;
 import com.client.database.model.MyDeal;
 import com.client.database.model.User;
 import com.client.database.model.UserFB;
@@ -30,8 +34,8 @@ public class DealDetailsFragment extends Fragment {
     private FloatingActionButton FAB;
     private TextView totalIncome, totalOutcome, total_Money;
     private CustomDealList adapter;
-
-    public DealDetailsFragment (){}
+    private DataBaseHelper dataBaseHelper;
+    private ShowDetails showDetails;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -46,10 +50,8 @@ public class DealDetailsFragment extends Fragment {
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(rootView.getContext(), DealActivity.class);
-                intent.putExtra("update", false);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -72,20 +74,55 @@ public class DealDetailsFragment extends Fragment {
                 intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position));
                 intent.putExtra("DGroupDetails", MyDeal.listDealGroupDetailsPos.get(position));
                 intent.putExtra("update", true);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
+
+        totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
+        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
+        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
+
+
+        countTotal();
+
+
+        return rootView;
+    }
+
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && data != null || requestCode == 2){
+            if (resultCode == getActivity().RESULT_OK) {
+                dataBaseHelper = new DataBaseHelper(getContext());
+                showDetails = new ShowDetails();
+                showDetails.clear_list();
+
+                showDetails.showDetails(dataBaseHelper);
+
+                countTotal();
+
+            }
+
+            if (resultCode == getActivity().RESULT_CANCELED){
+
+            }
+        }
+
+    }
+
+    private void countTotal (){
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
         int sumIncome = 0;
         int sumOutcome = 0;
         int number1 [] = new int[MyDeal.listAllIncome.size()];
         int number [] = new int[MyDeal.listAllOutcome.size()];
-
-        totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoney);
-        totalOutcome = (TextView) rootView.findViewById(R.id.total_outcomeMoney);
-        total_Money = (TextView) rootView.findViewById(R.id.total_Money);
-
 
         for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
             number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
@@ -122,13 +159,5 @@ public class DealDetailsFragment extends Fragment {
         }else {
             total_Money.setText(totalmoney + " " + User.getIdMoneyType());
         }
-
-
-        return rootView;
-    }
-
-    public void onResume(){
-        super.onResume();
-        adapter.notifyDataSetChanged();
     }
 }

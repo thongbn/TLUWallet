@@ -44,6 +44,9 @@ public class PlanActivity extends Activity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
+
+        overridePendingTransition(R.anim.card_flip_left_in, R.anim.card_flip_right_out);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         dataBaseHelper = new DataBaseHelper(PlanActivity.this);
         dataBaseHelper.open();
@@ -153,10 +156,14 @@ public class PlanActivity extends Activity{
                 } else {
                     if(AccessToken.getCurrentAccessToken() != null){
                         dataBaseHelper.insertPlanbyFB();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }else {
                         dataBaseHelper.insertPlan();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }
 
 
@@ -220,5 +227,15 @@ public class PlanActivity extends Activity{
                 imgGroup.setImageResource(R.drawable.icon_not_selected);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
+
     }
 }

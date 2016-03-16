@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -129,13 +130,10 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="10.0sp">
 
-         </ListView>
+        </ListView>
 
         <include layout="@layout/floating_action_button" />
 
     </android.support.design.widget.CoordinatorLayout>
-
-
-
 
 </LinearLayout>
