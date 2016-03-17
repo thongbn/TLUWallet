@@ -2,11 +2,13 @@ package com.client.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +31,7 @@ import java.util.Locale;
 public class DealDetailsFragment extends Fragment {
 
     private ListView listDeal;
-    private FloatingActionButton FAB;
+    private com.melnykov.fab.FloatingActionButton FAB;
     private TextView totalIncome, totalOutcome, total_Money;
     private CustomDealList adapter;
     private DataBaseHelper dataBaseHelper;
@@ -42,9 +44,11 @@ public class DealDetailsFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
         FacebookSdk.sdkInitialize(rootView.getContext());
 
+        getActivity().setTitle(R.string.nav_drawer_item_deal_details);
+
         //Floating action button
 
-        FAB = (FloatingActionButton) rootView.findViewById(R.id.imageButton);
+        FAB = (com.melnykov.fab.FloatingActionButton) rootView.findViewById(R.id.imageButton);
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +57,11 @@ public class DealDetailsFragment extends Fragment {
             }
         });
 
+
         //Custom deal list
         listDeal = (ListView) rootView.findViewById(R.id.listDealDetails);
+
+        FAB.attachToListView(listDeal);
 
         adapter = new CustomDealList(rootView.getContext());
         listDeal.setAdapter(adapter);
@@ -167,4 +174,5 @@ public class DealDetailsFragment extends Fragment {
             total_Money.setText(totalmoney + " " + User.getIdMoneyType());
         }
     }
+
 }

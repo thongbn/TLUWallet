@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:textSize="25dp"
-                android:text="Chọn nhóm" />
+                android:text="@string/common_pick_group" />
 
         </LinearLayout>
 
@@ -74,7 +74,7 @@
                 android:textColor="@color/black"
                 android:singleLine="true"
                 android:inputType="numberDecimal"
-                android:hint="Nhập số tiền"
+                android:hint="@string/common_edit_money"
                 android:digits="0123456789.,"
                 android:layout_marginBottom="10dp"
                 android:background="@color/white"/>
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:inputType="text|textMultiLine"
-                android:hint="Ghi chú"
+                android:hint="@string/common_note"
                 android:singleLine="true"
                 android:maxLength ="80"
                 android:textColor="@color/black"
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:focusable="false"
-                android:hint="Chọn ngày"
+                android:hint="@string/common_date_pick"
                 android:textColor="@color/black"
                 android:background="@color/white"/>
 

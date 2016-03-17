@@ -17,6 +17,8 @@ public class HelpFragment extends Fragment {
             Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.help_fragment, container, false);
+
+        getActivity().setTitle(R.string.nav_drawer_item_help);
          
         return rootView;
     }

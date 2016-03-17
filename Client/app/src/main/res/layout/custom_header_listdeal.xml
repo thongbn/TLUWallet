@@ -96,7 +96,6 @@
                 android:id="@+id/total_Money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXXX M"
                 android:textSize="15dp"
                 android:layout_alignParentRight="true"/>
 

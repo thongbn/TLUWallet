@@ -173,7 +173,7 @@ public class EditDealActivity extends Activity{
                 Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (dealMoney.equals("") || dealDetail.equals("")) {
-                    deal_Money.setError("Chưa điền thông tin");
+                    deal_Money.setError(getText(R.string.common_error_field_not_set));
                     deal_Detail.setError("Chưa điền thông tin");
                     return;
                 } else {
@@ -198,7 +198,7 @@ public class EditDealActivity extends Activity{
             @Override
             public void onClick(View v) {
                 dataBaseHelper.deleteDeal(dealID);
-                Toast.makeText(EditDealActivity.this, "Giao dịch đã được xóa", Toast.LENGTH_LONG).show();
+                Toast.makeText(EditDealActivity.this, getText(R.string.common_delete), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
@@ -228,12 +228,12 @@ public class EditDealActivity extends Activity{
                 Plan.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (dealMoney.equals("") || dealDetail.equals("")) {
-                    deal_Money.setError("Chưa điền thông tin");
-                    deal_Detail.setError("Chưa điền thông tin");
+                    deal_Money.setError(getText(R.string.common_error_field_not_set));
+                    deal_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;
                 } else {
                     dataBaseHelper.insertPlan();
-                    Toast.makeText(EditDealActivity.this, "Giao dịch đã được chuyển sang mục Dự định", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditDealActivity.this, getText(R.string.common_create_plan), Toast.LENGTH_LONG).show();
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     finish();

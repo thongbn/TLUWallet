@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Budget App</string>
+    <string name="APP_ID">760189010793477</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_item_report">Monthy Report</string>
+    <string name="nav_drawer_item_plan">Plan Transactions</string>
+    <string name="nav_drawer_item_database">Tools</string>
+    <string name="nav_drawer_item_help">Help</string>
+    <string name="nav_drawer_item_settings">Settings</string>
+    <string name="nav_drawer_item_deal_details">Transactions</string>
+	
+    <string name="navigation_drawer_opened">The navigation drawer is opened</string>
+    <string name="navigation_drawer_closed">The navigation drawer is closed</string>
+    <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>
+    <string name="tag_nav_drawer_special_entry">nav_drawer_special_entry</string>
+
+
+    <!-- Account acitivity -->
+    <string name="common_account_manager">MY ACCOUNT</string>
+	<string name="common_logout_button">Logout</string>
+	
+	<!-- Create/edit deal, plan acitivity -->
+	<string name="common_pick_group">Select category</string>
+	<string name="common_edit_money">0</string>
+	<string name="common_note">Note</string>
+	<string name="common_date_pick">Date</string>
+	<string name="common_error_field_not_set">You must fill amount field</string>
+	<string name="common_delete">Transactions deleted</string>
+	<string name="common_create_deal">Transaction had been created</string>
+	<string name="common_create_plan">Plan transaction had been created</string>
+	
+	<!-- Deal and plan details -->
+	<string name="common_detail_tittle">Income/Expense</string>
+	
+	<!-- Login, register activity-->
+	<string name="common_email">Email</string>
+	<string name="common_password">Password</string>
+	<string name="common_confirm_password">Confirm password</string>
+	<string name="common_show_password">Show password</string>
+	<string name="common_remember_password">Remember password</string>
+	<string name="common_login">Login</string>
+	<string name="common_link_to_register">Don\'t have account? Register here!</string>
+	<string name="common_register">Register</string>
+	<string name="common_link_to_login">Already have account? Login here!</string>
+	<string name="common_login_success">Login success</string>
+	<string name="common_error_user_pass">Wrong email/password</string>
+	<string name="common_error_password_not_match">Email</string>
+	<string name="common_error_email">Wrong email</string>
+	<string name="common_error_email_already_have">Email already have</string>
+	<string name="common_register_success">Register success</string>
+	
+	
+	<!-- Toolbar -->
+	<string name="common_cancel"> | Cancel</string>
+	<string name="common_done"> | Done</string>
+	
+	<!-- Pick Group -->
+	<string name="common_income">Income</string>
+	<string name="common_outcome">Expense</string>
+	<string name="common_income_plan">Income in future</string>
+	<string name="common_outcome_plan">Expense in future</string>
+	
+
+</resources>

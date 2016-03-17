@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text_account"
-        android:text="QUẢN LÝ TÀI KHOẢN"
+        android:text="@string/common_account_manager"
         android:textSize="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -39,7 +39,6 @@
             android:layout_marginTop="10dp"
             android:id="@+id/email_account"
             android:layout_marginBottom="10dp"
-            android:text="email@email.com"
             android:textSize="15dp"/>
 
         <Button
@@ -47,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:id="@+id/btnLogout"
-            android:text="Đăng xuất"
+            android:text="@string/common_logout_button"
             />
 
     </RelativeLayout>

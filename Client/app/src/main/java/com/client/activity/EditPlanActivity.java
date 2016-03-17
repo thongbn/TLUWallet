@@ -172,8 +172,8 @@ public class EditPlanActivity extends Activity{
                 Plan.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (planMoney.equals("") || planDetail.equals("")) {
-                    plan_Money.setError("Chưa điền thông tin");
-                    plan_Detail.setError("Chưa điền thông tin");
+                    plan_Money.setError(getText(R.string.common_error_field_not_set));
+                    plan_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;
                 } else {
                     dataBaseHelper.updatePlan(planID);
@@ -197,7 +197,7 @@ public class EditPlanActivity extends Activity{
             @Override
             public void onClick(View v) {
                 dataBaseHelper.deletePlan(planID);
-                Toast.makeText(EditPlanActivity.this, "Giao dịch đã được xóa", Toast.LENGTH_LONG).show();
+                Toast.makeText(EditPlanActivity.this, getText(R.string.common_delete), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
@@ -228,12 +228,12 @@ public class EditPlanActivity extends Activity{
                 Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (planMoney.equals("") || planDetail.equals("")) {
-                    plan_Money.setError("Chưa điền thông tin");
-                    plan_Detail.setError("Chưa điền thông tin");
+                    plan_Money.setError(getText(R.string.common_error_field_not_set));
+                    plan_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;
                 } else {
                     dataBaseHelper.insertDeal();
-                    Toast.makeText(EditPlanActivity.this, "Giao dịch đã được tạo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditPlanActivity.this, getText(R.string.common_create_deal), Toast.LENGTH_LONG).show();
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     finish();

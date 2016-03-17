@@ -149,8 +149,8 @@ public class PlanActivity extends Activity{
                 Plan.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (planMoney.equals("") || planDetail.equals("") || pickGroup.equals("")) {
-                    plan_Money.setError("Chưa điền thông tin");
-                    plan_Detail.setError("Chưa điền thông tin");
+                    plan_Money.setError(getText(R.string.common_error_field_not_set));
+                    plan_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;
                 } else {
                     if(AccessToken.getCurrentAccessToken() != null){

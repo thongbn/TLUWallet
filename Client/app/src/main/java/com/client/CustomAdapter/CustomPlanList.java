@@ -63,12 +63,12 @@ public class CustomPlanList  extends BaseAdapter{
         holder.datePlan.setText(MyPlan.listPlanDate.get(position));
 
         if (MyPlan.listPlanGroup.get(position).equals(1)){
-            holder.planGroup.setText("Thu nhập dự định");
+            holder.planGroup.setText(R.string.common_income_plan);
             String income [] = convertView.getResources().getStringArray(R.array.income_categories);
             holder.planGroupDetails.setText(income[MyPlan.listPlanGroupDetailsPos.get(position)]);
             holder.transaction_image.setImageResource(MyPlan.listPlanGroupIcon.get(position));
         }else {
-            holder.planGroup.setText("Chi tiêu dự định");
+            holder.planGroup.setText(R.string.common_outcome_plan);
             String outcome [] = convertView.getResources().getStringArray(R.array.outcome_categories);
             holder.planGroupDetails.setText(outcome[MyPlan.listPlanGroupDetailsPos.get(position)]);
             holder.transaction_image.setImageResource(MyPlan.listPlanGroupIcon.get(position));

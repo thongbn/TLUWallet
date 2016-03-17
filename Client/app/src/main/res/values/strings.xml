@@ -3,24 +3,63 @@
     <string name="APP_ID">760189010793477</string>
 
     <!-- Navigation Drawer -->
-    <string name="nav_drawer_item_wallet">Ví</string>
     <string name="nav_drawer_item_report">Báo cáo hàng tháng</string>
-    <string name="nav_drawer_item_plan">Dự định</string>
+    <string name="nav_drawer_item_plan">Sổ giao dịch dự định</string>
     <string name="nav_drawer_item_database">Cơ sở dữ liệu</string>
     <string name="nav_drawer_item_help">Hướng dẫn</string>
     <string name="nav_drawer_item_settings">Cài đặt</string>
     <string name="nav_drawer_item_deal_details">Sổ giao dịch</string>
+	
     <string name="navigation_drawer_opened">The navigation drawer is opened</string>
     <string name="navigation_drawer_closed">The navigation drawer is closed</string>
     <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>
     <string name="tag_nav_drawer_special_entry">nav_drawer_special_entry</string>
 
 
-    <!-- Create deal -->
-    <string name="Group">Chọn Nhóm</string>
-    <string name="Money">Số Tiền</string>
-    <string name="Note">Ghi Chú</string>
-    <string name="Date">Ngày Tháng</string>
-
+    <!-- Account acitivity -->
+    <string name="common_account_manager">QUẢN LÝ TÀI KHOẢN</string>
+	<string name="common_logout_button">Đăng xuất</string>
+	
+	<!-- Create/edit deal, plan acitivity -->
+	<string name="common_pick_group">Chọn nhóm</string>
+	<string name="common_edit_money">Nhập số tiền</string>
+	<string name="common_note">Ghi chú</string>
+	<string name="common_date_pick">Chọn ngày</string>
+	<string name="common_error_field_not_set">Chưa điền thông tin</string>
+	<string name="common_delete">Giao dịch đã được xóa</string>
+	<string name="common_create_deal">Giao dịch đã được tạo</string>
+	<string name="common_create_plan">Giao dịch dự định đã được tạo</string>
+	
+	<!-- Deal and plan details -->
+	<string name="common_detail_tittle">Chi tiêu/Thu nhập</string>
+	
+	<!-- Login, register activity-->
+	<string name="common_email">Email</string>
+	<string name="common_password">Mật khẩu</string>
+	<string name="common_confirm_password">Xác nhận mật khẩu</string>
+	<string name="common_show_password">Hiển thị mật khẩu</string>
+	<string name="common_remember_password">Nhớ mật khẩu</string>
+	<string name="common_login">Đăng nhập</string>
+	<string name="common_link_to_register">Chưa có tài khoản? Mời đăng ký tại đây!</string>
+	<string name="common_register">Đăng ký</string>
+	<string name="common_link_to_login">Đã có tài khoản? Mời đăng nhập tại đây!</string>
+	<string name="common_login_success">Đăng nhập thành công</string>
+	<string name="common_error_user_pass">Sai tên đăng nhập/mật khẩu</string>
+	<string name="common_error_password_not_match">Email</string>
+	<string name="common_error_email">Mời nhập đúng kiểu email</string>
+	<string name="common_error_email_already_have">Email đã có rồi</string>
+	<string name="common_register_success">Đăng ký thành công</string>
+	
+	
+	<!-- Toolbar -->
+	<string name="common_cancel"> | Hủy</string>
+	<string name="common_done"> | Lưu</string>
+	
+	<!-- Pick Group -->
+	<string name="common_income">Thu nhập</string>
+	<string name="common_outcome">Chi tiêu</string>
+	<string name="common_income_plan">Thu nhập dự định</string>
+	<string name="common_outcome_plan">Chi tiêu dự định</string>
+	
 
 </resources>

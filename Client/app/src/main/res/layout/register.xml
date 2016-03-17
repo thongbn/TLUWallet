@@ -37,7 +37,7 @@
                 android:id="@+id/reg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/common_email"
                 android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -53,7 +53,7 @@
                 android:id="@+id/reg_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mật khẩu"
+                android:hint="@string/common_password"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +68,7 @@
                 android:id="@+id/reg_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Xác nhận mật khẩu"
+                android:hint="@string/common_confirm_password"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -81,7 +81,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="Đăng ký"
+            android:text="@string/common_register"
             style="@style/CustomStyleButton" />
         <!-- Link to Login Screen -->
 
@@ -92,7 +92,7 @@
             android:layout_marginBottom="30sp"
             android:layout_marginTop="30sp"
             android:gravity="center"
-            android:text="Đã có tài khoản? Mời đăng nhập tại đây!"
+            android:text="@string/common_link_to_login"
             android:textColor="#ffffff"
             android:layout_gravity="center"
             android:textSize="17sp" />

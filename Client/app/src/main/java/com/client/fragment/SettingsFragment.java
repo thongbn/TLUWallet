@@ -18,6 +18,8 @@ public class SettingsFragment extends Fragment{
  
         View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
 
+        getActivity().setTitle(R.string.nav_drawer_item_settings);
+
         return rootView;
     }
 }

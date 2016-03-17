@@ -86,8 +86,8 @@ public class LoginActivity extends Activity{
             editTextEmail.setText(loginPreferences.getString("email", ""));
             editTextPassword.setText(loginPreferences.getString("password", ""));
             if(editTextEmail.equals("") || editTextPassword.equals("")){
-                editTextEmail.setError("Chưa có thông tin");
-                editTextPassword.setError("Chưa có thông tin");
+                editTextEmail.setError(getText(R.string.common_error_field_not_set));
+                editTextPassword.setError(getText(R.string.common_error_field_not_set));
             }else {
                 saveLoginCheckBox.setChecked(true);
                 dataBaseHelper.login(loginPreferences.getString("email", ""), loginPreferences.getString("password", ""));
@@ -123,7 +123,7 @@ public class LoginActivity extends Activity{
                             loginPrefsEditor.putString("email", email);
                             loginPrefsEditor.putString("password", password);
                             loginPrefsEditor.apply();
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, getText(R.string.common_login_success), Toast.LENGTH_LONG).show();
 
                             if (User.getIdMoneyType() == null){
                                 Intent i = new Intent(getApplicationContext(),ChooseMoneyTypeActivity.class);
@@ -136,10 +136,10 @@ public class LoginActivity extends Activity{
                         }
                         else
                         {
-                            Toast.makeText(LoginActivity.this, "Sai tên đăng nhập/mật khẩu", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, getText(R.string.common_error_user_pass), Toast.LENGTH_LONG).show();
                         }
                     }else{
-                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập/mật khẩu", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, getText(R.string.common_error_user_pass), Toast.LENGTH_LONG).show();
                     }
                 }
                 catch(Exception e)

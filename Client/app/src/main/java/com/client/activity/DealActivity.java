@@ -146,8 +146,8 @@ public class DealActivity extends Activity {
                 Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
                 if (dealMoney.equals("") || dealDetail.equals("") || pickGroup.equals("")) {
-                    deal_Money.setError("Chưa điền thông tin");
-                    deal_Detail.setError("Chưa điền thông tin");
+                    deal_Money.setError(getText(R.string.common_error_field_not_set));
+                    deal_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;
                 } else {
                     if(AccessToken.getCurrentAccessToken() != null){

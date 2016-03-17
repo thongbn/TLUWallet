@@ -25,8 +25,8 @@ public class PickGroupActivity extends AppCompatActivity{
         setContentView(R.layout.activity_pick_group);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsPickGroup);
-        tabLayout.addTab(tabLayout.newTab().setText("Thu nhập"));
-        tabLayout.addTab(tabLayout.newTab().setText("Chi tiêu"));
+        tabLayout.addTab(tabLayout.newTab().setText(getText(R.string.common_income)));
+        tabLayout.addTab(tabLayout.newTab().setText(getText(R.string.common_outcome)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);

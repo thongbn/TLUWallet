@@ -46,7 +46,7 @@ public class CustomChooseMoneyType extends BaseAdapter{
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.custom_spinner_money_type, null);
+            convertView = inflater.inflate(R.layout.custom_choose_money_type, null);
             holder = new ViewHolder();
 
             holder.typemoney = (TextView) convertView.findViewById(R.id.text_typeMoney);

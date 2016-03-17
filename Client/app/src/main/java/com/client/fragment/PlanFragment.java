@@ -28,7 +28,7 @@ import java.util.Locale;
 public class PlanFragment extends Fragment {
 
     private ListView listPlan;
-    private FloatingActionButton FAB;
+    private com.melnykov.fab.FloatingActionButton FAB;
     private TextView totalIncome, totalOutcome, total_Money;
     private CustomPlanList adapter;
     private DataBaseHelper dataBaseHelper;
@@ -41,9 +41,11 @@ public class PlanFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.plan_fragment, container, false);
         FacebookSdk.sdkInitialize(rootView.getContext());
 
+        getActivity().setTitle(R.string.nav_drawer_item_plan);
+
         //Floating action button
 
-        FAB = (FloatingActionButton) rootView.findViewById(R.id.imageButton);
+        FAB = (com.melnykov.fab.FloatingActionButton) rootView.findViewById(R.id.imageButton);
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +58,8 @@ public class PlanFragment extends Fragment {
 
         //Custom deal list
         listPlan = (ListView) rootView.findViewById(R.id.listPlanDetails);
+
+        FAB.attachToListView(listPlan);
 
         adapter = new CustomPlanList(rootView.getContext());
         listPlan.setAdapter(adapter);

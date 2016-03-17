@@ -51,30 +51,30 @@ public class RegisterActivity extends Activity{
 				User.setPassword(password);
 				//check if any of fields are vaccant
 				if(password.equals("") || confirmPassword.equals("")|| email.equals("")){
-					editTextEmail.setError("Chưa điền thông tin");
-					editTextPassword.setError("Chừa điền thông tin");
-					editTextConfirmPassword.setError("Chưa điền thông tin");
+					editTextEmail.setError(getText(R.string.common_error_field_not_set));
+					editTextPassword.setError(getText(R.string.common_error_field_not_set));
+					editTextConfirmPassword.setError(getText(R.string.common_error_field_not_set));
 					return;
 				}
 				
 				//check if both password matches
 				if(!password.equals(confirmPassword)){
-					editTextPassword.setError("Mật khẩu không khớp");
-					editTextConfirmPassword.setError("Mật khẩu không khớp");
+					editTextPassword.setError(getText(R.string.common_error_password_not_match));
+					editTextConfirmPassword.setError(getText(R.string.common_error_password_not_match));
 					return;
 				}
 
 				if((!CheckEmail(email))){
-					editTextEmail.setError("Mời nhập lại đúng kiểu email");
+					editTextEmail.setError(getText(R.string.common_error_email));
 				}
 				else{
 					//Save the Data in Database
 
 					if(!dataBaseHelper.checkemail(email)){
-						editTextEmail.setError("Email đã có rồi");
+						editTextEmail.setError(getText(R.string.common_error_email_already_have));
 					}else {
 						dataBaseHelper.insertEntry();
-						Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), getText(R.string.common_register_success), Toast.LENGTH_LONG).show();
 						Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 						startActivity(i);
 					}

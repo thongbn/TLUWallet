@@ -17,7 +17,6 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:padding="3px"
-        android:text="Money Type"
         android:textColor="#0022ee"
         android:layout_gravity="center"
         android:textSize="15dp"

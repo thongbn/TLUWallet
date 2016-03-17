@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="@string/common_email" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Mật khẩu" />
+                android:hint="@string/common_password" />
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
@@ -57,7 +57,7 @@
             android:layout_alignLeft="@+id/editTextPassword"
             android:layout_marginLeft="170dp"
             android:layout_marginTop="16dp"
-            android:text="Hiển thị mật khẩu" />
+            android:text="@string/common_show_password" />
 
         <CheckBox
             android:id="@+id/saveLoginCheckBox"
@@ -67,7 +67,7 @@
             android:layout_alignLeft="@+id/editTextPassword"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="5dp"
-            android:text="Nhớ mật khẩu" />
+            android:text="@string/common_remember_password" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -76,7 +76,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dip"
             android:layout_gravity="center"
-            android:text="Đăng nhập"
+            android:text="@string/common_login"
             style="@style/CustomStyleButton"/>
 
         <com.facebook.login.widget.LoginButton
@@ -97,7 +97,7 @@
             android:layout_marginBottom="20dip"
             android:layout_marginTop="40dip"
             android:gravity="center"
-            android:text="Chưa có tài khoản? Mời đăng ký tại đây!"
+            android:text="@string/common_link_to_register"
             android:textColor="#ffffff"
             android:textSize="17sp" />
     </LinearLayout>

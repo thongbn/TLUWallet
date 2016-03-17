@@ -15,7 +15,6 @@ import com.client.model.User;
 import com.client.model.UserFB;
 import com.facebook.AccessToken;
 
-import java.util.Arrays;
 
 /**
  * Created by ToanNguyen on 03/03/2016.
@@ -65,12 +64,12 @@ public class CustomDealList extends BaseAdapter {
         holder.dateDeal.setText(MyDeal.listDealDate.get(position));
 
         if (MyDeal.listDealGroup.get(position).equals(1)){
-            holder.dealGroup.setText("Thu nhập");
+            holder.dealGroup.setText(R.string.common_income);
             String income [] = convertView.getResources().getStringArray(R.array.income_categories);
             holder.dealGroupDetails.setText(income[MyDeal.listDealGroupDetailsPos.get(position)]);
             holder.transaction_image.setImageResource(MyDeal.listDealGroupIcon.get(position));
         }else {
-            holder.dealGroup.setText("Chi tiêu");
+            holder.dealGroup.setText(R.string.common_outcome);
             String outcome [] = convertView.getResources().getStringArray(R.array.outcome_categories);
             holder.dealGroupDetails.setText(outcome[MyDeal.listDealGroupDetailsPos.get(position)]);
             holder.transaction_image.setImageResource(MyDeal.listDealGroupIcon.get(position));

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="16dp"
-        android:text="Cơ sở dữ liệu"/>
+        android:text="@string/nav_drawer_item_database"/>
     
     <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
