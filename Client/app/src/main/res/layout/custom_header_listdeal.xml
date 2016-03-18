@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tổng quan"
+            android:text="@string/common_overview"
             android:textSize="20dp"
             android:textStyle="bold"/>
 
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thu nhập"
+                android:text="@string/common_income"
                 android:textSize="15dp"
                 android:id="@+id/inBount"
                 />
@@ -46,7 +46,6 @@
                 android:id="@+id/total_incomeMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="xxx.xxx M"
                 android:textSize="15dp"
                 android:textColor="@color/blue_500"
                 android:layout_alignParentRight="true"/>
@@ -61,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chi Tiêu"
+                android:text="@string/common_outcome"
                 android:textSize="15dp"
                 android:id="@+id/outBount"
                 />
@@ -70,7 +69,6 @@
                 android:id="@+id/total_outcomeMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="xxx.xxx M"
                 android:textSize="15dp"
                 android:textColor="#FF0000"
                 android:layout_alignParentRight="true"/>

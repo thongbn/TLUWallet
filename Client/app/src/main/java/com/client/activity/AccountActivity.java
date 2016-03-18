@@ -22,12 +22,6 @@ import com.facebook.login.LoginManager;
  */
 public class AccountActivity extends AppCompatActivity {
 
-    private TextView account_email;
-    private SharedPreferences loginPreferences;
-    private ImageView imageAccount;
-    private Button btnLogout;
-    private ImageButton turnBack;
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -35,9 +29,9 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.account_activity);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        account_email = (TextView) findViewById(R.id.email_account);
-        imageAccount = (ImageView) findViewById(R.id.image_account);
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        TextView account_email = (TextView) findViewById(R.id.email_account);
+        ImageView imageAccount = (ImageView) findViewById(R.id.image_account);
+        SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         String emailLogin = loginPreferences.getString("email", "");
         if (AccessToken.getCurrentAccessToken() != null) {
             SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);
@@ -50,7 +44,7 @@ public class AccountActivity extends AppCompatActivity {
         }
 
 
-        btnLogout = (Button)findViewById(R.id.btnLogout);
+        Button btnLogout = (Button)findViewById(R.id.btnLogout);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +69,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        turnBack = (ImageButton) findViewById(R.id.turn_back);
+        ImageButton turnBack = (ImageButton) findViewById(R.id.turn_back);
         turnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

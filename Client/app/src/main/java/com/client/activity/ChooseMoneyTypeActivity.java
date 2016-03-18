@@ -15,15 +15,10 @@ import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
-/**
- * Created by ToanNguyen on 11/03/2016.
- */
 public class ChooseMoneyTypeActivity extends Activity{
 
     private String [] moneytype = {"đ", "$", "€", "£", "¥", "$", " ¥", "₩", "$", "฿"};
-    private ListView listMoneyType;
     private DataBaseHelper dataBaseHelper;
-    private CustomChooseMoneyType adapter;
 
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,8 +26,8 @@ public class ChooseMoneyTypeActivity extends Activity{
         FacebookSdk.sdkInitialize(getApplicationContext());
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
-        listMoneyType = (ListView) findViewById(R.id.listMoneyType);
-        adapter = new CustomChooseMoneyType(getApplicationContext());
+        ListView listMoneyType = (ListView) findViewById(R.id.listMoneyType);
+        CustomChooseMoneyType adapter = new CustomChooseMoneyType(getApplicationContext());
         listMoneyType.setAdapter(adapter);
 
         listMoneyType.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -29,9 +29,12 @@
 	<string name="common_delete">Giao dịch đã được xóa</string>
 	<string name="common_create_deal">Giao dịch đã được tạo</string>
 	<string name="common_create_plan">Giao dịch dự định đã được tạo</string>
+	<string name="common_delete_warning">Bạn có chắc chắn muốn xóa giao dịch?</string>
 	
 	<!-- Deal and plan details -->
 	<string name="common_detail_tittle">Chi tiêu/Thu nhập</string>
+	<string name="common_overview">Tổng quan</string>
+	<string name="common_overview_different">Khác nhau</string>
 	
 	<!-- Login, register activity-->
 	<string name="common_email">Email</string>

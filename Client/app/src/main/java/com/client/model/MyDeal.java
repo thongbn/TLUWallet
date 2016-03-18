@@ -32,7 +32,11 @@ public class MyDeal {
 
     public static ArrayList<String> listAllIncome = new ArrayList<String>();
 
+    public static ArrayList<Integer> listAllIncomeGroupDetails = new ArrayList<Integer>();
+
     public static ArrayList<String> listAllOutcome = new ArrayList<String>();
+
+    public static ArrayList<Integer> listAllOutcomeGroupDetails = new ArrayList<Integer>();
 
     public  MyDeal (){
         super();

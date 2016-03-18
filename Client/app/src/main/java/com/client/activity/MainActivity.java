@@ -36,13 +36,9 @@ import com.facebook.login.widget.ProfilePictureView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private DrawerLayout mDrawerLayout;
-    private TextView headerUserEmail;
     private LinearLayout mNavDrawerEntriesRootView;
     private RelativeLayout mFrameLayout_AccountView;
     private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
-    private SharedPreferences loginPreferences;
-    private DataBaseHelper dataBaseHelper;
-    private ShowDetails showDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
-        showDetails = new ShowDetails();
+        ShowDetails showDetails = new ShowDetails();
 
         showDetails.clear_list();
 
@@ -141,9 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Header User
 
-        headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
+        TextView headerUserEmail = (TextView) findViewById(R.id.navigation_drawer_account_information_display_name);
 
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         String emailLogin = loginPreferences.getString("email", "");
         if (AccessToken.getCurrentAccessToken() != null) {
             SharedPreferences idFacebook = getSharedPreferences("idFacebook", MODE_PRIVATE);

@@ -30,9 +30,8 @@ public class DealActivity extends Activity {
     private EditText  deal_Money, deal_Detail, eDate;
     private ImageView imgGroup;
     private String dealMoney, dealDetail, idUser;
-    private TextView deal_TypeMoney, pickGroup;
+    private TextView pickGroup;
     DataBaseHelper dataBaseHelper;
-    private RelativeLayout addButton, clearButton;
 
     int day,month,year;
 
@@ -48,7 +47,7 @@ public class DealActivity extends Activity {
         dataBaseHelper.open();
 
         deal_Money = (EditText) findViewById(R.id.edit_Money);
-        deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
+        TextView deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
         deal_Detail = (EditText) findViewById(R.id.edit_Detail);
         eDate=(EditText) findViewById(R.id.edit_Date);
         pickGroup = (TextView) findViewById(R.id.pickGroup);
@@ -123,7 +122,7 @@ public class DealActivity extends Activity {
             }
         });
 
-        addButton = (RelativeLayout) findViewById(R.id.saveDeal_action_text);
+        RelativeLayout addButton = (RelativeLayout) findViewById(R.id.saveDeal_action_text);
         addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -168,7 +167,7 @@ public class DealActivity extends Activity {
             }
         });
 
-        clearButton = (RelativeLayout) findViewById(R.id.cancelDeal_action_text);
+        RelativeLayout clearButton = (RelativeLayout) findViewById(R.id.cancelDeal_action_text);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

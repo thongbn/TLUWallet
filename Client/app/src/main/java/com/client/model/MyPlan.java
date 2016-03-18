@@ -23,7 +23,11 @@ public class MyPlan {
 
     public static ArrayList<String> listAllIncome = new ArrayList<String>();
 
+    public static ArrayList<Integer> listAllIncomePlanGroupDetails = new ArrayList<Integer>();
+
     public static ArrayList<String> listAllOutcome = new ArrayList<String>();
+
+    public static ArrayList<Integer> listAllOutcomePlanGroupDetails = new ArrayList<Integer>();
 
     private static int planGroup;
 

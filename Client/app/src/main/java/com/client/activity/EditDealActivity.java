@@ -34,13 +34,10 @@ import java.util.Calendar;
 public class EditDealActivity extends Activity{
 
     private EditText deal_Money, deal_Detail, eDate;
-    private String dealMoney, dealDetail, dealTypemoney, idUser, dealID, dealDate;
+    private String dealMoney, dealDetail, dealTypemoney, idUser, dealID;
     private Integer dealGroupDetailsPos, dealIcon, dealGroup;
-    private TextView deal_TypeMoney, dealGroupText;
+    private TextView deal_TypeMoney;
     DataBaseHelper dataBaseHelper;
-    private ImageView deleteButton, dealGroupIcon, tranferButton;
-    private boolean isUpdate;
-    private RelativeLayout saveButton, clearButton;
 
     int day,month,year;
     @Override
@@ -58,8 +55,8 @@ public class EditDealActivity extends Activity{
         deal_Money = (EditText) findViewById(R.id.edit_Money_Deal);
         deal_TypeMoney = (TextView) findViewById(R.id.edit_deal_type_money);
         deal_Detail = (EditText) findViewById(R.id.edit_Detail_Deal);
-        dealGroupText = (TextView) findViewById(R.id.dGroupDetails);
-        dealGroupIcon = (ImageView)findViewById(R.id.dGroupImg);
+        TextView dealGroupText = (TextView) findViewById(R.id.dGroupDetails);
+        ImageView dealGroupIcon = (ImageView)findViewById(R.id.dGroupImg);
         eDate=(EditText) findViewById(R.id.edit_Date_Deal);
 
         if(AccessToken.getCurrentAccessToken() != null){
@@ -118,13 +115,13 @@ public class EditDealActivity extends Activity{
                 showDialog(113);
             }
         });
-        isUpdate = getIntent().getExtras().getBoolean("update");
+        boolean isUpdate = getIntent().getExtras().getBoolean("update");
         if(isUpdate) {
             dealID = getIntent().getExtras().getString("DId");
             dealMoney = getIntent().getExtras().getString("DMoney");
             dealDetail = getIntent().getExtras().getString("DDetail");
             dealTypemoney = getIntent().getExtras().getString("DTypeMoney");
-            dealDate = getIntent().getExtras().getString("DDate");
+            String dealDate = getIntent().getExtras().getString("DDate");
             dealGroup = getIntent().getExtras().getInt("DGroup");
             dealGroupDetailsPos = getIntent().getExtras().getInt("DGroupDetails");
             dealIcon = getIntent().getExtras().getInt("DGroupImg");
@@ -150,7 +147,7 @@ public class EditDealActivity extends Activity{
         }
 
         setListener();
-        saveButton = (RelativeLayout) findViewById(R.id.saveDeal_action_text);
+        RelativeLayout saveButton = (RelativeLayout) findViewById(R.id.saveDeal_action_text);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +182,7 @@ public class EditDealActivity extends Activity{
             }
         });
 
-        clearButton = (RelativeLayout) findViewById(R.id.cancelDeal_action_text);
+        RelativeLayout clearButton = (RelativeLayout) findViewById(R.id.cancelDeal_action_text);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,10 +190,11 @@ public class EditDealActivity extends Activity{
             }
         });
 
-        deleteButton = (ImageView) findViewById(R.id.delete_deal);
+        ImageView deleteButton = (ImageView) findViewById(R.id.delete_deal);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dataBaseHelper.deleteDeal(dealID);
                 Toast.makeText(EditDealActivity.this, getText(R.string.common_delete), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
@@ -205,7 +203,7 @@ public class EditDealActivity extends Activity{
             }
         });
 
-        tranferButton = (ImageView) findViewById(R.id.tranfer_plan);
+        ImageView tranferButton = (ImageView) findViewById(R.id.tranfer_plan);
         tranferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

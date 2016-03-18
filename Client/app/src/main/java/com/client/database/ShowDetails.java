@@ -21,6 +21,7 @@ public class ShowDetails {
         MyDeal.listDealDate.clear();
         MyDeal.listAllIncome.clear();
         MyDeal.listAllOutcome.clear();
+        MyDeal.listAllOutcomeGroupDetails.clear();
 
         MyPlan.listPlanGroupDetailsPos.clear();
         MyPlan.listPlanGroup.clear();
@@ -31,6 +32,8 @@ public class ShowDetails {
         MyPlan.listPlanDate.clear();
         MyPlan.listAllIncome.clear();
         MyPlan.listAllOutcome.clear();
+        MyPlan.listAllOutcomePlanGroupDetails.clear();
+        MyPlan.listAllIncomePlanGroupDetails.clear();
     }
 
     public void showDetails (DataBaseHelper dataBaseHelper){
