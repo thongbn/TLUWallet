@@ -98,7 +98,7 @@ public class DealDetailsFragment extends Fragment {
 
         countTotal();
 
-        listDeal.addHeaderView(header);
+        listDeal.addHeaderView(header, null, false);
 
         return rootView;
     }

@@ -93,7 +93,7 @@ public class PlanFragment extends Fragment {
 
         countTotal();
 
-        listPlan.addHeaderView(header);
+        listPlan.addHeaderView(header, null, false);
 
         return rootView;
     }

@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <!-- Navigation Drawer -->
-    <dimen name="navigation_drawer_max_width">320dp</dimen>
+    <dimen name="navigation_drawer_max_width">250dp</dimen>
 
     <dimen name="nav_drawer_profile_image_size">64dp</dimen>
     <dimen name="nav_drawer_account_section_default_height">164dp</dimen>
