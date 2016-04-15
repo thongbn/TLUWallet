@@ -26,22 +26,25 @@ import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by ToanNguyen on 14/03/2016.
  */
 public class EditPlanActivity extends Activity{
     private EditText plan_Money, plan_Detail, eDate;
-    private String planMoney, planDetail, planTypemoney, idUser, planID, planDate;
+    private String planMoney, planDetail, planTypemoney, idUser, planID, planDate, saveSQL;
     private Integer planGroupDetailsPos, planIcon, planGroup;
     private TextView plan_TypeMoney, planGroupText;
     DataBaseHelper dataBaseHelper;
     private ImageView deleteButton, planGroupIcon, tranferButton;
     private boolean isUpdate;
     private RelativeLayout saveButton, clearButton;
+    Calendar myCalendar = Calendar.getInstance();
 
-    int day,month,year;
     @Override
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -114,7 +117,10 @@ public class EditPlanActivity extends Activity{
         eDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(113);
+                // TODO Auto-generated method stub
+                new DatePickerDialog(EditPlanActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         isUpdate = getIntent().getExtras().getBoolean("update");
@@ -148,7 +154,6 @@ public class EditPlanActivity extends Activity{
             planGroupIcon.setImageResource(planIcon);
         }
 
-        setListener();
         saveButton = (RelativeLayout) findViewById(R.id.savePlan_action_text);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,8 +161,18 @@ public class EditPlanActivity extends Activity{
                 planMoney = plan_Money.getText().toString();
                 planTypemoney = plan_TypeMoney.getText().toString();
                 planDetail = plan_Detail.getText().toString();
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                try {
+                    Date newDate = format.parse(planDate);
+                    format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                    saveSQL = format.format(newDate);
+                }catch (java.text.ParseException e){
+                    e.printStackTrace();
+                }
+
                 if (eDate != null)
-                    Plan.setPlanDate(eDate.getText().toString());
+                    Plan.setPlanDate(saveSQL);
 
                 Plan.setPlanMoney(planMoney);
                 Plan.setPlanGroup(planGroup);
@@ -212,8 +227,18 @@ public class EditPlanActivity extends Activity{
                 planMoney = plan_Money.getText().toString();
                 planTypemoney = plan_TypeMoney.getText().toString();
                 planDetail = plan_Detail.getText().toString();
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                try {
+                    Date newDate = format.parse(planDate);
+                    format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                    saveSQL = format.format(newDate);
+                }catch (java.text.ParseException e){
+                    e.printStackTrace();
+                }
+
                 if (eDate != null)
-                    Deal.setDealDate(eDate.getText().toString());
+                    Plan.setPlanDate(saveSQL);
 
                 Deal.setDealMoney(planMoney);
                 Deal.setDealGroup(planGroup);
@@ -243,34 +268,28 @@ public class EditPlanActivity extends Activity{
 
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if(id==113)
-        {
-            return new DatePickerDialog(this, dateChange, year, month, day);
-        }
-        return null;
-    }
-    private DatePickerDialog.OnDateSetListener dateChange= new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
         @Override
-        public void onDateSet(DatePicker view, int year1, int monthOfYear,
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             // TODO Auto-generated method stub
-            year=year1;
-            month=monthOfYear;
-            day=dayOfMonth;
-            eDate.setText(day+"-"+(month+1)+"-"+year);
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
         }
+
     };
-    private void setListener(){
-        eDate.setInputType(InputType.TYPE_NULL);
-        Calendar cal=Calendar.getInstance();
-        day=cal.get(Calendar.DAY_OF_MONTH);
-        month=cal.get(Calendar.MONTH);
-        year=cal.get(Calendar.YEAR);
-        eDate.setText(day + "-" + (month + 1) + "-" + year);
+
+    private void updateLabel() {
+
+        String myFormat = "dd-MM-yyyy"; //In which you need put here
+        String formatSQL = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdfSQL = new SimpleDateFormat(formatSQL, Locale.US);
+        eDate.setText(sdf.format(myCalendar.getTime()));
+        saveSQL = sdfSQL.format(myCalendar.getTime());
 
     }
 

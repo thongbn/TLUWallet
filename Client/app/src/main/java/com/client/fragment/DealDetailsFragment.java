@@ -1,5 +1,6 @@
 package com.client.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.client.CustomAdapter.CustomDealList;
@@ -24,7 +27,11 @@ import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
+import java.lang.reflect.Field;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -32,10 +39,12 @@ public class DealDetailsFragment extends Fragment {
 
     private ListView listDeal;
     private com.melnykov.fab.FloatingActionButton FAB;
-    private TextView totalIncome, totalOutcome, total_Money;
+    private TextView totalIncome, totalOutcome, total_Money, common_Overview;
     private CustomDealList adapter;
     private DataBaseHelper dataBaseHelper;
     private ShowDetails showDetails;
+    private String datePick;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -88,9 +97,30 @@ public class DealDetailsFragment extends Fragment {
             }
         });
 
-
-
         View header = getLayoutInflater(savedInstanceState).inflate(R.layout.custom_header_listdeal, null);
+
+        common_Overview = (TextView) header.findViewById(R.id.comon_overview);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.US);
+        try {
+            Date newDate = format.parse(com.client.model.DatePicker.getDate());
+            format = new SimpleDateFormat("MM-yyyy", Locale.US);
+            datePick = format.format(newDate);
+        }catch (java.text.ParseException e){
+            e.printStackTrace();
+        }
+
+        common_Overview.setText(datePick);
+
+        common_Overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         totalIncome = (TextView) header.findViewById(R.id.total_incomeMoney);
         totalOutcome = (TextView) header.findViewById(R.id.total_outcomeMoney);
@@ -114,6 +144,7 @@ public class DealDetailsFragment extends Fragment {
         if (requestCode == 1 && data != null || requestCode == 2){
             if (resultCode == getActivity().RESULT_OK) {
                 dataBaseHelper = new DataBaseHelper(getContext());
+
                 showDetails = new ShowDetails();
                 showDetails.clear_list();
 
@@ -173,6 +204,43 @@ public class DealDetailsFragment extends Fragment {
         }else {
             total_Money.setText(totalmoney + " " + User.getIdMoneyType());
         }
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+
+            dataBaseHelper = new DataBaseHelper(getContext());
+
+            showDetails = new ShowDetails();
+            showDetails.clear_list();
+
+            showDetails.showDetails(dataBaseHelper);
+
+            adapter.notifyDataSetChanged();
+        }
+
+    };
+
+    private void updateLabel() {
+
+        String myFormat = "MM-yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        common_Overview.setText(sdf.format(myCalendar.getTime()));
+
+        String sqlFormat = "yyyy-MM"; //In which you need put here
+        SimpleDateFormat getSQL = new SimpleDateFormat(sqlFormat, Locale.US);
+
+        com.client.model.DatePicker.setDate(getSQL.format(myCalendar.getTime()));
+
     }
 
 }

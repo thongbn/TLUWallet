@@ -1,5 +1,6 @@
 package com.client.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.client.CustomAdapter.CustomPlanList;
@@ -23,16 +25,21 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class PlanFragment extends Fragment {
 
     private ListView listPlan;
     private com.melnykov.fab.FloatingActionButton FAB;
-    private TextView totalIncome, totalOutcome, total_Money;
+    private TextView totalIncome, totalOutcome, total_Money, common_Overview;
     private CustomPlanList adapter;
     private DataBaseHelper dataBaseHelper;
     private ShowDetails showDetails;
+    Calendar myCalendar = Calendar.getInstance();
+    private String datePick;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -68,24 +75,47 @@ public class PlanFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(rootView.getContext(), EditPlanActivity.class);
-                intent.putExtra("PId", MyPlan.listPlaniD.get(position-1));
-                intent.putExtra("PMoney", MyPlan.listPlanMoney.get(position-1));
-                intent.putExtra("PDetail", MyPlan.listPlanDetails.get(position-1));
-                if (AccessToken.getCurrentAccessToken() != null){
+                intent.putExtra("PId", MyPlan.listPlaniD.get(position - 1));
+                intent.putExtra("PMoney", MyPlan.listPlanMoney.get(position - 1));
+                intent.putExtra("PDetail", MyPlan.listPlanDetails.get(position - 1));
+                if (AccessToken.getCurrentAccessToken() != null) {
                     intent.putExtra("PTypeMoney", UserFB.getIdMoneyTypebyFB());
-                }else {
+                } else {
                     intent.putExtra("PTypeMoney", User.getIdMoneyType());
                 }
-                intent.putExtra("PGroup", MyPlan.listPlanGroup.get(position-1));
-                intent.putExtra("PDate", MyPlan.listPlanDate.get(position-1));
-                intent.putExtra("PGroupImg", MyPlan.listPlanGroupIcon.get(position-1));
-                intent.putExtra("PGroupDetails", MyPlan.listPlanGroupDetailsPos.get(position-1));
+                intent.putExtra("PGroup", MyPlan.listPlanGroup.get(position - 1));
+                intent.putExtra("PDate", MyPlan.listPlanDate.get(position - 1));
+                intent.putExtra("PGroupImg", MyPlan.listPlanGroupIcon.get(position - 1));
+                intent.putExtra("PGroupDetails", MyPlan.listPlanGroupDetailsPos.get(position - 1));
                 intent.putExtra("update", true);
                 startActivityForResult(intent, 2);
             }
         });
 
         View header = getLayoutInflater(savedInstanceState).inflate(R.layout.custom_header_listdeal, null);
+
+        common_Overview = (TextView) header.findViewById(R.id.comon_overview);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.US);
+        try {
+            Date newDate = format.parse(com.client.model.DatePicker.getDate());
+            format = new SimpleDateFormat("MM-yyyy", Locale.US);
+            datePick = format.format(newDate);
+        }catch (java.text.ParseException e){
+            e.printStackTrace();
+        }
+
+        common_Overview.setText(datePick);
+
+        common_Overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         totalIncome = (TextView) header.findViewById(R.id.total_incomeMoney);
         totalOutcome = (TextView) header.findViewById(R.id.total_outcomeMoney);
@@ -168,5 +198,43 @@ public class PlanFragment extends Fragment {
         }else {
             total_Money.setText(totalmoney + " " + User.getIdMoneyType());
         }
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+
+            dataBaseHelper = new DataBaseHelper(getContext());
+
+            showDetails = new ShowDetails();
+            showDetails.clear_list();
+
+            showDetails.showDetails(dataBaseHelper);
+
+            adapter.notifyDataSetChanged();
+
+        }
+
+    };
+
+    private void updateLabel() {
+
+        String myFormat = "MM-yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        common_Overview.setText(sdf.format(myCalendar.getTime()));
+
+        String sqlFormat = "yyyy-MM"; //In which you need put here
+        SimpleDateFormat getSQL = new SimpleDateFormat(sqlFormat, Locale.US);
+
+        com.client.model.DatePicker.setDate(getSQL.format(myCalendar.getTime()));
+
     }
 }

@@ -33,7 +33,7 @@
 	
 	<!-- Deal and plan details -->
 	<string name="common_detail_tittle">Chi tiêu/Thu nhập</string>
-	<string name="common_overview">Tổng quan</string>
+	<string name="common_overview">Tổng quan tháng</string>
 	<string name="common_overview_different">Khác nhau</string>
 	
 	<!-- Login, register activity-->

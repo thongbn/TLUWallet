@@ -32,6 +32,10 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.ProfilePictureView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout mNavDrawerEntriesRootView;
     private RelativeLayout mFrameLayout_AccountView;
     private FrameLayout mFrameLayout_Plan, mFrameLayout_Database, mFrameLayout_Help, mFrameLayout_Settings, mFrameLayout_DealDetails, mFrameLayout_Report;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
+        myCalendar.get(Calendar.YEAR);
+        myCalendar.get(Calendar.MONTH);
+        myCalendar.get(Calendar.DAY_OF_MONTH);
+        //String dateFormat = "MM-yyyy";
+        String myFormat = "yyyy-MM"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        com.client.model.DatePicker.setDate(sdf.format(myCalendar.getTime()));
 
         ShowDetails showDetails = new ShowDetails();
 

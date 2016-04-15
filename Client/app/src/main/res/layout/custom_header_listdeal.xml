@@ -13,12 +13,42 @@
         android:paddingRight="20dp"
         android:paddingBottom="20dp"
         android:background="@color/white" >
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:text="@string/common_overview"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
+            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/common_overview"
+                android:layout_marginEnd="10dp"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xx-xxxx"
+                android:textColor="@color/darkorange"
+                android:textSize="20sp"
+                android:id="@+id/comon_overview"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_dropdown"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
         <View
             xmlns:android="http://schemas.android.com/apk/res/android"

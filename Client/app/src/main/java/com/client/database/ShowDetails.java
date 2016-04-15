@@ -1,5 +1,6 @@
 package com.client.database;
 
+import com.client.model.DatePicker;
 import com.client.model.Deal;
 import com.client.model.MyDeal;
 import com.client.model.MyPlan;
@@ -38,21 +39,21 @@ public class ShowDetails {
 
     public void showDetails (DataBaseHelper dataBaseHelper){
         if (AccessToken.getCurrentAccessToken() != null){
-            dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID());
-            dataBaseHelper.getAllIncomebyFB(Deal.getUserFB().getFacebookID(), "1");
-            dataBaseHelper.getAllOutcomebyFB(Deal.getUserFB().getFacebookID(), "2");
+            dataBaseHelper.getDealbyFB(Deal.getUserFB().getFacebookID(), DatePicker.getDate());
+            dataBaseHelper.getAllIncomebyFB(Deal.getUserFB().getFacebookID(), "1", DatePicker.getDate());
+            dataBaseHelper.getAllOutcomebyFB(Deal.getUserFB().getFacebookID(), "2", DatePicker.getDate());
 
-            dataBaseHelper.getPlanbyFB(Plan.getUserFB().getFacebookID());
-            dataBaseHelper.getAllPlanIncomebyFB(Plan.getUserFB().getFacebookID(), "1");
-            dataBaseHelper.getAllPlanOutcomebyFB(Plan.getUserFB().getFacebookID(), "2");
+            dataBaseHelper.getPlanbyFB(Plan.getUserFB().getFacebookID(), DatePicker.getDate());
+            dataBaseHelper.getAllPlanIncomebyFB(Plan.getUserFB().getFacebookID(), "1", DatePicker.getDate());
+            dataBaseHelper.getAllPlanOutcomebyFB(Plan.getUserFB().getFacebookID(), "2", DatePicker.getDate());
         }else {
-            dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung());
-            dataBaseHelper.getAllIncome(Deal.getUser().getIdNguoiDung(), "1");
-            dataBaseHelper.getAllOutcome(Deal.getUser().getIdNguoiDung(), "2");
+            dataBaseHelper.getDeal(Deal.getUser().getIdNguoiDung(), DatePicker.getDate());
+            dataBaseHelper.getAllIncome(Deal.getUser().getIdNguoiDung(), "1", DatePicker.getDate());
+            dataBaseHelper.getAllOutcome(Deal.getUser().getIdNguoiDung(), "2", DatePicker.getDate());
 
-            dataBaseHelper.getPlan(Plan.getUser().getIdNguoiDung());
-            dataBaseHelper.getAllPlanIncome(Plan.getUser().getIdNguoiDung(), "1");
-            dataBaseHelper.getAllPlanOutcome(Plan.getUser().getIdNguoiDung(), "2");
+            dataBaseHelper.getPlan(Plan.getUser().getIdNguoiDung(), DatePicker.getDate());
+            dataBaseHelper.getAllPlanIncome(Plan.getUser().getIdNguoiDung(), "1", DatePicker.getDate());
+            dataBaseHelper.getAllPlanOutcome(Plan.getUser().getIdNguoiDung(), "2", DatePicker.getDate());
         }
     }
 

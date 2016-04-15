@@ -15,12 +15,17 @@ import com.client.model.User;
 import com.client.model.UserFB;
 import com.facebook.AccessToken;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by ToanNguyen on 14/03/2016.
  */
 public class CustomPlanList  extends BaseAdapter{
 
     private Context context;
+    private String dateOutput;
 
     public CustomPlanList (Context context){
         super();
@@ -60,7 +65,17 @@ public class CustomPlanList  extends BaseAdapter{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.datePlan.setText(MyPlan.listPlanDate.get(position));
+        String date = MyPlan.listPlanDate.get(position);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        try {
+            Date newDate = format.parse(date);
+            format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            dateOutput = format.format(newDate);
+        }catch (java.text.ParseException e){
+            e.printStackTrace();
+        }
+
+        holder.datePlan.setText(dateOutput);
 
         if (MyPlan.listPlanGroup.get(position).equals(1)){
             holder.planGroup.setText(R.string.common_income_plan);

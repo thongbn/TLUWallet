@@ -1,22 +1,32 @@
 package com.client.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.client.R;
+import com.client.database.DataBaseHelper;
+import com.client.database.ShowDetails;
 import com.client.model.MyDeal;
 import com.client.model.MyPlan;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
 public class ReportFragment extends Fragment {
+
+    String date;
+    TextView report_overview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +34,20 @@ public class ReportFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.report_fragment, container, false);
 
         getActivity().setTitle(R.string.nav_drawer_item_report);
+
+        report_overview = (TextView) rootView.findViewById(R.id.report_overview);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.US);
+        try {
+            Date newDate = format.parse(com.client.model.DatePicker.getDate());
+            format = new SimpleDateFormat("MM-yyyy", Locale.US);
+            date = format.format(newDate);
+        }catch (java.text.ParseException e){
+            e.printStackTrace();
+        }
+
+        report_overview.setText("Báo cáo tháng " + date);
+
 
         //Income overview
 

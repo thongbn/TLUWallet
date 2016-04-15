@@ -24,7 +24,9 @@ import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by ToanNguyen on 14/03/2016.
@@ -32,12 +34,11 @@ import java.util.Calendar;
 public class PlanActivity extends Activity{
     private EditText plan_Money, plan_Detail, eDate;
     private ImageView imgGroup;
-    private String planMoney, planDetail, idUser;
+    private String planMoney, planDetail, idUser, saveSQL;
     private TextView plan_TypeMoney, pickGroup;
     DataBaseHelper dataBaseHelper;
     private RelativeLayout saveButton, clearButton;
-
-    int day,month,year;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -118,11 +119,20 @@ public class PlanActivity extends Activity{
             }
         });
 
-        setListener();
+        String myFormat = "dd-MM-yyyy"; //In which you need put here
+        String formatSQL = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdfSQL = new SimpleDateFormat(formatSQL, Locale.US);
+        eDate.setText(sdf.format(myCalendar.getTime()));
+        saveSQL = sdfSQL.format(myCalendar.getTime());
+
         eDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(113);
+                // TODO Auto-generated method stub
+                new DatePickerDialog(PlanActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -135,7 +145,7 @@ public class PlanActivity extends Activity{
                 planMoney = plan_Money.getText().toString();
                 planDetail = plan_Detail.getText().toString();
                 if (eDate != null)
-                    Plan.setPlanDate(eDate.getText().toString());
+                    Plan.setPlanDate(saveSQL);
 
                 Plan.setPlanMoney(planMoney);
                 Plan.setPlanDetail(planDetail);
@@ -180,35 +190,30 @@ public class PlanActivity extends Activity{
         });
 
     }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if(id==113)
-        {
-            return new DatePickerDialog(this, dateChange, year, month, day);
-        }
-        return null;
-    }
-    private DatePickerDialog.OnDateSetListener dateChange= new DatePickerDialog.OnDateSetListener() {
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
         @Override
-        public void onDateSet(DatePicker view, int year1, int monthOfYear,
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             // TODO Auto-generated method stub
-            year=year1;
-            month=monthOfYear;
-            day=dayOfMonth;
-            EditText eDate=(EditText) findViewById(R.id.edit_Date);
-            eDate.setText(day+"-"+(month+1)+"-"+year);
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
         }
+
     };
-    private void setListener(){
-        eDate.setInputType(InputType.TYPE_NULL);
-        Calendar cal=Calendar.getInstance();
-        day=cal.get(Calendar.DAY_OF_MONTH);
-        month=cal.get(Calendar.MONTH);
-        year=cal.get(Calendar.YEAR);
-        eDate.setText(day+"-"+(month+1)+"-"+year);
+
+    private void updateLabel() {
+
+        String myFormat = "dd-MM-yyyy"; //In which you need put here
+        String formatSQL = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdfSQL = new SimpleDateFormat(formatSQL, Locale.US);
+        eDate.setText(sdf.format(myCalendar.getTime()));
+        saveSQL = sdfSQL.format(myCalendar.getTime());
+
     }
 
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {

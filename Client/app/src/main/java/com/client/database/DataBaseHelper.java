@@ -287,17 +287,54 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private Cursor getDealbyID(String dID) {
+    private Cursor getDealbyID(String dID, String date) {
         db = this.getWritableDatabase();
-        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
-        String where = DEAL_USER_ID + "=?";
-        String[] whereArgs = new String[]{dID+""};
-        Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
+        String query = "Select " + DEAL_ID + " ," + DEAL_MONEY + " ," +  DEAL_DATE + " ," +  DEAL_DETAIL + " ," +  DEAL_GROUP + " ," +  DEAL_GROUP_DETAILS + " ," +  DEAL_GROUP_ICON
+                + " from " + DEAL_TABLE + " where " + DEAL_USER_ID + "=?" + " AND strftime('%Y-%m', " + DEAL_DATE + ") =?" ;
+
+        Cursor cursor = db.rawQuery(query, new String[]{dID, date});
         return cursor;
     }
 
-    public void getDeal (String dID) {
-        Cursor c = getDealbyID(dID);
+    public void getDeal (String dID, String date) {
+        Cursor c = getDealbyID(dID, date);
+
+        if(c != null)
+        {
+            while(c.moveToNext()){
+
+                String dealID = c.getString(c.getColumnIndex(DEAL_ID));
+                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
+                String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
+                String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
+                Integer dealGroup = c.getInt(c.getColumnIndex(DEAL_GROUP));
+                Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
+                Integer dealGroupIcon = c.getInt(c.getColumnIndex(DEAL_GROUP_ICON));
+
+
+
+                MyDeal.listDealiD.add(dealID);
+                MyDeal.listDealMoney.add(dealMoney);
+                MyDeal.listDealDate.add(dealDate);
+                MyDeal.listDealDetails.add(dealDetail);
+                MyDeal.listDealGroup.add(dealGroup);
+                MyDeal.listDealGroupDetailsPos.add(dealGroupDetails);
+                MyDeal.listDealGroupIcon.add(dealGroupIcon);
+            }
+        }
+    }
+
+    private Cursor getDealbyFbID(String dID, String date) {
+        db = this.getWritableDatabase();
+        String query = "Select " + DEAL_ID + " ," + DEAL_MONEY + " ," +  DEAL_DATE + " ," +  DEAL_DETAIL + " ," +  DEAL_GROUP + " ," +  DEAL_GROUP_DETAILS + " ," +  DEAL_GROUP_ICON
+                + " from " + DEAL_TABLE + " where " + DEAL_FB_ID + "=?" + " AND strftime('%Y-%m', " + DEAL_DATE + ") =?" ;
+
+        Cursor cursor = db.rawQuery(query, new String[]{dID, date});
+        return cursor;
+    }
+
+    public void getDealbyFB (String dID, String date) {
+        Cursor c = getDealbyFbID(dID, date);
 
         if(c != null)
         {
@@ -321,42 +358,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private Cursor getDealbyFbID(String dID) {
-        db = this.getWritableDatabase();
-        String from[] = { DEAL_ID, DEAL_MONEY, DEAL_DATE, DEAL_DETAIL, DEAL_GROUP, DEAL_GROUP_DETAILS, DEAL_GROUP_ICON };
-        String where = DEAL_FB_ID + "=?";
-        String[] whereArgs = new String[]{dID+""};
-        Cursor cursor = db.query(DEAL_TABLE, from, where, whereArgs, null, null, null, null);
-        return cursor;
-    }
-
-    public void getDealbyFB (String dID) {
-        Cursor c = getDealbyFbID(dID);
-
-        if(c != null)
-        {
-            while(c.moveToNext()){
-                String dealID = c.getString(c.getColumnIndex(DEAL_ID));
-                String dealMoney = c.getString(c.getColumnIndex(DEAL_MONEY));
-                String dealDate = c.getString(c.getColumnIndex(DEAL_DATE));
-                String dealDetail = c.getString(c.getColumnIndex(DEAL_DETAIL));
-                Integer dealGroup = c.getInt(c.getColumnIndex(DEAL_GROUP));
-                Integer dealGroupDetails = c.getInt(c.getColumnIndex(DEAL_GROUP_DETAILS));
-                Integer dealGroupIcon = c.getInt(c.getColumnIndex(DEAL_GROUP_ICON));
-
-                MyDeal.listDealiD.add(dealID);
-                MyDeal.listDealMoney.add(dealMoney);
-                MyDeal.listDealDate.add(dealDate);
-                MyDeal.listDealDetails.add(dealDetail);
-                MyDeal.listDealGroup.add(dealGroup);
-                MyDeal.listDealGroupDetailsPos.add(dealGroupDetails);
-                MyDeal.listDealGroupIcon.add(dealGroupIcon);
-            }
-        }
-    }
-
-    public void getAllIncome (String dID, String gID) {
-        Cursor c = getAllIncomeData(dID, gID);
+    public void getAllIncome (String dID, String gID, String date) {
+        Cursor c = getAllIncomeData(dID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -368,15 +371,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllIncomeData (String dID, String gID) {
+    public Cursor getAllIncomeData (String dID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.DEAL_MONEY + " ," + DataBaseHelper.DEAL_GROUP_DETAILS + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_USER_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
-        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        String query = "Select " + DEAL_MONEY + " ," + DEAL_GROUP_DETAILS + " from " + DEAL_TABLE + " where " + DEAL_USER_ID + "=? And " + DEAL_GROUP + "=? and strftime('%Y-%m', " + DEAL_DATE + ")=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID, date});
         return cursor;
     }
 
-    public void getAllIncomebyFB (String dID, String gID) {
-        Cursor c = getAllIncomeDatabyFB(dID, gID);
+    public void getAllIncomebyFB (String dID, String gID, String date) {
+        Cursor c = getAllIncomeDatabyFB(dID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -388,15 +391,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllIncomeDatabyFB (String dID, String gID) {
+    public Cursor getAllIncomeDatabyFB (String dID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.DEAL_MONEY + " ," + DataBaseHelper.DEAL_GROUP_DETAILS + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_FB_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
-        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        String query = "Select " + DEAL_MONEY + " ," + DEAL_GROUP_DETAILS + " from " + DEAL_TABLE + " where " + DEAL_FB_ID + "=? And " + DEAL_GROUP + "=? and strftime('%Y-%m', " + DEAL_DATE + ")=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID, date});
         return cursor;
     }
 
-    public void getAllOutcomebyFB (String dID, String gID) {
-        Cursor c = getAllOutcomeDatabyFB(dID, gID);
+    public void getAllOutcomebyFB (String dID, String gID, String date) {
+        Cursor c = getAllOutcomeDatabyFB(dID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -408,15 +411,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllOutcomeDatabyFB (String dID, String gID) {
+    public Cursor getAllOutcomeDatabyFB (String dID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.DEAL_MONEY + " ," + DataBaseHelper.DEAL_GROUP_DETAILS + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_FB_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
-        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        String query = "Select " + DEAL_MONEY + " ," + DEAL_GROUP_DETAILS + " from " + DEAL_TABLE + " where " + DEAL_FB_ID + "=? And " + DEAL_GROUP + "=? And strftime('%Y-%m', " + DEAL_DATE + ")=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID, date});
         return cursor;
     }
 
-    public void getAllOutcome (String dID, String gID) {
-        Cursor c = getAllOutcomeData(dID, gID);
+    public void getAllOutcome (String dID, String gID, String date) {
+        Cursor c = getAllOutcomeData(dID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -428,10 +431,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllOutcomeData (String dID, String gID) {
+    public Cursor getAllOutcomeData (String dID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.DEAL_MONEY + " ," + DataBaseHelper.DEAL_GROUP_DETAILS + " from " + DataBaseHelper.DEAL_TABLE + " where " + DataBaseHelper.DEAL_USER_ID + "=? And " + DataBaseHelper.DEAL_GROUP + "=?";
-        Cursor cursor = db.rawQuery(query, new String[]{dID, gID});
+        String query = "Select " + DEAL_MONEY + " ," + DEAL_GROUP_DETAILS + " from " + DEAL_TABLE + " where " + DEAL_USER_ID + "=? And " + DEAL_GROUP + "=? And strftime('%Y-%m', " + DEAL_DATE + ")=?";
+        Cursor cursor = db.rawQuery(query, new String[]{dID, gID, date});
         return cursor;
     }
 
@@ -483,17 +486,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private Cursor getPlanbyID(String pID) {
+    private Cursor getPlanbyID(String pID, String date) {
         db = this.getWritableDatabase();
-        String from[] = { PLAN_ID, PLAN_MONEY, PLAN_DATE, PLAN_DETAIL, PLAN_GROUP, PLAN_GROUP_DETAILS, PLAN_GROUP_ICON };
-        String where = PLAN_USER_ID + "=?";
-        String[] whereArgs = new String[]{pID+""};
-        Cursor cursor = db.query(PLAN_TABLE, from, where, whereArgs, null, null, null, null);
+        String query = "Select " + PLAN_ID + " ," + PLAN_MONEY + " ," +  PLAN_DATE + " ," +  PLAN_DETAIL + " ," +  PLAN_GROUP + " ," +  PLAN_GROUP_DETAILS + " ," +  PLAN_GROUP_ICON
+                + " from " + PLAN_TABLE + " where " + PLAN_USER_ID + "=?" + " AND strftime('%Y-%m', " + PLAN_DATE + ") =?" ;
+
+        Cursor cursor = db.rawQuery(query, new String[]{pID, date});
         return cursor;
     }
 
-    public void getPlan (String pID) {
-        Cursor c = getPlanbyID(pID);
+    public void getPlan (String pID, String date) {
+        Cursor c = getPlanbyID(pID, date);
 
         if(c != null)
         {
@@ -517,17 +520,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private Cursor getPlanbyFbID(String pID) {
+    private Cursor getPlanbyFbID(String pID, String date) {
         db = this.getWritableDatabase();
-        String from[] = { PLAN_ID, PLAN_MONEY, PLAN_DATE, PLAN_DETAIL, PLAN_GROUP, PLAN_GROUP_DETAILS, PLAN_GROUP_ICON };
-        String where = PLAN_FB_ID + "=?";
-        String[] whereArgs = new String[]{pID+""};
-        Cursor cursor = db.query(PLAN_TABLE, from, where, whereArgs, null, null, null, null);
+        String query = "Select " + PLAN_ID + " ," + PLAN_MONEY + " ," +  PLAN_DATE + " ," +  PLAN_DETAIL + " ," +  PLAN_GROUP + " ," +  PLAN_GROUP_DETAILS + " ," +  PLAN_GROUP_ICON
+                + " from " + PLAN_TABLE + " where " + PLAN_FB_ID + "=?" + " AND strftime('%Y-%m', " + PLAN_DATE + ") =?" ;
+
+        Cursor cursor = db.rawQuery(query, new String[]{pID, date});
         return cursor;
     }
 
-    public void getPlanbyFB (String pID) {
-        Cursor c = getPlanbyFbID(pID);
+    public void getPlanbyFB (String pID, String date) {
+        Cursor c = getPlanbyFbID(pID, date);
 
         if(c != null)
         {
@@ -551,8 +554,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void getAllPlanIncome (String pID, String gID) {
-        Cursor c = getAllPlanIncomeData(pID, gID);
+    public void getAllPlanIncome (String pID, String gID, String date) {
+        Cursor c = getAllPlanIncomeData(pID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -564,15 +567,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllPlanIncomeData (String pID, String gID) {
+    public Cursor getAllPlanIncomeData (String pID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.PLAN_MONEY + " ," + DataBaseHelper.PLAN_GROUP_DETAILS + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_USER_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
-        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_USER_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID, date});
         return cursor;
     }
 
-    public void getAllPlanIncomebyFB (String pID, String gID) {
-        Cursor c = getAllPlanIncomeDatabyFB(pID, gID);
+    public void getAllPlanIncomebyFB (String pID, String gID, String date) {
+        Cursor c = getAllPlanIncomeDatabyFB(pID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -584,15 +587,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllPlanIncomeDatabyFB (String pID, String gID) {
+    public Cursor getAllPlanIncomeDatabyFB (String pID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.PLAN_MONEY + " ," + DataBaseHelper.PLAN_GROUP_DETAILS + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_FB_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_FB_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
         Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
         return cursor;
     }
 
-    public void getAllPlanOutcomebyFB (String pID, String gID) {
-        Cursor c = getAllPlanOutcomeDatabyFB(pID, gID);
+    public void getAllPlanOutcomebyFB (String pID, String gID, String date) {
+        Cursor c = getAllPlanOutcomeDatabyFB(pID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -604,15 +607,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllPlanOutcomeDatabyFB (String pID, String gID) {
+    public Cursor getAllPlanOutcomeDatabyFB (String pID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.PLAN_MONEY + " ," + DataBaseHelper.PLAN_GROUP_DETAILS + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_FB_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_FB_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
         Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
         return cursor;
     }
 
-    public void getAllPlanOutcome (String pID, String gID) {
-        Cursor c = getAllPlanOutcomeData(pID, gID);
+    public void getAllPlanOutcome (String pID, String gID, String date) {
+        Cursor c = getAllPlanOutcomeData(pID, gID, date);
 
         if (c != null){
             while (c.moveToNext()){
@@ -624,9 +627,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllPlanOutcomeData (String pID, String gID) {
+    public Cursor getAllPlanOutcomeData (String pID, String gID, String date) {
         db = this.getWritableDatabase();
-        String query = "Select " + DataBaseHelper.PLAN_MONEY + " ," + DataBaseHelper.PLAN_GROUP_DETAILS + " from " + DataBaseHelper.PLAN_TABLE + " where " + DataBaseHelper.PLAN_USER_ID + "=? And " + DataBaseHelper.PLAN_GROUP + "=?";
+        String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_USER_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
         Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
         return cursor;
     }

@@ -15,6 +15,10 @@ import com.client.model.User;
 import com.client.model.UserFB;
 import com.facebook.AccessToken;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 /**
  * Created by ToanNguyen on 03/03/2016.
@@ -22,6 +26,7 @@ import com.facebook.AccessToken;
 public class CustomDealList extends BaseAdapter {
 
     private Context context;
+    private String dateOutput;
 
     public CustomDealList (Context context){
         super();
@@ -61,7 +66,17 @@ public class CustomDealList extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.dateDeal.setText(MyDeal.listDealDate.get(position));
+        String date = MyDeal.listDealDate.get(position);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        try {
+            Date newDate = format.parse(date);
+            format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            dateOutput = format.format(newDate);
+        }catch (java.text.ParseException e){
+            e.printStackTrace();
+        }
+
+        holder.dateDeal.setText(dateOutput);
 
         if (MyDeal.listDealGroup.get(position).equals(1)){
             holder.dealGroup.setText(R.string.common_income);
@@ -90,4 +105,5 @@ public class CustomDealList extends BaseAdapter {
         TextView dateDeal , dealGroup, dealMoney, dealDetails, dealGroupDetails;
         ImageView transaction_image;
     }
+
 }
