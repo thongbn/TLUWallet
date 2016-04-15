@@ -114,15 +114,6 @@ public class EditPlanActivity extends Activity{
             }
         });
 
-        eDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(EditPlanActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
         isUpdate = getIntent().getExtras().getBoolean("update");
         if(isUpdate) {
             planID = getIntent().getExtras().getString("PId");
@@ -141,6 +132,7 @@ public class EditPlanActivity extends Activity{
             plan_Detail.setText(planDetail);
 
             eDate.setText(planDate);
+            saveSQL = planDate;
             if (planGroup == 1){
                 String income [] = getResources().getStringArray(R.array.income_categories);
                 planGroupText.setText(income[planGroupDetailsPos]);
@@ -154,6 +146,17 @@ public class EditPlanActivity extends Activity{
             planGroupIcon.setImageResource(planIcon);
         }
 
+        eDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(EditPlanActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
         saveButton = (RelativeLayout) findViewById(R.id.savePlan_action_text);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,15 +164,6 @@ public class EditPlanActivity extends Activity{
                 planMoney = plan_Money.getText().toString();
                 planTypemoney = plan_TypeMoney.getText().toString();
                 planDetail = plan_Detail.getText().toString();
-
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                try {
-                    Date newDate = format.parse(planDate);
-                    format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                    saveSQL = format.format(newDate);
-                }catch (java.text.ParseException e){
-                    e.printStackTrace();
-                }
 
                 if (eDate != null)
                     Plan.setPlanDate(saveSQL);
@@ -228,17 +222,8 @@ public class EditPlanActivity extends Activity{
                 planTypemoney = plan_TypeMoney.getText().toString();
                 planDetail = plan_Detail.getText().toString();
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                try {
-                    Date newDate = format.parse(planDate);
-                    format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                    saveSQL = format.format(newDate);
-                }catch (java.text.ParseException e){
-                    e.printStackTrace();
-                }
-
                 if (eDate != null)
-                    Plan.setPlanDate(saveSQL);
+                    Deal.setDealDate(saveSQL);
 
                 Deal.setDealMoney(planMoney);
                 Deal.setDealGroup(planGroup);
