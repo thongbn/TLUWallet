@@ -37,7 +37,7 @@ import java.util.Locale;
 public class EditDealActivity extends Activity{
 
     private EditText deal_Money, deal_Detail, eDate;
-    private String dealMoney, dealDetail, dealTypemoney, idUser, dealID, saveSQL, dealDate;
+    private String dealMoney, dealDetail, dealTypemoney, idUser, dealID, saveSQL, dealDate, dateOutput;
     private Integer dealGroupDetailsPos, dealIcon, dealGroup;
     private TextView deal_TypeMoney;
     DataBaseHelper dataBaseHelper;
@@ -129,7 +129,17 @@ public class EditDealActivity extends Activity{
 
             deal_Detail.setText(dealDetail);
 
-            eDate.setText(dealDate);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            try {
+                Date newDate = format.parse(dealDate);
+                format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                dateOutput = format.format(newDate);
+            }catch (java.text.ParseException e){
+                e.printStackTrace();
+            }
+
+            eDate.setText(dateOutput);
+
             saveSQL = dealDate;
 
             if (dealGroup == 1){

@@ -36,7 +36,7 @@ import java.util.Locale;
  */
 public class EditPlanActivity extends Activity{
     private EditText plan_Money, plan_Detail, eDate;
-    private String planMoney, planDetail, planTypemoney, idUser, planID, planDate, saveSQL;
+    private String planMoney, planDetail, planTypemoney, idUser, planID, planDate, saveSQL, dateOutput;
     private Integer planGroupDetailsPos, planIcon, planGroup;
     private TextView plan_TypeMoney, planGroupText;
     DataBaseHelper dataBaseHelper;
@@ -131,7 +131,16 @@ public class EditPlanActivity extends Activity{
 
             plan_Detail.setText(planDetail);
 
-            eDate.setText(planDate);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            try {
+                Date newDate = format.parse(planDate);
+                format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                dateOutput = format.format(newDate);
+            }catch (java.text.ParseException e){
+                e.printStackTrace();
+            }
+
+            eDate.setText(dateOutput);
             saveSQL = planDate;
             if (planGroup == 1){
                 String income [] = getResources().getStringArray(R.array.income_categories);
