@@ -251,11 +251,21 @@ public class EditPlanActivity extends Activity{
                     plan_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;
                 } else {
-                    dataBaseHelper.insertDeal();
-                    Toast.makeText(EditPlanActivity.this, getText(R.string.common_create_deal), Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
-                    finish();
+
+                    if(AccessToken.getCurrentAccessToken() != null){
+                        dataBaseHelper.insertDealbyFB();
+                        Toast.makeText(EditPlanActivity.this, getText(R.string.common_create_deal), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }else {
+                        dataBaseHelper.insertDeal();
+                        Toast.makeText(EditPlanActivity.this, getText(R.string.common_create_deal), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+
                 }
             }
         });
