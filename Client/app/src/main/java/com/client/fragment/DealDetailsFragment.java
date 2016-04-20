@@ -1,18 +1,13 @@
 package com.client.fragment;
 
-import android.app.DatePickerDialog;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.client.CustomAdapter.CustomDealList;
@@ -26,8 +21,7 @@ import com.client.model.User;
 import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-
-import java.lang.reflect.Field;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,212 +29,222 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class DealDetailsFragment extends Fragment {
+public class DealDetailsFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
 
-    private ListView listDeal;
-    private com.melnykov.fab.FloatingActionButton FAB;
-    private TextView totalIncome, totalOutcome, total_Money, common_Overview;
-    private CustomDealList adapter;
-    private DataBaseHelper dataBaseHelper;
-    private ShowDetails showDetails;
-    private String datePick;
-    Calendar myCalendar = Calendar.getInstance();
+  private ListView listDeal;
+  private com.melnykov.fab.FloatingActionButton FAB;
+  private TextView totalIncome, totalOutcome, total_Money, common_Overview;
+  private CustomDealList adapter;
+  private DataBaseHelper dataBaseHelper;
+  private ShowDetails showDetails;
+  private String datePick;
+  Calendar myCalendar = Calendar.getInstance();
 
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+  @Override
+  public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
-        FacebookSdk.sdkInitialize(rootView.getContext());
+    final View rootView = inflater.inflate(R.layout.deal_details_fragment, container, false);
+    FacebookSdk.sdkInitialize(rootView.getContext());
 
-        getActivity().setTitle(R.string.nav_drawer_item_deal_details);
+    getActivity().setTitle(R.string.nav_drawer_item_deal_details);
 
-        //Floating action button
+    //Floating action button
 
-        FAB = (com.melnykov.fab.FloatingActionButton) rootView.findViewById(R.id.imageButton);
-        FAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(rootView.getContext(), DealActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
+    FAB = (com.melnykov.fab.FloatingActionButton) rootView.findViewById(R.id.imageButton);
+    FAB.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(rootView.getContext(), DealActivity.class);
+        startActivityForResult(intent, 1);
+      }
+    });
 
 
-        //Custom deal list
-        listDeal = (ListView) rootView.findViewById(R.id.listDealDetails);
+    //Custom deal list
+    listDeal = (ListView) rootView.findViewById(R.id.listDealDetails);
 
-        FAB.attachToListView(listDeal);
+    FAB.attachToListView(listDeal);
 
-        adapter = new CustomDealList(rootView.getContext());
-        listDeal.setAdapter(adapter);
+    adapter = new CustomDealList(rootView.getContext());
+    listDeal.setAdapter(adapter);
 
-        listDeal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(rootView.getContext(), EditDealActivity.class);
-                intent.putExtra("DId", MyDeal.listDealiD.get(position-1));
-                intent.putExtra("DMoney", MyDeal.listDealMoney.get(position-1));
-                intent.putExtra("DDetail", MyDeal.listDealDetails.get(position - 1));
-                if (AccessToken.getCurrentAccessToken() != null){
-                    intent.putExtra("DTypeMoney", UserFB.getIdMoneyTypebyFB());
-                }else {
-                    intent.putExtra("DTypeMoney", User.getIdMoneyType());
-                }
-
-                intent.putExtra("DGroup", MyDeal.listDealGroup.get(position-1));
-                intent.putExtra("DDate", MyDeal.listDealDate.get(position-1));
-                intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position-1));
-                intent.putExtra("DGroupDetails", MyDeal.listDealGroupDetailsPos.get(position-1));
-                intent.putExtra("update", true);
-                startActivityForResult(intent, 2);
-            }
-        });
-
-        View header = getLayoutInflater(savedInstanceState).inflate(R.layout.custom_header_listdeal, null);
-
-        common_Overview = (TextView) header.findViewById(R.id.comon_overview);
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.US);
-        try {
-            Date newDate = format.parse(com.client.model.DatePicker.getDate());
-            format = new SimpleDateFormat("MM-yyyy", Locale.US);
-            datePick = format.format(newDate);
-        }catch (java.text.ParseException e){
-            e.printStackTrace();
+    listDeal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(rootView.getContext(), EditDealActivity.class);
+        intent.putExtra("DId", MyDeal.listDealiD.get(position-1));
+        intent.putExtra("DMoney", MyDeal.listDealMoney.get(position-1));
+        intent.putExtra("DDetail", MyDeal.listDealDetails.get(position - 1));
+        if (AccessToken.getCurrentAccessToken() != null){
+          intent.putExtra("DTypeMoney", UserFB.getIdMoneyTypebyFB());
+        }else {
+          intent.putExtra("DTypeMoney", User.getIdMoneyType());
         }
 
-        common_Overview.setText(datePick);
+        intent.putExtra("DGroup", MyDeal.listDealGroup.get(position-1));
+        intent.putExtra("DDate", MyDeal.listDealDate.get(position-1));
+        intent.putExtra("DGroupImg", MyDeal.listDealGroupIcon.get(position-1));
+        intent.putExtra("DGroupDetails", MyDeal.listDealGroupDetailsPos.get(position-1));
+        intent.putExtra("update", true);
+        startActivityForResult(intent, 2);
+      }
+    });
 
-        common_Overview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getActivity(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+    View header = getLayoutInflater(savedInstanceState).inflate(R.layout.custom_header_listdeal, null);
 
-        totalIncome = (TextView) header.findViewById(R.id.total_incomeMoney);
-        totalOutcome = (TextView) header.findViewById(R.id.total_outcomeMoney);
-        total_Money = (TextView) header.findViewById(R.id.total_Money);
+    common_Overview = (TextView) header.findViewById(R.id.comon_overview);
+
+    //convert format from sql to MM-yyyy to show up
+
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.US);
+    try {
+      Date newDate = format.parse(com.client.model.DatePicker.getDate());
+      format = new SimpleDateFormat("MM-yyyy", Locale.US);
+      datePick = format.format(newDate);
+    }catch (java.text.ParseException e){
+      e.printStackTrace();
+    }
+
+    common_Overview.setText(datePick);
+
+    common_Overview.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // TODO Auto-generated method stub
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+          DealDetailsFragment.this,
+          myCalendar.get(Calendar.YEAR),
+          myCalendar.get(Calendar.MONTH),
+          myCalendar.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.setThemeDark(true);
+        dpd.setAccentColor(getResources().getColor(R.color.blue_500));
+        dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+
+      }
+    });
+
+    totalIncome = (TextView) header.findViewById(R.id.total_incomeMoney);
+    totalOutcome = (TextView) header.findViewById(R.id.total_outcomeMoney);
+    total_Money = (TextView) header.findViewById(R.id.total_Money);
+
+    countTotal();
+
+    listDeal.addHeaderView(header, null, false);
+
+    return rootView;
+  }
+
+  public void onResume(){
+    super.onResume();
+    adapter.notifyDataSetChanged();
+    DatePickerDialog dpd = (DatePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Datepickerdialog");
+    if(dpd != null) dpd.setOnDateSetListener(this);
+  }
+
+  public void onActivityResult (int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == 1 && data != null || requestCode == 2){
+      if (resultCode == getActivity().RESULT_OK) {
+        dataBaseHelper = new DataBaseHelper(getContext());
+
+        showDetails = new ShowDetails();
+        showDetails.clear_list();
+
+        showDetails.showDetails(dataBaseHelper);
 
         countTotal();
 
-        listDeal.addHeaderView(header, null, false);
+      }
 
-        return rootView;
+      if (resultCode == getActivity().RESULT_CANCELED){
+
+      }
     }
 
-    public void onResume(){
-        super.onResume();
-        adapter.notifyDataSetChanged();
+  }
+
+  private void countTotal (){
+
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+    int sumIncome = 0;
+    int sumOutcome = 0;
+    int number1 [] = new int[MyDeal.listAllIncome.size()];
+    int number [] = new int[MyDeal.listAllOutcome.size()];
+
+    for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
+      number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
     }
 
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && data != null || requestCode == 2){
-            if (resultCode == getActivity().RESULT_OK) {
-                dataBaseHelper = new DataBaseHelper(getContext());
-
-                showDetails = new ShowDetails();
-                showDetails.clear_list();
-
-                showDetails.showDetails(dataBaseHelper);
-
-                countTotal();
-
-            }
-
-            if (resultCode == getActivity().RESULT_CANCELED){
-
-            }
-        }
-
+    for (int i = 0; i < number1.length; i++){
+      sumIncome += number1[i];
     }
 
-    private void countTotal (){
-
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
-        int sumIncome = 0;
-        int sumOutcome = 0;
-        int number1 [] = new int[MyDeal.listAllIncome.size()];
-        int number [] = new int[MyDeal.listAllOutcome.size()];
-
-        for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
-            number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
-        }
-
-        for (int i = 0; i < number1.length; i++){
-            sumIncome += number1[i];
-        }
-
-        for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
-            number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
-        }
-
-
-        for (int i = 0; i < number.length; i++){
-            sumOutcome += number[i];
-        }
-
-        String income = numberFormat.format(sumIncome);
-        String outcome = numberFormat.format(sumOutcome);
-
-        if (AccessToken.getCurrentAccessToken() != null){
-            totalIncome.setText(income + " " + UserFB.getIdMoneyTypebyFB());
-            totalOutcome.setText(outcome + " " + UserFB.getIdMoneyTypebyFB());
-        }else {
-            totalIncome.setText(income + " " + User.getIdMoneyType());
-            totalOutcome.setText(outcome + " " + User.getIdMoneyType());
-        }
-
-        String totalmoney = numberFormat.format(sumIncome - sumOutcome);
-
-        if (AccessToken.getCurrentAccessToken() != null){
-            total_Money.setText(totalmoney + " " + UserFB.getIdMoneyTypebyFB());
-        }else {
-            total_Money.setText(totalmoney + " " + User.getIdMoneyType());
-        }
+    for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
+      number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
     }
 
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-
-            dataBaseHelper = new DataBaseHelper(getContext());
-
-            showDetails = new ShowDetails();
-            showDetails.clear_list();
-
-            showDetails.showDetails(dataBaseHelper);
-
-            adapter.notifyDataSetChanged();
-        }
-
-    };
-
-    private void updateLabel() {
-
-        String myFormat = "MM-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        common_Overview.setText(sdf.format(myCalendar.getTime()));
-
-        String sqlFormat = "yyyy-MM"; //In which you need put here
-        SimpleDateFormat getSQL = new SimpleDateFormat(sqlFormat, Locale.US);
-
-        com.client.model.DatePicker.setDate(getSQL.format(myCalendar.getTime()));
-
+    for (int i = 0; i < number.length; i++){
+      sumOutcome += number[i];
     }
+
+    String income = numberFormat.format(sumIncome);
+    String outcome = numberFormat.format(sumOutcome);
+
+    if (AccessToken.getCurrentAccessToken() != null){
+      totalIncome.setText(income + " " + UserFB.getIdMoneyTypebyFB());
+      totalOutcome.setText(outcome + " " + UserFB.getIdMoneyTypebyFB());
+    }else {
+      totalIncome.setText(income + " " + User.getIdMoneyType());
+      totalOutcome.setText(outcome + " " + User.getIdMoneyType());
+    }
+
+    String totalmoney = numberFormat.format(sumIncome - sumOutcome);
+
+    if (AccessToken.getCurrentAccessToken() != null){
+      total_Money.setText(totalmoney + " " + UserFB.getIdMoneyTypebyFB());
+    }else {
+      total_Money.setText(totalmoney + " " + User.getIdMoneyType());
+    }
+  }
+
+  public void onDateSet(DatePickerDialog  view, int year, int monthOfYear,
+                        int dayOfMonth) {
+    // TODO Auto-generated method stub
+    myCalendar.set(Calendar.YEAR, year);
+    myCalendar.set(Calendar.MONTH, monthOfYear);
+    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+    updateLabel();
+
+    //reload page
+
+    dataBaseHelper = new DataBaseHelper(getContext());
+
+    showDetails = new ShowDetails();
+    showDetails.clear_list();
+
+    showDetails.showDetails(dataBaseHelper);
+
+    adapter.notifyDataSetChanged();
+  };
+
+
+
+  private void updateLabel() {
+
+    String myFormat = "MM-yyyy"; //format show up
+    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+    common_Overview.setText(sdf.format(myCalendar.getTime()));
+
+    String sqlFormat = "yyyy-MM"; //format put into sql
+    SimpleDateFormat getSQL = new SimpleDateFormat(sqlFormat, Locale.US);
+
+    com.client.model.DatePicker.setDate(getSQL.format(myCalendar.getTime()));
+
+  }
 
 }
