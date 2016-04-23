@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.client.CustomAdapter.NumberTextWatcher;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.model.MyPlan;
@@ -32,13 +34,13 @@ import java.util.Locale;
  * Created by ToanNguyen on 14/03/2016.
  */
 public class PlanActivity extends Activity{
-    private EditText plan_Money, plan_Detail, eDate;
+    private com.rengwuxian.materialedittext.MaterialEditText plan_Money, plan_Detail, eDate, pickGroup;
     private ImageView imgGroup;
     private String planMoney, planDetail, idUser, saveSQL;
-    private TextView plan_TypeMoney, pickGroup;
     DataBaseHelper dataBaseHelper;
     private RelativeLayout saveButton, clearButton;
     Calendar myCalendar = Calendar.getInstance();
+    private String typeMoney;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -51,17 +53,16 @@ public class PlanActivity extends Activity{
         dataBaseHelper = new DataBaseHelper(PlanActivity.this);
         dataBaseHelper.open();
 
-        plan_Money = (EditText) findViewById(R.id.edit_Money);
-        plan_TypeMoney = (TextView) findViewById(R.id.plan_type_money);
-        plan_Detail = (EditText) findViewById(R.id.edit_Detail);
-        eDate=(EditText) findViewById(R.id.edit_Date);
+        plan_Money = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Money);
+        plan_Detail = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Detail);
+        eDate=(com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Date);
         imgGroup = (ImageView) findViewById(R.id.imageGroup);
-        pickGroup = (TextView) findViewById(R.id.pickGroup);
+        pickGroup = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.pickGroup);
 
         if(AccessToken.getCurrentAccessToken() != null){
-            plan_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
+          typeMoney = UserFB.getIdMoneyTypebyFB();
         }else {
-            plan_TypeMoney.setText(User.getIdMoneyType());
+          typeMoney = User.getIdMoneyType();
         }
 
         //pick group
@@ -77,47 +78,8 @@ public class PlanActivity extends Activity{
 
 
         //money
-        plan_Money.addTextChangedListener(new TextWatcher() {
-            boolean isManualChange = false;
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if (isManualChange) {
-                    isManualChange = false;
-                    return;
-                }
-                try {
-                    String value = s.toString().replace(",", "");
-                    String reverseValue = new StringBuilder(value).reverse()
-                            .toString();
-                    StringBuilder finalValue = new StringBuilder();
-                    for (int i = 1; i <= reverseValue.length(); i++) {
-                        char val = reverseValue.charAt(i - 1);
-                        finalValue.append(val);
-                        if (i % 3 == 0 && i != reverseValue.length() && i > 0) {
-                            finalValue.append(",");
-                        }
-                    }
-                    isManualChange = true;
-                    plan_Money.setText(finalValue.reverse());
-                    plan_Money.setSelection(finalValue.length());
-                } catch (Exception e) {
-                    // Do nothing since not a number
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-        });
+        plan_Money.setHint(getResources().getString(R.string.common_edit_money)+ " (" + typeMoney + ")");
+        plan_Money.addTextChangedListener(new NumberTextWatcher(plan_Money));
 
         String myFormat = "dd-MM-yyyy"; //In which you need put here
         String formatSQL = "yyyy-MM-dd";
@@ -158,7 +120,7 @@ public class PlanActivity extends Activity{
                 Plan.getUserFB().setFacebookID(facebookId);
                 Plan.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
-                if (planMoney.equals("") || planDetail.equals("") || pickGroup.equals("")) {
+                if (planMoney.equals("") || planDetail.equals("") || pickGroup.equals(getResources().getString(R.string.common_pick_group))) {
                     plan_Money.setError(getText(R.string.common_error_field_not_set));
                     plan_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Budget App</string>
-    <string name="APP_ID">760189010793477</string>
+    <string name="app_name" translatable="false">Budget App</string>
+    <string name="APP_ID" translatable="false">760189010793477</string>
 
     <!-- Navigation Drawer -->
     <string name="nav_drawer_item_report">Báo cáo hàng tháng</string>
@@ -9,17 +9,17 @@
     <string name="nav_drawer_item_help">Hướng dẫn</string>
     <string name="nav_drawer_item_settings">Cài đặt</string>
     <string name="nav_drawer_item_deal_details">Sổ giao dịch</string>
-	
-    <string name="navigation_drawer_opened">The navigation drawer is opened</string>
-    <string name="navigation_drawer_closed">The navigation drawer is closed</string>
-    <string name="tag_nav_drawer_main_entry">nav_drawer_main_entry</string>
-    <string name="tag_nav_drawer_special_entry">nav_drawer_special_entry</string>
+
+    <string name="navigation_drawer_opened" translatable="false">The navigation drawer is opened</string>
+    <string name="navigation_drawer_closed" translatable="false">The navigation drawer is closed</string>
+    <string name="tag_nav_drawer_main_entry" translatable="false">nav_drawer_main_entry</string>
+    <string name="tag_nav_drawer_special_entry" translatable="false">nav_drawer_special_entry</string>
 
 
     <!-- Account acitivity -->
     <string name="common_account_manager">QUẢN LÝ TÀI KHOẢN</string>
 	<string name="common_logout_button">Đăng xuất</string>
-	
+
 	<!-- Create/edit deal, plan acitivity -->
 	<string name="common_pick_group">Chọn nhóm</string>
 	<string name="common_edit_money">Nhập số tiền</string>
@@ -30,12 +30,12 @@
 	<string name="common_create_deal">Giao dịch đã được tạo</string>
 	<string name="common_create_plan">Giao dịch dự định đã được tạo</string>
 	<string name="common_delete_warning">Bạn có chắc chắn muốn xóa giao dịch?</string>
-	
+
 	<!-- Deal and plan details -->
 	<string name="common_detail_tittle">Chi tiêu/Thu nhập</string>
 	<string name="common_overview">Tổng quan tháng</string>
 	<string name="common_overview_different">Khác nhau</string>
-	
+
 	<!-- Login, register activity-->
 	<string name="common_email">Email</string>
 	<string name="common_password">Mật khẩu</string>
@@ -52,17 +52,37 @@
 	<string name="common_error_email">Mời nhập đúng kiểu email</string>
 	<string name="common_error_email_already_have">Email đã có rồi</string>
 	<string name="common_register_success">Đăng ký thành công</string>
-	
-	
+
+
 	<!-- Toolbar -->
 	<string name="common_cancel"> | Hủy</string>
 	<string name="common_done"> | Lưu</string>
-	
+
 	<!-- Pick Group -->
 	<string name="common_income">Thu nhập</string>
 	<string name="common_outcome">Chi tiêu</string>
 	<string name="common_income_plan">Thu nhập dự định</string>
 	<string name="common_outcome_plan">Chi tiêu dự định</string>
-	
+
+
+  <!-- Tutorial -->
+
+  <string name="tutorial_1">Theo dõi các khoản thu chi</string>
+  <string name="tutorial_2">Mỗi khi bạn chi/thu gì đó, hãy ghi lại vào Budget App để sau này bạn có thể xem lại lịch sử thu chi của mình.</string>
+  <string name="tutorial_4" translatable="false">22-04-2016</string>
+  <string name="tutorial_5" translatable="false">500,000 $</string>
+  <string name="tutorial_6">Ăn uống</string>
+  <string name="tutorial_7">Ăn với bạn</string>
+  <string name="tutorial_8">Bằng cách tạo dự kiến thu chi, bạn có thể tiết kiệm nhiều hơn cho tương lai</string>
+  <string name="tutorial_9">Du lịch</string>
+  <string name="tutorial_10">Giải trí</string>
+  <string name="tutorial_11">Gia đình</string>
+  <string name="tutorial_12">Học tập</string>
+  <string name="tutorial_13">Nhìn lại thói quen chi tiêu</string>
+  <string name="tutorial_14">Xem Báo cáo hàng tháng để xem lại các khoản thu chi với những biểu đồ đẹp đẽ như cái ở trên</string>
+  <string name="tutorial_15">Hỗ trợ</string>
+  <string name="tutorial_16">Phiên bản 1.0.0</string>
+  <string name="tutorial_17">Bởi SidaStudio</string>
+  <string name="tutorial_18">Ⓒ 2016 SidaStudio. All rights reserved</string>
 
 </resources>

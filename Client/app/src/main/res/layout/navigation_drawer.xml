@@ -80,8 +80,7 @@
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_deal_details"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
+                    style="@style/NavDrawerRowLayout.Main">
 
                     <ImageView
                         android:id="@+id/navigation_drawer_items_list_icon_deal_details"
@@ -99,8 +98,7 @@
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_report"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
+                    style="@style/NavDrawerRowLayout.Main">
 
                     <ImageView
                         android:id="@+id/navigation_drawer_items_list_icon_report"
@@ -114,10 +112,10 @@
 
                 </FrameLayout>
 
+
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_plan"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
+                    style="@style/NavDrawerRowLayout.Main">
 
                     <ImageView
                         android:id="@+id/navigation_drawer_items_list_plan"
@@ -137,8 +135,7 @@
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_database"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
+                    style="@style/NavDrawerRowLayout.Main" >
 
                     <ImageView
                         android:id="@+id/navigation_drawer_items_database"
@@ -159,8 +156,7 @@
 
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_help"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
+                    style="@style/NavDrawerRowLayout.Main" >
 
                     <ImageView
                         android:id="@+id/navigation_drawer_items_help"
@@ -176,10 +172,12 @@
 
                 </FrameLayout>
 
+                <include
+                  layout="@layout/navigation_drawer_divider"/>
+
                 <FrameLayout
                     android:id="@+id/navigation_drawer_list_linearLayout_settings"
-                    style="@style/NavDrawerRowLayout.Main"
-                    tools:background="@color/nav_drawer_row_item_selected">
+                    style="@style/NavDrawerRowLayout.Main" >
 
                     <ImageView
                         android:id="@+id/navigation_drawer_items_settings"

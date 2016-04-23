@@ -45,6 +45,8 @@
 
         <activity android:name=".activity.AccountActivity"></activity>
 
+        <activity android:name=".fragment.HelpDetailZeroFragment" />
+
         <activity
             android:name=".activity.DealActivity"
             android:label="Tạo giao dịch" />

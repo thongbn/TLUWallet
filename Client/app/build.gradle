@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.client"
@@ -33,4 +33,7 @@ dependencies {
   compile 'com.github.blackfizz:eazegraph:1.2.2@aar'
   compile 'com.nineoldandroids:library:2.4.0'
   compile 'com.wdullaer:materialdatetimepicker:2.3.0'
+  compile 'com.rengwuxian.materialedittext:library:2.1.4'
+  compile 'me.relex:circleindicator:1.2.0@aar'
+
 }

@@ -2,19 +2,14 @@ package com.client.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import com.client.CustomAdapter.NumberTextWatcher;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.model.Deal;
@@ -23,17 +18,16 @@ import com.client.model.User;
 import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class DealActivity extends Activity {
-    private EditText  deal_Money, deal_Detail, eDate;
+    private com.rengwuxian.materialedittext.MaterialEditText deal_Money, deal_Detail, eDate , pickGroup;
     private ImageView imgGroup;
     private String dealMoney, dealDetail, idUser, saveSQL;
-    private TextView pickGroup;
     DataBaseHelper dataBaseHelper;
+    private String typeMoney;
     Calendar myCalendar = Calendar.getInstance();
 
     @Override
@@ -47,17 +41,16 @@ public class DealActivity extends Activity {
         dataBaseHelper = new DataBaseHelper(DealActivity.this);
         dataBaseHelper.open();
 
-        deal_Money = (EditText) findViewById(R.id.edit_Money);
-        TextView deal_TypeMoney = (TextView) findViewById(R.id.deal_type_money);
-        deal_Detail = (EditText) findViewById(R.id.edit_Detail);
-        eDate=(EditText) findViewById(R.id.edit_Date);
-        pickGroup = (TextView) findViewById(R.id.pickGroup);
+        deal_Money = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Money);
+        deal_Detail = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Detail);
+        eDate=(com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Date);
+        pickGroup = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.pickGroup);
         imgGroup = (ImageView) findViewById(R.id.imageGroup);
 
         if(AccessToken.getCurrentAccessToken() != null){
-            deal_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
+          typeMoney = UserFB.getIdMoneyTypebyFB();
         }else {
-            deal_TypeMoney.setText(User.getIdMoneyType());
+          typeMoney = User.getIdMoneyType();
         }
 
         //pick group
@@ -73,47 +66,8 @@ public class DealActivity extends Activity {
 
 
         //money
-        deal_Money.addTextChangedListener(new TextWatcher() {
-            boolean isManualChange = false;
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if (isManualChange) {
-                    isManualChange = false;
-                    return;
-                }
-                try {
-                    String value = s.toString().replace(",", "");
-                    String reverseValue = new StringBuilder(value).reverse()
-                            .toString();
-                    StringBuilder finalValue = new StringBuilder();
-                    for (int i = 1; i <= reverseValue.length(); i++) {
-                        char val = reverseValue.charAt(i - 1);
-                        finalValue.append(val);
-                        if (i % 3 == 0 && i != reverseValue.length() && i > 0) {
-                            finalValue.append(",");
-                        }
-                    }
-                    isManualChange = true;
-                    deal_Money.setText(finalValue.reverse());
-                    deal_Money.setSelection(finalValue.length());
-                } catch (Exception e) {
-                    // Do nothing since not a number
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-        });
+        deal_Money.setHint(getResources().getString(R.string.common_edit_money)+ " (" + typeMoney + ")");
+        deal_Money.addTextChangedListener(new NumberTextWatcher(deal_Money));
 
         String myFormat = "dd-MM-yyyy"; //In which you need put here
         String formatSQL = "yyyy-MM-dd";
@@ -154,7 +108,7 @@ public class DealActivity extends Activity {
                 Deal.getUserFB().setFacebookID(facebookId);
                 Deal.getUser().setIdNguoiDung(idUser);
                 //check if any of fields are vaccant
-                if (dealMoney.equals("") || dealDetail.equals("") || pickGroup.equals("")) {
+                if (dealMoney.equals("") || dealDetail.equals("") || pickGroup.equals(getResources().getString(R.string.common_pick_group))) {
                     deal_Money.setError(getText(R.string.common_error_field_not_set));
                     deal_Detail.setError(getText(R.string.common_error_field_not_set));
                     return;

@@ -1,24 +1,19 @@
 package com.client.fragment;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.client.R;
-import com.client.database.DataBaseHelper;
-import com.client.database.ShowDetails;
 import com.client.model.MyDeal;
 import com.client.model.MyPlan;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;

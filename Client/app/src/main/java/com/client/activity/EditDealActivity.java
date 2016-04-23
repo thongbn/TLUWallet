@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.client.CustomAdapter.NumberTextWatcher;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.model.Deal;
@@ -36,12 +37,12 @@ import java.util.Locale;
  */
 public class EditDealActivity extends Activity{
 
-    private EditText deal_Money, deal_Detail, eDate;
+    private com.rengwuxian.materialedittext.MaterialEditText deal_Money, deal_Detail, eDate;
     private String dealMoney, dealDetail, dealTypemoney, idUser, dealID, saveSQL, dealDate, dateOutput;
     private Integer dealGroupDetailsPos, dealIcon, dealGroup;
-    private TextView deal_TypeMoney;
     DataBaseHelper dataBaseHelper;
     Calendar myCalendar = Calendar.getInstance();
+    private String typeMoney;
 
     @Override
     public void onCreate (Bundle savedInstanceState){
@@ -55,62 +56,22 @@ public class EditDealActivity extends Activity{
         dataBaseHelper = new DataBaseHelper(EditDealActivity.this);
         dataBaseHelper.open();
 
-        deal_Money = (EditText) findViewById(R.id.edit_Money_Deal);
-        deal_TypeMoney = (TextView) findViewById(R.id.edit_deal_type_money);
-        deal_Detail = (EditText) findViewById(R.id.edit_Detail_Deal);
-        TextView dealGroupText = (TextView) findViewById(R.id.dGroupDetails);
+        deal_Money = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Money_Deal);
+        deal_Detail = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Detail_Deal);
+        com.rengwuxian.materialedittext.MaterialEditText dealGroupText = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.dGroupDetails);
         ImageView dealGroupIcon = (ImageView)findViewById(R.id.dGroupImg);
-        eDate=(EditText) findViewById(R.id.edit_Date_Deal);
+        eDate=(com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Date_Deal);
 
         if(AccessToken.getCurrentAccessToken() != null){
-            deal_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
+          typeMoney = UserFB.getIdMoneyTypebyFB();
         }else {
-            deal_TypeMoney.setText(User.getIdMoneyType());
+          typeMoney = User.getIdMoneyType();
         }
 
 
         //money
-        deal_Money.addTextChangedListener(new TextWatcher() {
-            boolean isManualChange = false;
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if (isManualChange) {
-                    isManualChange = false;
-                    return;
-                }
-                try {
-                    String value = s.toString().replace(",", "");
-                    String reverseValue = new StringBuilder(value).reverse()
-                            .toString();
-                    StringBuilder finalValue = new StringBuilder();
-                    for (int i = 1; i <= reverseValue.length(); i++) {
-                        char val = reverseValue.charAt(i - 1);
-                        finalValue.append(val);
-                        if (i % 3 == 0 && i != reverseValue.length() && i > 0) {
-                            finalValue.append(",");
-                        }
-                    }
-                    isManualChange = true;
-                    deal_Money.setText(finalValue.reverse());
-                    deal_Money.setSelection(finalValue.length());
-                } catch (Exception e) {
-                    // Do nothing since not a number
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-        });
+        deal_Money.setHint(getResources().getString(R.string.common_edit_money)+ " (" + typeMoney + ")");
+        deal_Money.addTextChangedListener(new NumberTextWatcher(deal_Money));
 
         boolean isUpdate = getIntent().getExtras().getBoolean("update");
         if(isUpdate) {
@@ -124,8 +85,7 @@ public class EditDealActivity extends Activity{
             dealIcon = getIntent().getExtras().getInt("DGroupImg");
 
             deal_Money.setText(dealMoney);
-
-            deal_TypeMoney.setText(dealTypemoney);
+            deal_Money.setHint(getResources().getString(R.string.common_edit_money)+ " (" + dealTypemoney + ")");
 
             deal_Detail.setText(dealDetail);
 
@@ -171,7 +131,6 @@ public class EditDealActivity extends Activity{
             @Override
             public void onClick(View v) {
                 dealMoney = deal_Money.getText().toString();
-                dealTypemoney = deal_TypeMoney.getText().toString();
                 dealDetail = deal_Detail.getText().toString();
 
                 if (eDate != null)
@@ -228,7 +187,7 @@ public class EditDealActivity extends Activity{
             @Override
             public void onClick(View v) {
                 dealMoney = deal_Money.getText().toString();
-                dealTypemoney = deal_TypeMoney.getText().toString();
+                dealTypemoney = typeMoney;
                 dealDetail = deal_Detail.getText().toString();
 
                 if (eDate != null)

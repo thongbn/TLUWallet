@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.client.CustomAdapter.NumberTextWatcher;
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.model.Deal;
@@ -35,15 +36,15 @@ import java.util.Locale;
  * Created by ToanNguyen on 14/03/2016.
  */
 public class EditPlanActivity extends Activity{
-    private EditText plan_Money, plan_Detail, eDate;
+    private com.rengwuxian.materialedittext.MaterialEditText plan_Money, plan_Detail, eDate, planGroupText;
     private String planMoney, planDetail, planTypemoney, idUser, planID, planDate, saveSQL, dateOutput;
     private Integer planGroupDetailsPos, planIcon, planGroup;
-    private TextView plan_TypeMoney, planGroupText;
     DataBaseHelper dataBaseHelper;
     private ImageView deleteButton, planGroupIcon, tranferButton;
     private boolean isUpdate;
     private RelativeLayout saveButton, clearButton;
     Calendar myCalendar = Calendar.getInstance();
+    private String typeMoney;
 
     @Override
     public void onCreate (Bundle savedInstanceState){
@@ -57,62 +58,22 @@ public class EditPlanActivity extends Activity{
         dataBaseHelper = new DataBaseHelper(EditPlanActivity.this);
         dataBaseHelper.open();
 
-        plan_Money = (EditText) findViewById(R.id.edit_Money_Plan);
-        plan_TypeMoney = (TextView) findViewById(R.id.edit_plan_type_money);
-        plan_Detail = (EditText) findViewById(R.id.edit_Detail_Plan);
-        planGroupText = (TextView) findViewById(R.id.pGroupDetails);
+        plan_Money = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Money_Plan);
+        plan_Detail = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Detail_Plan);
+        planGroupText = (com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.pGroupDetails);
         planGroupIcon = (ImageView)findViewById(R.id.pGroupImg);
-        eDate=(EditText) findViewById(R.id.edit_Date_Plan);
+        eDate=(com.rengwuxian.materialedittext.MaterialEditText) findViewById(R.id.edit_Date_Plan);
 
         if(AccessToken.getCurrentAccessToken() != null){
-            plan_TypeMoney.setText(UserFB.getIdMoneyTypebyFB());
+          typeMoney = UserFB.getIdMoneyTypebyFB();
         }else {
-            plan_TypeMoney.setText(User.getIdMoneyType());
+          typeMoney = User.getIdMoneyType();
         }
 
 
         //money
-        plan_Money.addTextChangedListener(new TextWatcher() {
-            boolean isManualChange = false;
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if (isManualChange) {
-                    isManualChange = false;
-                    return;
-                }
-                try {
-                    String value = s.toString().replace(",", "");
-                    String reverseValue = new StringBuilder(value).reverse()
-                            .toString();
-                    StringBuilder finalValue = new StringBuilder();
-                    for (int i = 1; i <= reverseValue.length(); i++) {
-                        char val = reverseValue.charAt(i - 1);
-                        finalValue.append(val);
-                        if (i % 3 == 0 && i != reverseValue.length() && i > 0) {
-                            finalValue.append(",");
-                        }
-                    }
-                    isManualChange = true;
-                    plan_Money.setText(finalValue.reverse());
-                    plan_Money.setSelection(finalValue.length());
-                } catch (Exception e) {
-                    // Do nothing since not a number
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-        });
+        plan_Money.setHint(getResources().getString(R.string.common_edit_money)+ " (" + typeMoney + ")");
+        plan_Money.addTextChangedListener(new NumberTextWatcher(plan_Money));
 
         isUpdate = getIntent().getExtras().getBoolean("update");
         if(isUpdate) {
@@ -127,7 +88,7 @@ public class EditPlanActivity extends Activity{
 
             plan_Money.setText(planMoney);
 
-            plan_TypeMoney.setText(planTypemoney);
+            plan_Money.setHint(getResources().getString(R.string.common_edit_money)+ " (" + planTypemoney + ")");
 
             plan_Detail.setText(planDetail);
 
@@ -171,7 +132,6 @@ public class EditPlanActivity extends Activity{
             @Override
             public void onClick(View v) {
                 planMoney = plan_Money.getText().toString();
-                planTypemoney = plan_TypeMoney.getText().toString();
                 planDetail = plan_Detail.getText().toString();
 
                 if (eDate != null)
@@ -228,7 +188,6 @@ public class EditPlanActivity extends Activity{
             @Override
             public void onClick(View v) {
                 planMoney = plan_Money.getText().toString();
-                planTypemoney = plan_TypeMoney.getText().toString();
                 planDetail = plan_Detail.getText().toString();
 
                 if (eDate != null)

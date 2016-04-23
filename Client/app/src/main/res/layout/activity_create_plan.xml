@@ -1,171 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<LinearLayout android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/activity_create_plan">
+
+  <include
+    layout="@layout/toolbar_save_plan" />
+
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DisplayPlan"
-    android:id="@+id/activity_create_plan">
+    android:layout_marginTop="60dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="20dp"
+    android:background="@color/white">
 
-    <include
-        layout="@layout/toolbar_save_plan" />
 
     <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:layout_marginTop="10dp">
+
+      <ImageView
+        android:id="@+id/imageGroup"
+        android:layout_gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/icon_not_selected" />
+
+      <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/pickGroup"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/white">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/imageGroup"
-                android:layout_gravity="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/icon_not_selected" />
-
-            <TextView
-                android:id="@+id/pickGroup"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:textSize="25dp"
-                android:text="@string/common_pick_group" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:id="@+id/plan_type_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:text="$"
-                android:textSize="20sp"
-                android:textColor="@color/primary_darker"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-
-            <EditText
-                android:id="@+id/edit_Money"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:scrollHorizontally="false"
-                android:maxLength ="13"
-                android:ems="10"
-                android:textColor="@color/black"
-                android:singleLine="true"
-                android:inputType="numberDecimal"
-                android:hint="@string/common_edit_money"
-                android:digits="0123456789.,"
-                android:background="@color/white"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="-7dp"
-            android:layout_below="@+id/text"
-            android:background="@color/iron"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
-
-            <ImageView
-                android:id="@+id/pRowTextDetailMoney"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:textSize="20sp"
-                android:src="@drawable/ic_adjustment"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <EditText
-                android:id="@+id/edit_Detail"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:inputType="text|textMultiLine"
-                android:hint="@string/common_note"
-                android:singleLine="true"
-                android:maxLength ="80"
-                android:textColor="@color/black"
-                android:background="@color/white"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="-7dp"
-            android:layout_below="@+id/text"
-            android:background="@color/iron"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
-
-            <ImageView
-                android:id="@+id/pRowTextDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:src="@drawable/ic_calendar"
-                android:textSize="20sp"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <EditText
-                android:id="@+id/edit_Date"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:focusable="false"
-                android:hint="@string/common_date_pick"
-                android:textColor="@color/black"
-                android:background="@color/white"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="-7dp"
-            android:layout_below="@+id/text"
-            android:background="@color/iron"/>
+        android:layout_marginStart="30dp"
+        android:focusable="false"
+        android:textSize="25sp"
+        android:hint="@string/common_pick_group" />
 
     </LinearLayout>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+      android:id="@+id/edit_Money"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+      android:layout_marginTop="10dp"
+      android:scrollHorizontally="false"
+      android:maxLength ="13"
+      android:ems="10"
+      android:textColor="@color/black"
+      android:background="@color/white"
+      android:singleLine="true"
+      android:inputType="numberDecimal"
+      android:hint="@string/common_edit_money"
+      android:digits="0123456789.,"
+      app:met_iconLeft="@drawable/ic_currency"
+      app:met_floatingLabel="highlight"
+      app:met_baseColor="#0056d3"
+      app:met_primaryColor="#982360"
+      app:met_errorColor="#ddaa00" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+      android:id="@+id/edit_Detail"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+      android:inputType="text|textMultiLine"
+      android:hint="@string/common_note"
+      android:singleLine="true"
+      android:maxLength ="80"
+      app:met_maxCharacters="80"
+      app:met_floatingLabel="highlight"
+      app:met_baseColor="#0056d3"
+      app:met_primaryColor="#982360"
+      app:met_errorColor="#ddaa00"
+      app:met_iconLeft="@drawable/ic_adjustment"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+      android:id="@+id/edit_Date"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+      android:focusable="false"
+      android:hint="@string/common_date_pick"
+      app:met_floatingLabel="highlight"
+      app:met_baseColor="#0056d3"
+      app:met_primaryColor="#982360"
+      app:met_errorColor="#ddaa00"
+      app:met_iconLeft="@drawable/ic_calendar"/>
+
+  </LinearLayout>
 
 </LinearLayout>
