@@ -84,5 +84,10 @@
   <string name="tutorial_16">Phiên bản 1.0.0</string>
   <string name="tutorial_17">Bởi SidaStudio</string>
   <string name="tutorial_18">Ⓒ 2016 SidaStudio. All rights reserved</string>
+	<string name="select_language">Chọn ngôn ngữ</string>
+	<string name="vietnam_selected">Bạn đã chọn tiếng việt</string>
+	<string name="english_selected">Bạn đã chọn tiếng Anh</string>
+	<string name="english">Tiếng Anh</string>
+	<string name="vietnamese">Tiếng Việt</string>
 
 </resources>

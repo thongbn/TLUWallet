@@ -1,6 +1,7 @@
 package com.client.fragment;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.client.CustomAdapter.CustomDealList;
@@ -21,7 +24,6 @@ import com.client.model.User;
 import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,7 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class DealDetailsFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
+public class DealDetailsFragment extends Fragment{
 
   private ListView listDeal;
   private com.melnykov.fab.FloatingActionButton FAB;
@@ -112,15 +114,13 @@ public class DealDetailsFragment extends Fragment implements DatePickerDialog.On
       @Override
       public void onClick(View v) {
         // TODO Auto-generated method stub
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-          DealDetailsFragment.this,
-          myCalendar.get(Calendar.YEAR),
-          myCalendar.get(Calendar.MONTH),
-          myCalendar.get(Calendar.DAY_OF_MONTH)
-        );
-        dpd.setThemeDark(true);
-        dpd.setAccentColor(getResources().getColor(R.color.blue_500));
-        dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+        dialog.getDatePicker().setSpinnersShown(true);
+
+        // hiding calendarview and daySpinner in datePicker
+        dialog.getDatePicker().setCalendarViewShown(false);
+        dialog.show();
 
       }
     });
@@ -139,8 +139,6 @@ public class DealDetailsFragment extends Fragment implements DatePickerDialog.On
   public void onResume(){
     super.onResume();
     adapter.notifyDataSetChanged();
-    DatePickerDialog dpd = (DatePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Datepickerdialog");
-    if(dpd != null) dpd.setOnDateSetListener(this);
   }
 
   public void onActivityResult (int requestCode, int resultCode, Intent data) {
@@ -211,27 +209,28 @@ public class DealDetailsFragment extends Fragment implements DatePickerDialog.On
     }
   }
 
-  public void onDateSet(DatePickerDialog  view, int year, int monthOfYear,
-                        int dayOfMonth) {
-    // TODO Auto-generated method stub
-    myCalendar.set(Calendar.YEAR, year);
-    myCalendar.set(Calendar.MONTH, monthOfYear);
-    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-    updateLabel();
+  DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-    //reload page
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                          int dayOfMonth) {
+      // TODO Auto-generated method stub
+      myCalendar.set(Calendar.YEAR, year);
+      myCalendar.set(Calendar.MONTH, monthOfYear);
+      myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+      updateLabel();
 
-    dataBaseHelper = new DataBaseHelper(getContext());
+      dataBaseHelper = new DataBaseHelper(getContext());
 
-    showDetails = new ShowDetails();
-    showDetails.clear_list();
+      showDetails = new ShowDetails();
+      showDetails.clear_list();
 
-    showDetails.showDetails(dataBaseHelper);
+      showDetails.showDetails(dataBaseHelper);
 
-    adapter.notifyDataSetChanged();
+      adapter.notifyDataSetChanged();
+    }
+
   };
-
-
 
   private void updateLabel() {
 

@@ -69,4 +69,10 @@
         <item>@color/darkred</item>
     </integer-array>
 
+    <string-array name="languages">
+        <item>Chọn ngôn ngữ</item>
+        <item>Tiếng Việt</item>
+        <item>Tiếng Anh</item>
+    </string-array>
+
 </resources>

@@ -1,6 +1,6 @@
 package com.client.fragment;
 
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class PlanFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
+public class PlanFragment extends Fragment{
 
     private ListView listPlan;
     private com.melnykov.fab.FloatingActionButton FAB;
@@ -107,20 +107,13 @@ public class PlanFragment extends Fragment implements DatePickerDialog.OnDateSet
         common_Overview.setText(datePick);
 
       common_Overview.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          // TODO Auto-generated method stub
-          DatePickerDialog dpd = DatePickerDialog.newInstance(
-            PlanFragment.this,
-            myCalendar.get(Calendar.YEAR),
-            myCalendar.get(Calendar.MONTH),
-            myCalendar.get(Calendar.DAY_OF_MONTH)
-          );
-          dpd.setThemeDark(true);
-          dpd.setAccentColor(getResources().getColor(R.color.blue_500));
-          dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-
-        }
+          @Override
+          public void onClick(View v) {
+              // TODO Auto-generated method stub
+              new DatePickerDialog(getActivity(), date, myCalendar
+                      .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                      myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+          }
       });
 
         totalIncome = (TextView) header.findViewById(R.id.total_incomeMoney);
@@ -137,8 +130,6 @@ public class PlanFragment extends Fragment implements DatePickerDialog.OnDateSet
     public void onResume(){
         super.onResume();
         adapter.notifyDataSetChanged();
-        DatePickerDialog dpd = (DatePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Datepickerdialog");
-        if(dpd != null) dpd.setOnDateSetListener(this);
     }
 
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
@@ -208,25 +199,29 @@ public class PlanFragment extends Fragment implements DatePickerDialog.OnDateSet
         }
     }
 
-    public void onDateSet(DatePickerDialog  view, int year, int monthOfYear,
-                        int dayOfMonth) {
-    // TODO Auto-generated method stub
-        myCalendar.set(Calendar.YEAR, year);
-        myCalendar.set(Calendar.MONTH, monthOfYear);
-        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        updateLabel();
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-        //reload page
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
 
-        dataBaseHelper = new DataBaseHelper(getContext());
+            dataBaseHelper = new DataBaseHelper(getContext());
 
-        showDetails = new ShowDetails();
-        showDetails.clear_list();
+            showDetails = new ShowDetails();
+            showDetails.clear_list();
 
-        showDetails.showDetails(dataBaseHelper);
+            showDetails.showDetails(dataBaseHelper);
 
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
+        }
+
     };
+
 
     private void updateLabel() {
 
