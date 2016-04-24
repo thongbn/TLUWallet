@@ -28,19 +28,18 @@
 
         <activity android:name=".activity.RegisterActivity" />
 
-        <activity android:name=".activity.EditDealActivity"
-            android:label="Chỉnh sửa giao dịch"/>
+        <activity android:name=".activity.EditDealActivity" />
 
         <activity android:name=".activity.PickGroupActivity" />
 
         <activity android:name=".activity.PickGroupPlanActivity" />
 
-        <activity android:name=".activity.ChooseMoneyTypeActivity"
-            android:label="Chọn loại tiền tệ"/>
+        <activity android:name=".activity.ChooseMoneyTypeActivity" />
 
         <activity
             android:name="com.client.activity.MainActivity"
-            android:label="Budget App">
+            android:label="Budget App"
+            android:configChanges="locale|orientation">
         </activity>
 
         <activity android:name=".activity.AccountActivity"></activity>
@@ -48,14 +47,11 @@
         <activity android:name=".fragment.HelpDetailZeroFragment" />
 
         <activity
-            android:name=".activity.DealActivity"
-            android:label="Tạo giao dịch" />
+            android:name=".activity.DealActivity" />
 
-        <activity android:name=".activity.EditPlanActivity"
-            android:label="Sửa giao dịch dự định"/>
+        <activity android:name=".activity.EditPlanActivity" />
 
-        <activity android:name=".activity.PlanActivity"
-            android:label="Tạo giao dịch dự định"/>
+        <activity android:name=".activity.PlanActivity" />
 
         <activity
             android:name="com.facebook.FacebookActivity"

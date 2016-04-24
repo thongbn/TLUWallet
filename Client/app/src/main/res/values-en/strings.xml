@@ -56,9 +56,10 @@
   <string name="tutorial_7">With friends</string>
   <string name="tutorial_8">By setting up saving and spending plans, you can save more for future</string>
   <string name="tutorial_9">Travel</string>
-  <string name="select_language">Select languages</string>
+  <string name="select_language">Select languages: </string>
   <string name="vietnam_selected">You have selected Vietnamese</string>
   <string name="english_selected">You have selected English</string>
   <string name="english">English</string>
   <string name="vietnamese">Vietnamese</string>
+  <string name="language">Language</string>
 </resources>
