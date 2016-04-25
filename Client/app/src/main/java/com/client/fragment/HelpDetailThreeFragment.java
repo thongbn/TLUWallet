@@ -3,30 +3,66 @@ package com.client.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.client.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
-import org.eazegraph.lib.charts.PieChart;
-import org.eazegraph.lib.communication.IOnItemFocusChangedListener;
-import org.eazegraph.lib.models.PieModel;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 
 /**
  * Created by ToanNguyen on 22/04/2016.
  */
 public class HelpDetailThreeFragment extends Fragment {
 
-  private PieChart mPieChart;
+  private PieChart mChart;
 
   @Override
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     View rootView = inflater.inflate(R.layout.help_detail_three_fragment, null);
 
-    mPieChart = (PieChart) rootView.findViewById(R.id.piechart);
-    loadData();
+    mChart = (PieChart) rootView.findViewById(R.id.pieChart1);
+    mChart.setDescription("");
+
+    // radius of the center hole in percent of maximum radius
+    mChart.getLegend().setEnabled(false);
+    mChart.setDrawHoleEnabled(false);
+
+    ArrayList<Entry> entries = new ArrayList<>();
+    entries.add(new Entry(60, 0));
+    entries.add(new Entry(10, 1));
+    entries.add(new Entry(20, 2));
+    entries.add(new Entry(10, 3));
+
+    ArrayList<String> labels = new ArrayList<String>();
+    labels.add(getResources().getString(R.string.tutorial_9));
+    labels.add(getResources().getString(R.string.tutorial_10));
+    labels.add(getResources().getString(R.string.tutorial_11));
+    labels.add(getResources().getString(R.string.tutorial_12));
+
+    PieDataSet dataset = new PieDataSet(entries, "");
+
+    PieData data = new PieData(labels, dataset);
+
+    mChart.setData(data);
+    dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+    mChart.animateY(1500);
+    data.setValueFormatter(new MyValueFormatter());
 
     return rootView;
   }
@@ -34,22 +70,21 @@ public class HelpDetailThreeFragment extends Fragment {
   @Override
   public void onResume() {
     super.onResume();
-    mPieChart.startAnimation();
   }
 
-  private void loadData() {
-    mPieChart.addPieSlice(new PieModel(getResources().getString(R.string.tutorial_9), 50, Color.parseColor("#FE6DA8")));
-    mPieChart.addPieSlice(new PieModel(getResources().getString(R.string.tutorial_10), 20, Color.parseColor("#56B7F1")));
-    mPieChart.addPieSlice(new PieModel(getResources().getString(R.string.tutorial_11), 10, Color.parseColor("#CDA67F")));
-    mPieChart.addPieSlice(new PieModel(getResources().getString(R.string.tutorial_12), 20, Color.parseColor("#FED70E")));
+  public class MyValueFormatter implements ValueFormatter {
 
-    mPieChart.setOnItemFocusChangedListener(new IOnItemFocusChangedListener() {
-      @Override
-      public void onItemFocusChanged(int _Position) {
-//                Log.d("PieChart", "Position: " + _Position);
-      }
-    });
+    private DecimalFormat mFormat;
+
+    public MyValueFormatter() {
+      mFormat = new DecimalFormat("###,###,##0.0"); // use one decimal
+    }
+
+    @Override
+    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+      // write your logic here
+      return mFormat.format(value) + " %"; // e.g. append a dollar-sign
+    }
   }
-
 
 }

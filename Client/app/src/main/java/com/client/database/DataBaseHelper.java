@@ -590,7 +590,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getAllPlanIncomeDatabyFB (String pID, String gID, String date) {
         db = this.getWritableDatabase();
         String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_FB_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
-        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID, date});
         return cursor;
     }
 
@@ -610,7 +610,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getAllPlanOutcomeDatabyFB (String pID, String gID, String date) {
         db = this.getWritableDatabase();
         String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_FB_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
-        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID, date});
         return cursor;
     }
 
@@ -630,7 +630,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getAllPlanOutcomeData (String pID, String gID, String date) {
         db = this.getWritableDatabase();
         String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_USER_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
-        Cursor cursor = db.rawQuery(query, new String[]{pID, gID});
+        Cursor cursor = db.rawQuery(query, new String[]{pID, gID, date});
         return cursor;
     }
 

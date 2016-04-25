@@ -59,7 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //String dateFormat = "MM-yyyy";
         String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        com.client.model.DatePicker.setDate(sdf.format(myCalendar.getTime()));
+
+        com.client.model.DatePicker date = new com.client.model.DatePicker();
+
+        date.setDate(sdf.format(myCalendar.getTime()));
 
         ShowDetails showDetails = new ShowDetails();
 

@@ -57,9 +57,8 @@
   <string name="tutorial_8">Bằng cách tạo dự kiến thu chi, bạn có thể tiết kiệm nhiều hơn cho tương lai</string>
   <string name="tutorial_9">Du lịch</string>
   <string name="select_language">Chọn ngôn ngữ: </string>
-  <string name="vietnam_selected">Bạn đã chọn tiếng việt</string>
-  <string name="english_selected">Bạn đã chọn tiếng Anh</string>
-  <string name="english">Tiếng Anh</string>
-  <string name="vietnamese">Tiếng Việt</string>
+  <string name="vietnam_selected">Bạn đã chọn Tiếng Việt</string>
+  <string name="english_selected">You have selected English</string>
   <string name="language">Ngôn Ngữ</string>
+  <string name="report_overview">Báo cáo tháng</string>
 </resources>

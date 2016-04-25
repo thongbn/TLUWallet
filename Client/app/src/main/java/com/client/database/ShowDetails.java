@@ -23,6 +23,7 @@ public class ShowDetails {
         MyDeal.listAllIncome.clear();
         MyDeal.listAllOutcome.clear();
         MyDeal.listAllOutcomeGroupDetails.clear();
+        MyDeal.listAllIncomeGroupDetails.clear();
 
         MyPlan.listPlanGroupDetailsPos.clear();
         MyPlan.listPlanGroup.clear();

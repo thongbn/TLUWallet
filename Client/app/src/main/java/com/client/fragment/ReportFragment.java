@@ -1,56 +1,163 @@
 package com.client.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.client.R;
+import com.client.database.DataBaseHelper;
+import com.client.database.ShowDetails;
 import com.client.model.MyDeal;
 import com.client.model.MyPlan;
-import org.eazegraph.lib.charts.PieChart;
-import org.eazegraph.lib.models.PieModel;
+import com.client.model.User;
+import com.client.model.UserFB;
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
+
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
-import java.util.Random;
 
 public class ReportFragment extends Fragment {
 
-    String date;
-    TextView report_overview;
+    public static Fragment newInstance() {
+        return new ReportFragment();
+    }
+
+    private DataBaseHelper dataBaseHelper;
+    private ShowDetails showDetails;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.report_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.report_fragment, container, false);
+
+        FacebookSdk.sdkInitialize(rootView.getContext());
 
         getActivity().setTitle(R.string.nav_drawer_item_report);
 
-        report_overview = (TextView) rootView.findViewById(R.id.report_overview);
+        DatePicker dp = (DatePicker) rootView.findViewById(R.id.dp);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.US);
-        try {
-            Date newDate = format.parse(com.client.model.DatePicker.getDate());
-            format = new SimpleDateFormat("MM-yyyy", Locale.US);
-            date = format.format(newDate);
-        }catch (java.text.ParseException e){
-            e.printStackTrace();
+        int year = myCalendar.get(Calendar.YEAR);
+        int month = myCalendar.get(Calendar.MONTH);
+        int dayOfMonth = myCalendar.get(Calendar.DAY_OF_MONTH);
+
+        String myFormat = "yyyy-MM"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        com.client.model.DatePicker date = new com.client.model.DatePicker();
+
+        date.setDate(sdf.format(myCalendar.getTime()));
+
+        dataBaseHelper = new DataBaseHelper(getContext());
+
+        showDetails = new ShowDetails();
+        showDetails.clear_list();
+
+        showDetails.showDetails(dataBaseHelper);
+
+        chart(rootView);
+
+
+        dp.init(
+                year,
+                month,
+                dayOfMonth,
+                new DatePicker.OnDateChangedListener() {
+
+                    @Override
+                    public void onDateChanged(
+                            DatePicker view,
+                            int year,
+                            int monthOfYear,
+                            int dayOfMonth)
+                    {
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        String sqlFormat = "yyyy-MM"; //format put into sql
+                        SimpleDateFormat getSQL = new SimpleDateFormat(sqlFormat, Locale.US);
+
+                        com.client.model.DatePicker date = new com.client.model.DatePicker();
+
+                        date.setDate(getSQL.format(myCalendar.getTime()));
+
+                        dataBaseHelper = new DataBaseHelper(getContext());
+
+                        showDetails = new ShowDetails();
+                        showDetails.clear_list();
+
+                        showDetails.showDetails(dataBaseHelper);
+
+                        chart(rootView);
+
+                    }
+                });
+
+        int daySpinnerId = Resources.getSystem().getIdentifier("day", "id", "android");
+        if (daySpinnerId != 0)
+        {
+            View daySpinner = dp.findViewById(daySpinnerId);
+            if (daySpinner != null)
+            {
+                daySpinner.setVisibility(View.GONE);
+            }
         }
 
-        report_overview.setText("Báo cáo tháng " + date);
+        int monthSpinnerId = Resources.getSystem().getIdentifier("month", "id", "android");
+        if (monthSpinnerId != 0)
+        {
+            View monthSpinner = dp.findViewById(monthSpinnerId);
+            if (monthSpinner != null)
+            {
+                monthSpinner.setVisibility(View.VISIBLE);
+            }
+        }
 
+        int yearSpinnerId = Resources.getSystem().getIdentifier("year", "id", "android");
+        if (yearSpinnerId != 0)
+        {
+            View yearSpinner = dp.findViewById(yearSpinnerId);
+            if (yearSpinner != null)
+            {
+                yearSpinner.setVisibility(View.VISIBLE);
+            }
+        }
+
+        return rootView;
+    }
+
+
+    public void chart (View rootView) {
 
         //Income overview
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+        String income_text = getString(R.string.common_income);
+        String outcome_text = getString(R.string.common_outcome);
+        String plan_income_text = getString(R.string.common_income_plan);
+        String plan_outcome_text = getString(R.string.common_outcome_plan);
         int sumIncome = 0;
-        int sumOutcome = 0;
         int number1 [] = new int[MyDeal.listAllIncome.size()];
-        int number [] = new int[MyDeal.listAllOutcome.size()];
+
 
         for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
             number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
@@ -64,29 +171,18 @@ public class ReportFragment extends Fragment {
         String income = numberFormat.format(sumIncome);
 
         TextView totalIncome = (TextView) rootView.findViewById(R.id.total_incomeMoneyReport);
-        totalIncome.setText(income);
-
 
         //Chart deal income
 
-        PieChart mPieChartIncome = (PieChart) rootView.findViewById(R.id.piechart1);
-
-        String incomeName [] = rootView.getResources().getStringArray(R.array.income_categories);
-        String outcomeName  [] = rootView.getResources().getStringArray(R.array.outcome_categories);
-        int androidColors [] = rootView.getResources().getIntArray(R.array.androidcolors);
-
-        for (int i = 0 ; i < MyDeal.listAllIncome.size(); i++) {
-            mPieChartIncome.addPieSlice(new PieModel(incomeName[MyDeal.listAllIncomeGroupDetails.get(i)], (number1[i]*100.0f)/(sumIncome*100.0f)*100, androidColors[new Random().nextInt(androidColors.length)]));
-        }
-
-        if (MyDeal.listAllIncome.size() ==  0){
-            mPieChartIncome.setVisibility(View.VISIBLE);
-        }else {
-            mPieChartIncome.startAnimation();
-        }
+        PieChart mPieChart1 = (PieChart) rootView.findViewById(R.id.piechart1);
+        drawChart(rootView, number1, sumIncome, MyDeal.listAllIncome, MyDeal.listAllIncomeGroupDetails, mPieChart1, R.array.income_categories, income_text);
 
 
-        //Chart deal outcome
+
+        //Outcome overview
+
+        int sumOutcome = 0;
+        int number [] = new int[MyDeal.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
             number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
@@ -100,26 +196,16 @@ public class ReportFragment extends Fragment {
         String outcome = numberFormat.format(sumOutcome);
 
         TextView totalOutcome = (TextView) rootView.findViewById(R.id.total_expenseMoneyReport);
-        totalOutcome.setText(outcome);
 
-        PieChart mPieChartOutcome = (PieChart) rootView.findViewById(R.id.piechart2);
+        //Chart deal outcome
 
-        for (int i = 0 ; i < MyDeal.listAllOutcome.size(); i++) {
-            mPieChartOutcome.addPieSlice(new PieModel(outcomeName[MyDeal.listAllOutcomeGroupDetails.get(i)], (number[i]*100.0f)/(sumOutcome*100.0f)*100, androidColors[new Random().nextInt(androidColors.length)]));
-        }
+        PieChart mPieChart2 = (PieChart) rootView.findViewById(R.id.piechart2);
+        drawChart(rootView, number, sumOutcome, MyDeal.listAllOutcome, MyDeal.listAllOutcomeGroupDetails, mPieChart2, R.array.outcome_categories, outcome_text);
 
-        if (MyDeal.listAllOutcome.size() == 0){
-            mPieChartOutcome.setVisibility(View.VISIBLE);
-        }else {
-            mPieChartOutcome.startAnimation();
-        }
 
-        //Plan overview
-
+        //Plan income Overview
         int sumPlanIncome = 0;
-        int sumPlanOutcome = 0;
         int numberPlanIn [] = new int[MyPlan.listAllIncome.size()];
-        int numberPlanOut [] = new int[MyPlan.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyPlan.listAllIncome.size(); i++) {
             numberPlanIn [i] = Integer.parseInt(MyPlan.listAllIncome.get(i).replace(",", ""));
@@ -128,6 +214,19 @@ public class ReportFragment extends Fragment {
         for (int i = 0; i < numberPlanIn.length; i++){
             sumPlanIncome += numberPlanIn[i];
         }
+
+        String incomePlan = numberFormat.format(sumPlanIncome);
+        TextView planIncome = (TextView) rootView.findViewById(R.id.total_incomePlanMoneyReport);
+
+        //Chart income plan
+
+        PieChart mPieChart3 = (PieChart) rootView.findViewById(R.id.piechart3);
+        drawChart(rootView, numberPlanIn, sumPlanIncome, MyPlan.listAllIncome, MyPlan.listAllIncomePlanGroupDetails, mPieChart3, R.array.income_categories, plan_income_text);
+
+
+        //Plan outcome Overview
+        int sumPlanOutcome = 0;
+        int numberPlanOut [] = new int[MyPlan.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyPlan.listAllOutcome.size(); i++) {
             numberPlanOut [i] = Integer.parseInt(MyPlan.listAllOutcome.get(i).replace(",", ""));
@@ -138,52 +237,83 @@ public class ReportFragment extends Fragment {
             sumPlanOutcome += numberPlanOut[i];
         }
 
-        String incomePlan = numberFormat.format(sumPlanIncome);
         String outcomePlan = numberFormat.format(sumPlanOutcome);
-
-        TextView planIncome = (TextView) rootView.findViewById(R.id.total_incomePlanMoneyReport);
-        planIncome.setText(incomePlan);
-
         TextView planOutcome = (TextView) rootView.findViewById(R.id.total_expensePlanMoneyReport);
-        planOutcome.setText(outcomePlan);
 
-        //Plan Chart
+        //Chart outcome plan
 
-        PieChart mPieChartOutcomePlan = (PieChart) rootView.findViewById(R.id.piechart4);
-
-        for (int i = 0 ; i < MyPlan.listAllOutcome.size(); i++) {
-            mPieChartOutcomePlan.addPieSlice(new PieModel(outcomeName[MyPlan.listAllOutcomePlanGroupDetails.get(i)], (numberPlanOut[i]*100.0f)/(sumPlanOutcome*100.0f)*100, androidColors[new Random().nextInt(androidColors.length)]));
-        }
-
-        if (MyPlan.listAllOutcome.size() == 0){
-            mPieChartOutcomePlan.setVisibility(View.VISIBLE);
-        }else {
-            mPieChartOutcomePlan.startAnimation();
-        }
-
-
-        PieChart mPieChartIncomePlan = (PieChart) rootView.findViewById(R.id.piechart3);
-
-        for (int i = 0 ; i < MyPlan.listAllOutcome.size(); i++) {
-            mPieChartIncomePlan.addPieSlice(new PieModel(incomeName[MyPlan.listAllIncomePlanGroupDetails.get(i)], (numberPlanIn[i]*100.0f)/(sumPlanIncome*100.0f)*100, androidColors[new Random().nextInt(androidColors.length)]));
-        }
-
-        if (MyPlan.listAllOutcome.size() == 0){
-            mPieChartIncomePlan.setVisibility(View.VISIBLE);
-        }else {
-            mPieChartIncomePlan.startAnimation();
-        }
-
+        PieChart mPieChart4 = (PieChart) rootView.findViewById(R.id.piechart4);
+        drawChart(rootView, numberPlanOut, sumPlanOutcome, MyPlan.listAllOutcome, MyPlan.listAllOutcomePlanGroupDetails, mPieChart4, R.array.outcome_categories, plan_outcome_text);
 
         TextView differentIncome = (TextView) rootView.findViewById(R.id.total_incomeDifferentMoneyReport);
         String totalDifferentIncome = numberFormat.format(sumIncome - sumPlanIncome);
-        differentIncome.setText(totalDifferentIncome);
+
 
         TextView differentOutcome = (TextView) rootView.findViewById(R.id.total_expenseDifferentMoneyReport);
         String totalDifferentOutcome = numberFormat.format(sumOutcome - sumPlanOutcome);
-        differentOutcome.setText(totalDifferentOutcome);
 
-        return rootView;
+        if (AccessToken.getCurrentAccessToken() != null){
+            totalIncome.setText(income + " " + UserFB.getIdMoneyTypebyFB());
+            totalOutcome.setText(outcome + " " + UserFB.getIdMoneyTypebyFB());
+            planIncome.setText(incomePlan + " " + UserFB.getIdMoneyTypebyFB());
+            planOutcome.setText(outcomePlan + " " + UserFB.getIdMoneyTypebyFB());
+            differentIncome.setText(totalDifferentIncome + " " + UserFB.getIdMoneyTypebyFB());
+            differentOutcome.setText(totalDifferentOutcome + " " + UserFB.getIdMoneyTypebyFB());
+        }else {
+            totalIncome.setText(income + " " + User.getIdMoneyType());
+            totalOutcome.setText(outcome + " " + User.getIdMoneyType());
+            planIncome.setText(incomePlan + " " + User.getIdMoneyType());
+            planOutcome.setText(outcomePlan + " " + User.getIdMoneyType());
+            differentIncome.setText(totalDifferentIncome + " " + User.getIdMoneyType());
+            differentOutcome.setText(totalDifferentOutcome + " " + User.getIdMoneyType());
+        }
+
     }
+
+    public void drawChart (View rootView, int number1 [], int sum, ArrayList<String> list, ArrayList<Integer> listGroupDetails, PieChart mPieChart, int array, String insidetext){
+
+        ArrayList<Entry> entries = new ArrayList<>();
+        for (int i = 0; i< list.size(); i++) {
+
+            entries.add(new Entry((number1[i]*100.0f)/(sum*100.0f)*100, i));
+
+        }
+        mPieChart.getLegend().setEnabled(false);
+
+        ArrayList<String> labels = new ArrayList<String>();
+        String name [] = rootView.getResources().getStringArray(array);
+        for (int i = 0; i< list.size(); i++) {
+            labels.add(name[listGroupDetails.get(i)]);
+        }
+        PieDataSet dataset = new PieDataSet(entries, null);
+        PieData data = new PieData(labels, dataset);
+        mPieChart.setData(data);
+        dataset.setColors(ColorTemplate.JOYFUL_COLORS);
+        mPieChart.animateY(1500);
+        mPieChart.setDescription("");
+        mPieChart.setDrawHoleEnabled(false);
+        data.setValueFormatter(new MyValueFormatter());
+        data.setValueTextSize(6.5f);
+        dataset.setSliceSpace(4);
+        mPieChart.setDrawHoleEnabled(true);
+        mPieChart.setCenterText(insidetext);
+
+    }
+
+    public class MyValueFormatter implements ValueFormatter {
+
+        private DecimalFormat mFormat;
+
+        public MyValueFormatter() {
+            mFormat = new DecimalFormat("###,###,##0.0"); // use one decimal
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            // write your logic here
+            return mFormat.format(value) + " %"; // e.g. append a dollar-sign
+        }
+    }
+
 
 }

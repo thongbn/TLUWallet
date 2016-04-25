@@ -2,6 +2,7 @@ package com.client.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ public class SettingsFragment extends Fragment{
     private Spinner spinnerctrl;
     private Locale myLocale;
     private int [] imageViews = {0 ,R.drawable.ic_currency_vnd, R.drawable.ic_currency_gbp};
+    private SharedPreferences langPreferences;
+    private SharedPreferences.Editor langPrefsEditor;
 	
 	@Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
@@ -70,6 +73,11 @@ public class SettingsFragment extends Fragment{
 
     public void setLocale(String lang) {
 
+        langPreferences = getActivity().getSharedPreferences("langPrefs", getActivity().MODE_PRIVATE);
+        langPrefsEditor = langPreferences.edit();
+        langPrefsEditor.clear();
+        langPrefsEditor.putString("lang", lang);
+        langPrefsEditor.apply();
         myLocale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();

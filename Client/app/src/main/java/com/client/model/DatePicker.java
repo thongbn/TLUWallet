@@ -5,6 +5,10 @@ package com.client.model;
  */
 public class DatePicker {
 
+    public DatePicker () {
+        super ();
+    }
+
     public static String getDate() {
         return date;
     }
