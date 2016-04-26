@@ -220,14 +220,14 @@ public class PlanFragment extends Fragment{
 
     private void countTotal() {
 
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
         int sumIncome = 0;
         int sumOutcome = 0;
         int number1 [] = new int[MyPlan.listAllIncome.size()];
         int number [] = new int[MyPlan.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyPlan.listAllIncome.size(); i++) {
-            number1 [i] = Integer.parseInt(MyPlan.listAllIncome.get(i).replace(",", ""));
+            number1 [i] = Integer.parseInt(MyPlan.listAllIncome.get(i).replace(".", ""));
         }
 
         for (int i = 0; i < number1.length; i++){
@@ -235,7 +235,7 @@ public class PlanFragment extends Fragment{
         }
 
         for (int i = 0 ; i< MyPlan.listAllOutcome.size(); i++) {
-            number [i] = Integer.parseInt(MyPlan.listAllOutcome.get(i).replace(",", ""));
+            number [i] = Integer.parseInt(MyPlan.listAllOutcome.get(i).replace(".", ""));
         }
 
 

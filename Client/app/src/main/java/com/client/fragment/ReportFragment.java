@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
 import com.client.R;
 import com.client.database.DataBaseHelper;
 import com.client.database.ShowDetails;
@@ -19,14 +18,12 @@ import com.client.model.UserFB;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -150,7 +147,7 @@ public class ReportFragment extends Fragment {
 
         //Income overview
 
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
         String income_text = getString(R.string.common_income);
         String outcome_text = getString(R.string.common_outcome);
         String plan_income_text = getString(R.string.common_income_plan);
@@ -160,7 +157,7 @@ public class ReportFragment extends Fragment {
 
 
         for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
-            number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
+            number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(".", ""));
         }
 
         for (int i = 0; i < number1.length; i++){
@@ -185,7 +182,7 @@ public class ReportFragment extends Fragment {
         int number [] = new int[MyDeal.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
-            number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
+            number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(".", ""));
         }
 
 
@@ -208,7 +205,7 @@ public class ReportFragment extends Fragment {
         int numberPlanIn [] = new int[MyPlan.listAllIncome.size()];
 
         for (int i = 0 ; i< MyPlan.listAllIncome.size(); i++) {
-            numberPlanIn [i] = Integer.parseInt(MyPlan.listAllIncome.get(i).replace(",", ""));
+            numberPlanIn [i] = Integer.parseInt(MyPlan.listAllIncome.get(i).replace(".", ""));
         }
 
         for (int i = 0; i < numberPlanIn.length; i++){
@@ -229,7 +226,7 @@ public class ReportFragment extends Fragment {
         int numberPlanOut [] = new int[MyPlan.listAllOutcome.size()];
 
         for (int i = 0 ; i< MyPlan.listAllOutcome.size(); i++) {
-            numberPlanOut [i] = Integer.parseInt(MyPlan.listAllOutcome.get(i).replace(",", ""));
+            numberPlanOut [i] = Integer.parseInt(MyPlan.listAllOutcome.get(i).replace(".", ""));
         }
 
 

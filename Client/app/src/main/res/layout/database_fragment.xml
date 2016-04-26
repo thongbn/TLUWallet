@@ -11,12 +11,15 @@
         android:textSize="16dp"
         android:text="@string/nav_drawer_item_database"/>
     
-    <ImageView android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/exportCSV"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtLabel"
         android:src="@drawable/ic_tools"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="CSV"/>
     
 
 </RelativeLayout>

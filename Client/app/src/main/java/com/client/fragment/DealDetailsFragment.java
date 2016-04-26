@@ -1,7 +1,5 @@
 package com.client.fragment;
 
-
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -207,14 +205,14 @@ public class DealDetailsFragment extends Fragment{
 
   private void countTotal (){
 
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.CANADA);
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
     int sumIncome = 0;
     int sumOutcome = 0;
     int number1 [] = new int[MyDeal.listAllIncome.size()];
     int number [] = new int[MyDeal.listAllOutcome.size()];
 
     for (int i = 0 ; i< MyDeal.listAllIncome.size(); i++) {
-      number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(",", ""));
+      number1 [i] = Integer.parseInt(MyDeal.listAllIncome.get(i).replace(".", ""));
     }
 
     for (int i = 0; i < number1.length; i++){
@@ -222,7 +220,7 @@ public class DealDetailsFragment extends Fragment{
     }
 
     for (int i = 0 ; i< MyDeal.listAllOutcome.size(); i++) {
-      number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(",", ""));
+      number [i] = Integer.parseInt(MyDeal.listAllOutcome.get(i).replace(".", ""));
     }
 
 

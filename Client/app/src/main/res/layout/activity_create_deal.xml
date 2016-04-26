@@ -63,7 +63,7 @@
         android:singleLine="true"
         android:inputType="numberDecimal"
         android:hint="@string/common_edit_money"
-        android:digits="0123456789.,"
+        android:digits="0123456789,."
         app:met_iconLeft="@drawable/ic_currency"
         app:met_floatingLabel="highlight"
         app:met_baseColor="#0056d3"

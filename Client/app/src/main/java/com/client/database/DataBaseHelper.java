@@ -6,13 +6,22 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
+
 import com.client.model.Deal;
 import com.client.model.MyDeal;
 import com.client.model.MyPlan;
 import com.client.model.Plan;
 import com.client.model.User;
 import com.client.model.UserFB;
+
+import java.io.BufferedWriter;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -25,8 +34,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "quanlychitieu.db";
     public static final int DATABASE_VERSION = 1;
 
-    private static final SimpleDateFormat formatter = new SimpleDateFormat(
-            "dd-MM-yyyy", Locale.ENGLISH);
 
     public static final String NGUOIDUNG_TABLE = "nguoidung",
             USER_ID = "idNguoiDung",
@@ -632,6 +639,59 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String query = "Select " + PLAN_MONEY + " ," + PLAN_GROUP_DETAILS + " from " + PLAN_TABLE + " where " + PLAN_USER_ID + "=? And " + PLAN_GROUP + "=? and strftime('%Y-%m', " + PLAN_DATE + ")=?";
         Cursor cursor = db.rawQuery(query, new String[]{pID, gID, date});
         return cursor;
+    }
+
+    //Export CSV
+    public void exportCSV (){
+        db = this.getWritableDatabase();
+        Cursor c = null;
+        FileWriter fileWriter;
+        BufferedWriter bufferedWriter;
+        try {
+        c = db.rawQuery("select * from " + DEAL_TABLE, null);
+        int rowCount = 0;
+        int colCount = 0;
+        File sdCardDir = Environment.getExternalStorageDirectory();
+        String filename = "MyBackup.csv";
+        File saveFile = new File(sdCardDir, filename);
+
+            fileWriter = new FileWriter(saveFile);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            rowCount = c.getCount();
+            colCount = c.getCount();
+
+            if (rowCount >0) {
+                c.moveToFirst();
+                for (int i = 0; i< colCount; i++){
+                    if (i != colCount -1) {
+                        bufferedWriter.write(c.getColumnName(i) + ",");
+                    }else {
+                        bufferedWriter.write(c.getColumnName(i));
+                    }
+                }
+                bufferedWriter.newLine();
+
+                for (int i = 0; i < rowCount; i++) {
+                    c.moveToPosition(i);
+                    for (int j = 0; j <colCount; j++){
+                        if (j != colCount -1)
+                            bufferedWriter.write(c.getString(j) + ",");
+                        else
+                            bufferedWriter.write(c.getString(j));
+                    }
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.flush();
+
+            }
+        }catch (Exception e){
+            if (db.isOpen()){
+                db.close();
+            }
+        }
+
+
+
     }
 
 }

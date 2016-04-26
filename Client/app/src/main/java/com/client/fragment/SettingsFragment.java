@@ -84,6 +84,11 @@ public class SettingsFragment extends Fragment{
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+        Configuration config = new Configuration();
+        config.locale = myLocale;
+        getActivity().getBaseContext().getResources().updateConfiguration(config,
+                getActivity().getBaseContext().getResources().getDisplayMetrics());
+
         Intent refresh = new Intent(getActivity(), MainActivity.class);
         startActivity(refresh);
     }

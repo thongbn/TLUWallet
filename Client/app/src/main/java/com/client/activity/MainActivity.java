@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
+        String lang = "vi";
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
         myCalendar.get(Calendar.YEAR);
